@@ -89,7 +89,7 @@
                             "<p class='text-center text-slate-500'>復習した問題を読み込めませんでした。</p>";
                         return;
                     }
-                    renderExplanations(questions);
+                    renderExplanations(questions.map(q => ({ ...q, genre: q.genre })));
                 } catch (error) {
                     console.error(error);
                     document.getElementById('explanationList').innerHTML =
@@ -110,7 +110,7 @@
             script.onload = () => {
                 if (typeof allQuestions !== 'undefined' && allQuestions.length > 0) {
                     document.getElementById('genreTitle').innerText = allQuestions[0].category;
-                    renderExplanations(allQuestions);
+                    renderExplanations(allQuestions.map(q => ({ ...q, genre })));
                 } else {
                     document.getElementById('explanationList').innerHTML = 
                         "<p class='text-center text-red-500'>問題データが見つかりませんでした。</p>";
@@ -149,6 +149,49 @@
             `;
         }
 
+        function escapeAttr(value) {
+            return String(value ?? '')
+                .replace(/&/g, '&amp;')
+                .replace(/"/g, '&quot;')
+                .replace(/</g, '&lt;');
+        }
+
+        function bookmarkButtonClass(saved) {
+            return saved
+                ? 'bookmark-explanation-btn ml-auto shrink-0 text-[11px] font-bold px-2.5 py-1 rounded-full bg-amber-100 text-amber-800 border border-amber-200'
+                : 'bookmark-explanation-btn ml-auto shrink-0 text-[11px] font-bold px-2.5 py-1 rounded-full bg-blue-50 text-blue-700 border border-blue-200';
+        }
+
+        function refreshReviewBadge() {
+            const link = document.querySelector('.bottom-nav a[href="review.html"]');
+            if (!link) return;
+            const count = getBookmarks().length;
+            let badge = link.querySelector('.nav-badge');
+            if (count <= 0) {
+                badge?.remove();
+                return;
+            }
+            if (!badge) {
+                badge = document.createElement('span');
+                badge.className = 'nav-badge';
+                link.prepend(badge);
+            }
+            badge.textContent = count > 9 ? '9+' : String(count);
+        }
+
+        function toggleExplanationBookmark(btn) {
+            const saved = toggleBookmark({
+                genre: btn.dataset.genre,
+                id: Number(btn.dataset.id),
+                category: btn.dataset.category || '',
+                difficulty: Number(btn.dataset.difficulty) || 2,
+                priority: Number(btn.dataset.priority) || 0
+            });
+            btn.textContent = saved ? '保存済み' : '復習に保存';
+            btn.className = bookmarkButtonClass(saved);
+            refreshReviewBadge();
+        }
+
         function renderExplanations(questions) {
             const listContainer = document.getElementById('explanationList');
             listContainer.innerHTML = "";
@@ -159,11 +202,22 @@
 
                 const formattedQuestion = parseMarkdown(q.question);
                 const formattedExplanation = parseMarkdown(q.explanation || "解説準備中");
+                const saved = isBookmarked(q.genre, q.id);
 
                 section.innerHTML = `
                     <div class="flex items-center gap-2 mb-2">
                         <span class="bg-blue-100 text-blue-700 px-2 py-1 rounded text-xs font-bold">Q${q.id}</span>
-                        <span class="text-slate-400 text-sm">${q.category}</span>
+                        <span class="text-slate-400 text-sm min-w-0 truncate">${q.category}</span>
+                        <button type="button"
+                            class="${bookmarkButtonClass(saved)}"
+                            data-genre="${escapeAttr(q.genre)}"
+                            data-id="${Number(q.id)}"
+                            data-category="${escapeAttr(q.category)}"
+                            data-difficulty="${Number(q.difficulty) || 2}"
+                            data-priority="${Number(q.priority) || 0}"
+                            onclick="toggleExplanationBookmark(this)">
+                            ${saved ? '保存済み' : '復習に保存'}
+                        </button>
                     </div>
                     <div class="flex flex-wrap items-center gap-2 mb-4">
                         ${difficultyMetaHtml(q.difficulty, q.priority)}

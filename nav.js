@@ -10,7 +10,7 @@
 
     const TABS = [
         { id: 'home', href: 'index.html', label: 'ホーム', files: ['index.html', ''], icon: 'home' },
-        { id: 'study', href: 'category.html', label: '学習', files: ['category.html', 'Explanation.html'], icon: 'book' },
+        { id: 'study', href: 'category.html', label: '学習', files: ['category.html', 'Explanation.html', 'report.html'], icon: 'book' },
         { id: 'comp', href: 'comprehensive.html', label: '総合演習', files: ['comprehensive.html', 'comprehensive-quiz.html'], icon: 'layers' },
         { id: 'mock', href: 'mock.html', label: '模試', files: ['mock.html', 'mock-quiz.html'], icon: 'exam' },
         { id: 'review', href: 'review.html', label: '復習', files: ['review.html'], icon: 'review' }

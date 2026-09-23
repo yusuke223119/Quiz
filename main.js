@@ -34,7 +34,7 @@ function initApp() {
         <main class="category-main">
             <div class="category-toolbar">
                 <p>学習する章を選択</p>
-                <a class="category-progress-chip" href="#menuContainer">
+                <a class="category-progress-chip" href="report.html">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 19h4V9H5v10zm5 0h4V5h-4v14zm5 0h4v-7h-4v7z"/>
                     </svg>

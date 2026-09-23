@@ -105,12 +105,14 @@ const allQuestions = [
     question: `
       3つの事象 \\(A,B,C\\) について、次の確率が与えられている。
       \\[
-        P(A)=0.50,\\qquad P(B)=0.40,\\qquad P(C)=0.30
+        P(A)=0.50,\\quad P(B)=0.40,\\quad P(C)=0.30
       \\]
       また、
-      \\[
-        P(A\\cap B)=0.20,\\qquad P(B\\cap C)=0.10,\\qquad P(C\\cap A)=0.15
-      \\]
+      \\begin{align*}
+        P(A\\cap B)&=0.20 \\\\
+        P(B\\cap C)&=0.10 \\\\
+        P(C\\cap A)&=0.15
+      \\end{align*}
       であり、
       \\[
         P(A\\cap B\\cap C)=0.05
@@ -130,20 +132,20 @@ const allQuestions = [
       <b>1. 基本公式</b><br>
       3つの事象の少なくとも1つが起こる確率は、包除原理により
       \\begin{align*}
-        P(A\\cup B\\cup C) &=
-        P(A)+P(B)+P(C) \\\\
-        &- P(A\\cap B)-P(B\\cap C)-P(C\\cap A)
-        + P(A\\cap B\\cap C)
+        &P(A\\cup B\\cup C) \\\\
+        &=P(A)+P(B)+P(C) \\\\
+        &\\quad - P(A\\cap B)-P(B\\cap C)-P(C\\cap A) \\\\
+        &\\quad + P(A\\cap B\\cap C)
       \\end{align*}
       と表されます。各事象の確率を単純に加えると、2つ以上の事象に含まれる部分を重複して数えてしまうため、2事象の共通部分を引く必要があります。ただし、その操作では3事象すべての共通部分を引きすぎるため、最後に3事象の共通部分を1回加えます。<br><br>
       <b>2. 計算・判定プロセス</b><br>
       公式に値を代入すると、
-      \\[
+      \\begin{align*}
         P(A\\cup B\\cup C)
-        = 0.50+0.40+0.30
-        - 0.20-0.10-0.15
+        &= 0.50+0.40+0.30 \\\\
+        &- 0.20-0.10-0.15 
         + 0.05
-      \\]
+      \\end{align*}
       したがって
       \\[
         1.20 - 0.45 + 0.05 = 0.80

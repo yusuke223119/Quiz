@@ -74,7 +74,7 @@
                 正解を判定する
             </button>
 
-            <div class="mt-8 border-t border-slate-100 pt-6">
+            <div data-ai-feature class="mt-8 border-t border-slate-100 pt-6">
                 <div class="bg-blue-50 rounded-2xl p-4 border border-blue-100">
                     <h3 class="text-blue-800 font-bold text-sm mb-3 flex items-center gap-2">お助けAIパートナー</h3>
                     <div id="ai-chat-history"
@@ -111,7 +111,7 @@
 
     <script id="dataScript"></script>
     <script src="priority.js?v=1"></script>
-    <script src="bookmarks.js?v=renum1"></script>
+    <script src="bookmarks.js?v=report1"></script>
     <script src="stats-table.js?v=statp1"></script>
 
     <script>
@@ -334,11 +334,14 @@
             const buttons = container.querySelectorAll("button");
             buttons.forEach(b => b.disabled = true);
 
+            if (quizMode === 'genre' && typeof recordQuestionAttempt === 'function') {
+                recordQuestionAttempt(getCurrentGenre(), currentQuestion.id, isCorrect);
+            } else if (isCorrect && quizMode === 'genre' && typeof markQuestionAnswered === 'function') {
+                markQuestionAnswered(getCurrentGenre(), currentQuestion.id);
+            }
+
             if (isCorrect) {
                 correctCount++;
-                if (quizMode === 'genre' && typeof markQuestionAnswered === 'function') {
-                    markQuestionAnswered(getCurrentGenre(), currentQuestion.id);
-                }
                 if (currentQuestion.type === "選択式") {
                     element.className = "choice-btn w-full p-4 text-left border-2 border-emerald-500 bg-emerald-50 rounded-xl";
                     element.textContent = `${currentQuestion.answer} : 正解`;
@@ -391,28 +394,32 @@
             loadingDiv.classList.remove("hidden");
             historyDiv.scrollTop = historyDiv.scrollHeight;
 
-            // Supabase Edge Functionへ送るプロンプトの構成
-            const prompt = `あなたは統計検定2級の学習を支援する優秀なメンターです。
-【現在の問題】: ${currentQuestion.question}
-【正解の根拠】: ${currentQuestion.explanation || "未設定"}
-ユーザーからの質問: "${question}"
-回答ルール: 正解は言わず、数学的ヒントを提示してください。
-回答は読みやすいMarkdown形式で行い、重要な数式は 独立した行（Display Mode） で記述してください。また、一行が長くなりすぎないよう適切に改行してください。`;
+            const prompt = `あなたは統計学の学習支援AIです。
+ユーザーの質問に日本語で簡潔かつ正確に答えてください。
+
+質問：
+${question}`;
 
             try {
-                // Supabase Edge Functionを呼び出し（APIキーは不要、URLはあなたのプロジェクトのもの）
-                const response = await fetch('https://ceaslesrkikugqvfwfmd.supabase.co/functions/v1/gemini-chat', {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ prompt: prompt })
-                });
-
-                if (!response.ok) {
-                    const errorData = await response.json();
-                    throw new Error(errorData.error || "通信エラーが発生しました");
+                let result;
+                if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.askAI && typeof window.__stat2AskNative === "function") {
+                    if (!window.__STAT2_APPLE_INTELLIGENCE__) {
+                        throw new Error("お助けAIは次のバージョンで提供します。");
+                    }
+                    const answer = await window.__stat2AskNative(question);
+                    result = { answer };
+                } else {
+                    const response = await fetch('https://ceaslesrkikugqvfwfmd.supabase.co/functions/v1/gemini-chat', {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ prompt: prompt })
+                    });
+                    if (!response.ok) {
+                        const errorData = await response.json();
+                        throw new Error(errorData.error || "通信エラーが発生しました");
+                    }
+                    result = await response.json();
                 }
-
-                const result = await response.json();
 
                 // AIの回答を表示（提示されたグレー背景のデザイン）
                 if (result.answer) {

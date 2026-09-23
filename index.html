@@ -10,7 +10,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500&display=swap">
-    <link rel="stylesheet" href="app.css?v=tag4">
+    <link rel="stylesheet" href="app.css?v=report4">
 </head>
 <body class="app-shell">
     <div class="app-frame">
@@ -24,25 +24,15 @@
             </header>
 
             <section class="home-stats-card" aria-label="学習状況">
-                <div class="home-stat">
+                <a href="report.html" class="home-stat home-stat-report">
                     <svg class="home-stat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4 19.5A2.5 2.5 0 016.5 17H20"/>
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M5 19h4V9H5v10zm5 0h4V5h-4v14zm5 0h4v-7h-4v7z"/>
                     </svg>
                     <div>
-                        <strong id="chapterCount">0</strong>
-                        <span>章</span>
+                        <strong>レポート</strong>
+                        <span>進捗を見る</span>
                     </div>
-                </div>
-                <div class="home-stat">
-                    <svg class="home-stat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/>
-                    </svg>
-                    <div>
-                        <strong id="topicCount">0</strong>
-                        <span>分野</span>
-                    </div>
-                </div>
+                </a>
                 <div class="home-stat home-stat-progress">
                     <div class="home-progress" id="progressRing" aria-hidden="true"></div>
                     <div>
@@ -86,7 +76,7 @@
     </div>
 
     <script src="menu_data.js?v=q074"></script>
-    <script src="bookmarks.js?v=renum1"></script>
+    <script src="bookmarks.js?v=report4"></script>
     <script src="nav.js?v=home2"></script>
     <script>
         const CHAPTER_META = {
@@ -119,16 +109,14 @@
             }
         }
 
-        const chapterCount = menuData.length;
-        const topicCount = menuData.reduce((sum, chapter) => sum + (chapter.subItems?.length || 0), 0);
-        const totalQuestions = menuData.reduce((sum, chapter) => sum + chapterQuestionCount(chapter), 0);
+        const totalQuestions = typeof countMenuQuestions === 'function'
+            ? countMenuQuestions()
+            : menuData.reduce((sum, chapter) => sum + chapterQuestionCount(chapter), 0);
         const answeredCount = typeof countAnsweredAll === 'function' ? countAnsweredAll() : 0;
         const answeredPct = totalQuestions > 0 ? Math.round((answeredCount / totalQuestions) * 100) : 0;
         const savedCount = getBookmarks().length;
         const lastStudy = getLastStudy();
 
-        document.getElementById('chapterCount').textContent = chapterCount;
-        document.getElementById('topicCount').textContent = topicCount;
         document.getElementById('answeredCount').textContent = `${answeredCount} / ${totalQuestions}`;
         document.getElementById('savedCount').textContent = savedCount;
         document.getElementById('progressRing').innerHTML = `
