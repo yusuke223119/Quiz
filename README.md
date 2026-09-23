@@ -64,4 +64,6 @@ python3 -m http.server 8765
 
 ## GitHub Pages
 
-公開後の URL はリポジトリの Pages 設定に従います。ローカル確認は上記の `http.server` を使ってください。
+公開版: [https://yusuke223119.github.io/Quiz/](https://yusuke223119.github.io/Quiz/)
+
+ローカル確認は上記の `http.server` を使ってください。
