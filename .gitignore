@@ -1,0 +1,21 @@
+#Supabase 
+.branches
+.temp
+.env.keys
+.env.local
+.env.*.local
+
+#Node.js 
+node_modules/
+npm-debug.log*
+
+# VSCode
+.vscode/
+# OS
+.DS_Store
+Thumbs.db
+
+# --- 環境変数・秘密情報 ---
+.env
+.env.development
+.env.production

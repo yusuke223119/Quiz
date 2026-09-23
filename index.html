@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#3b82f6">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>統計検定2級学習アプリ</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500&display=swap">
+    <link rel="stylesheet" href="app.css?v=tag4">
+</head>
+<body class="app-shell">
+    <div class="app-frame">
+        <main class="home-main">
+            <header class="home-hero">
+                <p class="home-hero-kicker">STAT 2</p>
+                <h1 class="home-hero-title">統計検定2級対策</h1>
+                <p class="home-hero-lead">一歩ずつ、合格へ。</p>
+                <p class="home-hero-script">See the world through data.</p>
+                <img class="home-hero-art" src="picture/home/hero-bars.svg" alt="">
+            </header>
+
+            <section class="home-stats-card" aria-label="学習状況">
+                <div class="home-stat">
+                    <svg class="home-stat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4 19.5A2.5 2.5 0 016.5 17H20"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/>
+                    </svg>
+                    <div>
+                        <strong id="chapterCount">0</strong>
+                        <span>章</span>
+                    </div>
+                </div>
+                <div class="home-stat">
+                    <svg class="home-stat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/>
+                    </svg>
+                    <div>
+                        <strong id="topicCount">0</strong>
+                        <span>分野</span>
+                    </div>
+                </div>
+                <div class="home-stat home-stat-progress">
+                    <div class="home-progress" id="progressRing" aria-hidden="true"></div>
+                    <div>
+                        <strong id="answeredCount">0 / 0</strong>
+                        <span>正解</span>
+                    </div>
+                </div>
+                <a href="review.html" class="home-stat">
+                    <svg class="home-stat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/>
+                    </svg>
+                    <div>
+                        <strong id="savedCount">0</strong>
+                        <span>保存</span>
+                    </div>
+                </a>
+            </section>
+
+            <a id="continueCard" href="category.html" class="home-continue">
+                <span class="home-continue-play" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.14v13.72L19 12 8 5.14z"/></svg>
+                </span>
+                <span class="home-continue-copy">
+                    <strong id="continueTitle">学習をはじめる</strong>
+                    <span id="continueChapter">分野別演習</span>
+                    <span id="continueHint">章ごとに基礎から解く</span>
+                </span>
+                <svg class="home-continue-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+            </a>
+
+            <section class="home-chapters">
+                <div class="home-chapters-head">
+                    <p>章から選ぶ</p>
+                    <a href="category.html">すべての分野を見る <span aria-hidden="true">›</span></a>
+                </div>
+                <div id="chapterGrid" class="home-chapter-grid"></div>
+            </section>
+        </main>
+    </div>
+
+    <script src="menu_data.js?v=q074"></script>
+    <script src="bookmarks.js?v=renum1"></script>
+    <script src="nav.js?v=home2"></script>
+    <script>
+        const CHAPTER_META = {
+            'chapter-1': { short: '記述統計', art: 'icons/descriptive-statistics.svg', tone: 'descriptive' },
+            'chapter-2': { short: 'データ収集', art: 'icons/data-collection.svg', tone: 'data' },
+            'chapter-3': { short: '確率分布', art: 'icons/probability-distribution.svg', tone: 'probability' },
+            'chapter-4': { short: '推定', art: 'icons/estimation.svg', tone: 'estimation' },
+            'chapter-5': { short: '検定', art: 'icons/hypothesis-testing.svg', tone: 'testing' },
+            'chapter-6': { short: '回帰分析', art: 'icons/regression.svg?v=4', tone: 'regression' }
+        };
+
+        function chapterQuestionCount(chapter) {
+            return (chapter.subItems || []).reduce((sum, sub) => sum + (sub.priorities?.length || 4), 0);
+        }
+
+        function findField(genre) {
+            if (!genre) return null;
+            for (const chapter of menuData) {
+                const sub = chapter.subItems?.find(item => item.genre === genre);
+                if (sub) return { chapter, sub };
+            }
+            return null;
+        }
+
+        function genreFromHref(href) {
+            try {
+                return new URL(href, window.location.href).searchParams.get('genre') || '';
+            } catch {
+                return '';
+            }
+        }
+
+        const chapterCount = menuData.length;
+        const topicCount = menuData.reduce((sum, chapter) => sum + (chapter.subItems?.length || 0), 0);
+        const totalQuestions = menuData.reduce((sum, chapter) => sum + chapterQuestionCount(chapter), 0);
+        const answeredCount = typeof countAnsweredAll === 'function' ? countAnsweredAll() : 0;
+        const answeredPct = totalQuestions > 0 ? Math.round((answeredCount / totalQuestions) * 100) : 0;
+        const savedCount = getBookmarks().length;
+        const lastStudy = getLastStudy();
+
+        document.getElementById('chapterCount').textContent = chapterCount;
+        document.getElementById('topicCount').textContent = topicCount;
+        document.getElementById('answeredCount').textContent = `${answeredCount} / ${totalQuestions}`;
+        document.getElementById('savedCount').textContent = savedCount;
+        document.getElementById('progressRing').innerHTML = `
+                <svg viewBox="0 0 36 36" role="img" aria-label="正答率 ${answeredPct}%">
+                <circle cx="18" cy="18" r="14" fill="none" stroke="#e2e8f0" stroke-width="3.4"/>
+                <circle cx="18" cy="18" r="14" fill="none" stroke="#2563eb" stroke-width="3.4"
+                    stroke-linecap="round" pathLength="100"
+                    stroke-dasharray="${answeredPct} 100"
+                    transform="rotate(-90 18 18)"/>
+                <text x="18" y="20.2" text-anchor="middle">${answeredPct}%</text>
+            </svg>
+        `;
+
+        const continueCard = document.getElementById('continueCard');
+        if (lastStudy) {
+            continueCard.href = lastStudy.href;
+            document.getElementById('continueTitle').textContent = '続きから学習';
+            const found = findField(lastStudy.genre || genreFromHref(lastStudy.href));
+            if (found) {
+                const num = (found.chapter.title.match(/第\d+章/) || ['分野別'])[0];
+                const short = CHAPTER_META[found.chapter.id]?.short || found.chapter.title;
+                document.getElementById('continueChapter').textContent = `${num} ${short}`;
+                const total = found.sub.priorities?.length || 0;
+                const done = typeof countAnsweredInGenre === 'function' ? countAnsweredInGenre(found.sub.genre) : 0;
+                const rawName = found.sub.name.replace(/^\d+\.\s*/, '').replace(/（[^）]*）/g, '');
+                const fieldNo = (found.sub.name.match(/^\d+/) || [''])[0];
+                const progress = total > 0 ? `（${total}問中 ${done}問正解）` : '';
+                document.getElementById('continueHint').textContent = `${fieldNo}. ${rawName}${progress}`;
+            } else {
+                document.getElementById('continueChapter').textContent = lastStudy.kind === 'comprehensive' ? '総合演習' : '分野別演習';
+                document.getElementById('continueHint').textContent = lastStudy.title || '続きから再開';
+            }
+        }
+
+        document.getElementById('chapterGrid').innerHTML = menuData.map(chapter => {
+            const meta = CHAPTER_META[chapter.id] || {};
+            const num = (chapter.title.match(/第\d+章/) || [chapter.title])[0];
+            const topic = meta.short || chapter.title;
+            const count = chapter.subItems?.length || 0;
+            const tone = meta.tone || chapter.id.replace('chapter-', '');
+            return `
+                <a class="home-chapter chapter-card chapter-${tone}" href="category.html#${chapter.id}">
+                    <div class="home-chapter-copy chapter-content">
+                        <p class="chapter-number">${num}</p>
+                        <h2>${topic}</h2>
+                        <p class="chapter-fields">${count}分野</p>
+                    </div>
+                    <img src="${meta.art}" class="chapter-illustration" alt="" aria-hidden="true">
+                    <svg class="home-chapter-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                    </svg>
+                </a>
+            `;
+        }).join('');
+    </script>
+</body>
+</html>

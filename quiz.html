@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#2563eb">
+    <title>統計検定2級 AI共闘学習アプリ</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="app.css?v=statp1">
+    <script>
+        window.MathJax = {
+            tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+            options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre'] }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        #ai-chat-history::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        #ai-chat-history::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+
+<body class="quiz-shell">
+
+    <div class="quiz-frame">
+
+        <div class="app-header">
+            <div class="flex justify-between items-center mb-1.5 gap-3">
+                <a id="quizBackLink" href="category.html" class="inline-flex items-center gap-1 text-sm text-white/90">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                    </svg>
+                    <span id="quizBackLabel">戻る</span>
+                </a>
+                <button type="button" id="bookmarkBtn" onclick="toggleCurrentBookmark()"
+                    class="text-[11px] font-bold px-2.5 py-1 rounded-full bg-white/15 text-white border border-white/30">
+                    復習に保存
+                </button>
+            </div>
+            <div class="flex items-center gap-2 min-w-0 mb-2">
+                <span id="questionId" class="inline-block bg-blue-400 px-1.5 py-0.5 rounded text-xs font-bold shrink-0">--</span>
+                <h1 id="categoryName" class="text-white text-sm font-bold leading-snug truncate">読み込み中...</h1>
+            </div>
+            <div class="w-full bg-blue-800 rounded-full h-1.5">
+                <div id="progressBar" class="bg-emerald-400 h-1.5 rounded-full transition-all duration-500"
+                    style="width: 0%"></div>
+            </div>
+        </div>
+
+        <div class="p-4 sm:p-6">
+            <div class="flex flex-wrap items-center gap-x-4 gap-y-1 mb-4">
+                <div id="difficultyContainer" class="flex items-center gap-2"></div>
+                <div id="priorityContainer" class="flex items-center gap-1.5"></div>
+            </div>
+
+            <div id="questionText" class="text-slate-700 text-lg leading-relaxed mb-6"></div>
+
+            <button type="button" class="stats-table-open" onclick="openStatsTable()" aria-haspopup="dialog" aria-controls="statsTableModal">
+                <span class="stats-table-open-label">統計数値表を確認</span>
+                <span class="stats-table-open-action">開く</span>
+            </button>
+
+            <div id="answerArea" class="grid grid-cols-1 gap-3 mb-6"></div>
+
+            <button type="button" id="judgeBtn" onclick="submitJudgement()"
+                class="hidden mb-6 w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-xl shadow-lg transition-all active:scale-[0.98]">
+                正解を判定する
+            </button>
+
+            <div class="mt-8 border-t border-slate-100 pt-6">
+                <div class="bg-blue-50 rounded-2xl p-4 border border-blue-100">
+                    <h3 class="text-blue-800 font-bold text-sm mb-3 flex items-center gap-2">お助けAIパートナー</h3>
+                    <div id="ai-chat-history"
+                        class="max-h-48 overflow-y-auto mb-4 space-y-3 p-2 bg-white/50 rounded-lg text-sm text-slate-600">
+                        <div class="italic text-slate-500">「ヒントが必要な時は何でも聞いてくださいね！」</div>
+                    </div>
+                    <div class="flex gap-2">
+                        <input type="text" id="userQuestion"
+                            class="flex-grow p-3 border border-blue-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm"
+                            placeholder="例：この記号の意味は？">
+                        <button onclick="askAI()"
+                            class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-xl text-sm font-bold transition-all">質問</button>
+                    </div>
+                    <div id="loading" class="hidden text-xs text-blue-500 mt-2 ml-1 animate-pulse">AI思考中...</div>
+                </div>
+            </div>
+
+            <div id="answerContainer" class="hidden bg-emerald-50 border-l-4 border-emerald-400 p-4 mt-6">
+                <h3 class="text-emerald-800 text-xs font-bold mb-1 uppercase">正解</h3>
+                <div id="answer" class="text-slate-800 text-sm font-bold"></div>
+            </div>
+
+            <div id="explanationContainer" class="hidden mt-6 p-6 bg-amber-50 border-l-4 border-amber-400 rounded-r-xl">
+                <h2 class="font-bold text-amber-800 mb-2">💡 正解の解説</h2>
+                <div id="explanation" class="text-slate-700 text-sm leading-relaxed"></div>
+            </div>
+
+            <button onclick="nextQuestion()" id="nextBtn"
+                class="hidden mt-6 w-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-4 rounded-xl shadow-lg transition-all active:scale-[0.98]">
+                次の問題へ進む
+            </button>
+        </div>
+    </div>
+
+    <script id="dataScript"></script>
+    <script src="priority.js?v=1"></script>
+    <script src="bookmarks.js?v=renum1"></script>
+    <script src="stats-table.js?v=statp1"></script>
+
+    <script>
+        let currentIndex = 0;
+        let currentQuestion = null;
+        let correctCount = 0;
+        let currentGenre = null;
+        let quizMode = 'genre';
+        let quizQuestions = [];
+        let selectedChoice = null;
+        let selectedElement = null;
+        let hasJudged = false;
+
+        const CHOICE_IDLE = "choice-btn w-full p-4 text-left border-2 border-slate-200 rounded-xl hover:bg-blue-50 hover:border-blue-500 transition-all duration-200";
+        const CHOICE_SELECTED = "choice-btn w-full p-4 text-left border-2 border-blue-500 bg-blue-50 rounded-xl transition-all duration-200";
+
+        window.onload = async () => {
+            const params = new URLSearchParams(window.location.search);
+            quizMode = params.get('mode') === 'review' ? 'review' : 'genre';
+
+            const backLink = document.getElementById('quizBackLink');
+            const backLabel = document.getElementById('quizBackLabel');
+            if (backLink && quizMode === 'review') {
+                backLink.href = 'review.html';
+                if (backLabel) backLabel.textContent = '復習';
+            }
+
+            if (quizMode === 'review') {
+                const refs = getReviewQueue();
+                if (!refs.length) {
+                    alert("復習する問題がありません。");
+                    window.location.href = 'review.html';
+                    return;
+                }
+
+                try {
+                    const questions = await loadQuestionsByRefs(refs);
+                    if (!questions.length) {
+                        alert("ブックマークした問題を読み込めませんでした。");
+                        window.location.href = 'review.html';
+                        return;
+                    }
+                    quizQuestions = questions;
+                    renderQuestion(quizQuestions[currentIndex]);
+                } catch (error) {
+                    console.error("復習問題の読み込みに失敗しました", error);
+                    alert("問題の読み込みに失敗しました。復習一覧に戻ります。");
+                    window.location.href = 'review.html';
+                }
+                return;
+            }
+
+            const genre = params.get('genre');
+            currentGenre = genre;
+
+            if (!genre) {
+                alert("ジャンルが選択されていません。TOPに戻ります。");
+                window.location.href = 'category.html';
+                return;
+            }
+
+            // 動的にスクリプトタグを作成して読み込む
+            const script = document.getElementById('dataScript');
+            script.src = `questions/${genre}.js?v=${typeof QUESTION_DATA_VERSION !== 'undefined' ? QUESTION_DATA_VERSION : 'q074'}`;
+
+            script.onload = () => {
+                // genre.jsが読み込まれると、グローバル変数 allQuestions が使えるようになる
+                if (typeof allQuestions !== 'undefined' && allQuestions.length > 0) {
+                    quizQuestions = allQuestions.map(question => ({ ...question, genre }));
+                    renderQuestion(quizQuestions[currentIndex]);
+                } else {
+                    console.error("データが見つかりません");
+                    alert(`「${genre}」のデータが見つかりません。`);
+                    window.location.href = 'category.html';
+                }
+            };
+
+            script.onerror = () => {
+                console.error(`questions/${genre}.js の読み込みに失敗しました`);
+                alert(`「${genre}」のデータ読み込みに失敗しました。TOPに戻ります。`);
+                window.location.href = 'category.html';
+            };
+        };
+
+        function getCurrentGenre() {
+            return currentQuestion?.genre || currentGenre || new URLSearchParams(window.location.search).get('genre');
+        }
+
+        function updateBookmarkButton() {
+            const btn = document.getElementById('bookmarkBtn');
+            if (!btn || !currentQuestion) return;
+
+            const saved = isBookmarked(getCurrentGenre(), currentQuestion.id);
+            btn.textContent = saved ? '保存済み' : '復習に保存';
+            btn.className = saved
+                ? 'text-xs font-bold px-3 py-1.5 rounded-full bg-amber-300 text-amber-900 border border-amber-200 hover:bg-amber-200 transition'
+                : 'text-xs font-bold px-3 py-1.5 rounded-full bg-white/15 text-white border border-white/30 hover:bg-white/25 transition';
+        }
+
+        function toggleCurrentBookmark() {
+            if (!currentQuestion) return;
+
+            toggleBookmark({
+                genre: getCurrentGenre(),
+                id: currentQuestion.id,
+                category: currentQuestion.category,
+                difficulty: currentQuestion.difficulty,
+                priority: currentQuestion.priority
+            });
+            updateBookmarkButton();
+        }
+
+        function renderQuestion(q) {
+            currentQuestion = q;
+            if (!currentQuestion.genre) {
+                currentQuestion.genre = getCurrentGenre();
+            }
+            updateBookmarkButton();
+
+            if (typeof closeStatsTable === "function") {
+                closeStatsTable();
+            }
+
+            // --- 以下、既存のレンダリング処理 ---
+            const progress = ((currentIndex + 1) / quizQuestions.length) * 100;
+            document.getElementById("progressBar").style.width = `${progress}%`;
+            document.getElementById("priorityContainer").innerHTML =
+                `<span class="text-xs font-bold text-slate-400 tracking-widest">重要度</span>${priorityBadgeHtml(q.priority)}`;
+
+            const difficultyContainer = document.getElementById("difficultyContainer");
+            const diffs = { 1: ["基礎", "bg-emerald-100 text-emerald-700"], 2: ["標準", "bg-blue-100 text-blue-700"], 3: ["応用", "bg-rose-100 text-rose-700"] };
+            const [label, color] = diffs[q.difficulty] || diffs[2];
+            difficultyContainer.innerHTML = `<span class="text-xs font-bold text-slate-400 tracking-widest">難易度</span><span class="${color} px-2 py-0.5 rounded text-xs font-bold">${label}</span>`;
+
+            document.getElementById("questionId").innerText = `Q${q.id}`;
+            document.getElementById("categoryName").innerText = q.category;
+
+            if (quizMode === 'genre' && typeof saveLastStudy === 'function') {
+                saveLastStudy({
+                    href: `quiz.html?genre=${encodeURIComponent(getCurrentGenre())}`,
+                    title: q.category || '分野別演習',
+                    kind: 'genre',
+                    genre: getCurrentGenre()
+                });
+            }
+
+            const replaceImage = (text) => text.replace(/!\[.*?\]\((.*?)\)/g, '<img src="$1" class="w-full h-auto rounded-xl my-4 shadow-sm border border-slate-200">');
+
+            document.getElementById("questionText").innerHTML = replaceImage(q.question);
+            document.getElementById("explanationContainer").classList.add("hidden");
+            document.getElementById("answerContainer").classList.add("hidden");
+            document.getElementById("nextBtn").classList.add("hidden");
+
+            selectedChoice = null;
+            selectedElement = null;
+            hasJudged = false;
+            document.getElementById("judgeBtn").classList.remove("hidden");
+
+            const ansContainer = document.getElementById("answerArea");
+            ansContainer.innerHTML = "";
+
+            if (q.type === "選択式") {
+                q.choices.forEach(choice => {
+                    const btn = document.createElement("button");
+                    btn.type = "button";
+                    btn.className = CHOICE_IDLE;
+                    btn.innerHTML = choice;
+                    btn.onclick = () => selectChoice(choice, btn);
+                    ansContainer.appendChild(btn);
+                });
+            } else if (q.type === "回答式") {
+                const input = document.createElement("input");
+                input.type = "text";
+                input.id = "answerInput";
+                input.placeholder = "回答を入力...";
+                input.className = "w-full p-4 border-2 border-slate-200 rounded-xl focus:border-blue-500 outline-none";
+                ansContainer.appendChild(input);
+            }
+
+            if (window.MathJax) MathJax.typesetPromise();
+        }
+
+        function selectChoice(choice, btn) {
+            if (hasJudged) return;
+            selectedChoice = choice;
+            selectedElement = btn;
+            document.querySelectorAll("#answerArea .choice-btn").forEach(button => {
+                button.className = CHOICE_IDLE;
+            });
+            btn.className = CHOICE_SELECTED;
+        }
+
+        function submitJudgement() {
+            if (hasJudged || !currentQuestion) return;
+
+            if (currentQuestion.type === "選択式") {
+                if (!selectedChoice || !selectedElement) {
+                    alert("回答を選んでから判定してください。");
+                    return;
+                }
+                document.getElementById("judgeBtn").classList.add("hidden");
+                checkAnswer(selectedChoice, selectedElement);
+                return;
+            }
+
+            const input = document.getElementById("answerInput");
+            document.getElementById("judgeBtn").classList.add("hidden");
+            checkAnswer((input?.value || "").trim(), input);
+        }
+
+        function checkAnswer(submittedValue, element) {
+            if (hasJudged) return;
+            hasJudged = true;
+            document.getElementById("judgeBtn").classList.add("hidden");
+
+            const isCorrect = (submittedValue === currentQuestion.answer);
+            const container = document.getElementById("answerArea");
+
+            // 選択式ボタンの全無効化
+            const buttons = container.querySelectorAll("button");
+            buttons.forEach(b => b.disabled = true);
+
+            if (isCorrect) {
+                correctCount++;
+                if (quizMode === 'genre' && typeof markQuestionAnswered === 'function') {
+                    markQuestionAnswered(getCurrentGenre(), currentQuestion.id);
+                }
+                if (currentQuestion.type === "選択式") {
+                    element.className = "choice-btn w-full p-4 text-left border-2 border-emerald-500 bg-emerald-50 rounded-xl";
+                    element.textContent = `${currentQuestion.answer} : 正解`;
+                } else {
+                    element.classList.add("border-emerald-500", "bg-emerald-50");
+                }
+            } else if (currentQuestion.type === "選択式") {
+                element.className = "choice-btn w-full p-4 text-left border-2 border-rose-500 bg-rose-50 rounded-xl";
+                element.textContent = `${submittedValue} : 不正解`;
+            } else {
+                element.classList.add("border-rose-500", "bg-rose-50");
+                element.value = `正解: ${currentQuestion.answer}`;
+            }
+
+            // 解説表示
+            const replaceImage = (text) => text.replace(/!\[.*?\]\((.*?)\)/g, '<img src="$1" class="w-full h-auto rounded-xl my-4 shadow-sm border border-slate-200">');
+            document.getElementById("explanation").innerHTML = replaceImage(currentQuestion.explanation || "解説なし");
+            document.getElementById("explanationContainer").classList.remove("hidden");
+            document.getElementById("answer").innerHTML = replaceImage(currentQuestion.answer);
+            document.getElementById("answerContainer").classList.remove("hidden");
+
+            const nextBtn = document.getElementById("nextBtn");
+            nextBtn.classList.remove("hidden");
+
+            if (currentIndex == quizQuestions.length - 1){
+                nextBtn.textContent = "解説ページへ進む"
+            }else{
+                nextBtn.textContent = "次の問題へ進む"
+            };
+
+            if (window.MathJax) MathJax.typesetPromise();
+        }
+
+        async function askAI() {
+            const input = document.getElementById("userQuestion");
+            const question = input.value.trim();
+            const historyDiv = document.getElementById("ai-chat-history");
+            const loadingDiv = document.getElementById("loading");
+
+            // バリデーション
+            if (!question) return;
+            if (typeof currentQuestion === 'undefined' || !currentQuestion) {
+                alert("問題データが読み込まれていません。");
+                return;
+            }
+
+            // UI更新（ユーザー側の吹き出しデザイン）
+            historyDiv.innerHTML += `<div class="text-right ml-8"><div class="inline-block bg-blue-600 text-white p-2 rounded-lg mb-2 text-sm">${question}</div></div>`;
+            input.value = "";
+            loadingDiv.classList.remove("hidden");
+            historyDiv.scrollTop = historyDiv.scrollHeight;
+
+            // Supabase Edge Functionへ送るプロンプトの構成
+            const prompt = `あなたは統計検定2級の学習を支援する優秀なメンターです。
+【現在の問題】: ${currentQuestion.question}
+【正解の根拠】: ${currentQuestion.explanation || "未設定"}
+ユーザーからの質問: "${question}"
+回答ルール: 正解は言わず、数学的ヒントを提示してください。
+回答は読みやすいMarkdown形式で行い、重要な数式は 独立した行（Display Mode） で記述してください。また、一行が長くなりすぎないよう適切に改行してください。`;
+
+            try {
+                // Supabase Edge Functionを呼び出し（APIキーは不要、URLはあなたのプロジェクトのもの）
+                const response = await fetch('https://ceaslesrkikugqvfwfmd.supabase.co/functions/v1/gemini-chat', {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ prompt: prompt })
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.error || "通信エラーが発生しました");
+                }
+
+                const result = await response.json();
+
+                // AIの回答を表示（提示されたグレー背景のデザイン）
+                if (result.answer) {
+                    let aiText = result.answer;
+                    // $...$ 形式の数式を MathJax 用に変換
+                    aiText = aiText.replace(/\$(.*?)\$/g, '\\($1\\)');
+
+                    historyDiv.innerHTML += `<div class="bg-slate-100 p-3 rounded-lg text-slate-800 mb-2 border border-slate-200"><b>AIパートナー:</b><br>${aiText}</div>`;
+                } else {
+                    historyDiv.innerHTML += `<div class="text-rose-500 text-xs p-2">AIが回答を生成できませんでした（ポリシー制限等）。</div>`;
+                }
+
+                // 数式のレンダリング
+                if (window.MathJax) {
+                    await MathJax.typesetPromise([historyDiv]);
+                }
+                historyDiv.scrollTop = historyDiv.scrollHeight;
+
+            } catch (e) {
+                console.error("AskAI Error:", e);
+                historyDiv.innerHTML += `<div class="text-rose-500 text-xs p-2">エラー: ${e.message}</div>`;
+            } finally {
+                loadingDiv.classList.add("hidden");
+                historyDiv.scrollTop = historyDiv.scrollHeight;
+            }
+        }
+
+        function nextQuestion() {
+            currentIndex++;
+
+            if (currentIndex < quizQuestions.length) {
+                // まだ問題がある場合は次の問題を表示
+                renderQuestion(quizQuestions[currentIndex]);
+            } else {
+                const params = new URLSearchParams(window.location.search);
+                const genre = params.get('genre');
+
+                if (quizMode === 'review') {
+                    window.location.href = `Explanation.html?mode=review&correct=${correctCount}&total=${quizQuestions.length}&v=star1`;
+                } else if (genre) {
+                    if (correctCount === quizQuestions.length && quizQuestions.length > 0 && typeof awardGenreStar === 'function') {
+                        awardGenreStar(genre, quizQuestions.length);
+                    }
+                    window.location.href = `Explanation.html?genre=${genre}&correct=${correctCount}&total=${quizQuestions.length}&v=star1`;
+                } else {
+                    window.location.href = 'category.html';
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>

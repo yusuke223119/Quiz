@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#2563eb">
+    <title>模試 - 統計検定2級学習アプリ</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="app.css?v=statp1">
+    <script>
+        window.MathJax = {
+            tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+            options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre'] }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+
+<body class="quiz-shell">
+
+    <div class="quiz-frame">
+
+        <div class="app-header">
+            <div class="flex items-center justify-between mb-1.5 gap-3">
+                <a href="mock.html" class="inline-flex items-center gap-1 text-sm text-white/90">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                    </svg>
+                    模試一覧
+                </a>
+                <div class="flex items-center gap-2">
+                    <p id="timerLabel" class="text-sm font-bold tabular-nums">--:--</p>
+                    <button type="button" id="menuBtn" onclick="openDrawer()"
+                        class="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-white/15 text-white"
+                        aria-label="問題一覧を開く">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div class="flex items-center gap-2 min-w-0 mb-2">
+                <span id="sectionBadge" class="bg-blue-400 px-1.5 py-0.5 rounded text-xs font-bold shrink-0">大問</span>
+                <h1 id="sectionTitle" class="text-white text-sm font-bold leading-snug truncate">読み込み中...</h1>
+            </div>
+            <div class="w-full bg-blue-800 rounded-full h-1.5">
+                <div id="progressBar" class="bg-emerald-400 h-1.5 rounded-full transition-all duration-500" style="width: 0%"></div>
+            </div>
+            <p id="progressLabel" class="text-[11px] text-blue-100 mt-1">回答済み 0 / 35</p>
+        </div>
+
+        <div class="p-4 sm:p-6">
+            <div id="resultBanner" class="hidden mb-4 p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-center">
+                <p id="resultScore" class="text-emerald-800 font-bold"></p>
+                <div class="mt-2">
+                    <span class="inline-block bg-white px-4 py-1.5 rounded-full text-xs font-bold text-emerald-700 border border-emerald-100">
+                        正答率: <span id="accuracyRate">--</span>%
+                    </span>
+                </div>
+                <p class="text-[11px] text-emerald-700 mt-2">メニューから問題番号を選ぶと、解説を見られます。</p>
+            </div>
+
+            <div id="stemBox"
+                class="mb-5 p-4 bg-slate-50 border border-slate-200 rounded-xl text-slate-700 text-sm leading-relaxed">
+            </div>
+
+            <button type="button" class="stats-table-open" onclick="openStatsTable()" aria-haspopup="dialog" aria-controls="statsTableModal">
+                <span class="stats-table-open-label">統計数値表を確認</span>
+                <span class="stats-table-open-action">開く</span>
+            </button>
+
+            <div class="flex items-center justify-between gap-3 mb-3">
+                <p id="qNumberLabel" class="text-xs font-bold text-blue-600">問題番号</p>
+                <div class="flex items-center gap-3">
+                    <p class="text-[11px] font-bold text-slate-400 tracking-widest">回答番号</p>
+                    <button type="button" id="flagBtn" onclick="toggleFlag()"
+                        class="inline-flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-bold border border-slate-200 text-slate-600 bg-white">
+                        印をつける
+                    </button>
+                </div>
+            </div>
+            <div id="partQuestion" class="text-slate-700 leading-relaxed mb-6"></div>
+            <div id="answerArea" class="grid grid-cols-1 gap-3 mb-6"></div>
+
+            <div class="grid grid-cols-2 gap-3 mb-3">
+                <button type="button" id="prevBtn" onclick="goPrev()"
+                    class="w-full bg-white border border-slate-200 text-slate-700 font-bold py-4 rounded-xl transition-all active:scale-[0.98]">
+                    前の問題
+                </button>
+                <button type="button" id="nextBtn" onclick="goNext()"
+                    class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-xl shadow-lg transition-all active:scale-[0.98]">
+                    次の問題へ
+                </button>
+            </div>
+
+            <button type="button" id="submitBtn" onclick="submitExam()"
+                class="mb-6 w-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-4 rounded-xl transition-all active:scale-[0.98]">
+                答案を提出する
+            </button>
+
+            <div id="answerContainer" class="hidden bg-emerald-50 border-l-4 border-emerald-400 p-4 mt-6">
+                <h3 class="text-emerald-800 text-xs font-bold mb-1 uppercase">この問の正解（回答番号）</h3>
+                <div id="answer" class="text-slate-800 text-sm font-bold"></div>
+            </div>
+
+            <div id="explanationContainer" class="hidden mt-6 p-6 bg-amber-50 border-l-4 border-amber-400 rounded-r-xl">
+                <div class="flex flex-wrap items-start justify-between gap-2 mb-2">
+                    <h2 class="font-bold text-amber-800">💡 この問の解説</h2>
+                    <div id="explanationMeta" class="flex flex-wrap items-center gap-2"></div>
+                </div>
+                <div id="explanation" class="text-slate-700 text-sm leading-relaxed"></div>
+            </div>
+
+            <a id="backBtn" href="mock.html"
+                class="hidden mt-6 block w-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-4 rounded-xl shadow-lg transition-all text-center active:scale-[0.98]">
+                模試一覧に戻る
+            </a>
+        </div>
+    </div>
+
+    <div id="drawerOverlay" class="mock-overlay hidden" onclick="closeDrawer()"></div>
+    <aside id="drawer" class="mock-drawer hidden" aria-label="問題一覧">
+        <div class="flex items-center justify-between px-4 py-3 border-b border-slate-100">
+            <div>
+                <p class="text-sm font-bold text-slate-800">問題一覧</p>
+                <p id="drawerSummary" class="text-[11px] text-slate-500 mt-0.5"></p>
+            </div>
+            <button type="button" onclick="closeDrawer()" class="w-9 h-9 rounded-lg text-slate-500 text-lg" aria-label="閉じる">×</button>
+        </div>
+        <div class="px-4 py-3 border-b border-slate-100">
+            <label class="flex items-center gap-2 text-sm text-slate-600">
+                <input type="checkbox" id="flagFilter" onchange="renderDrawer()" class="rounded border-slate-300">
+                印をつけた問題だけ見る
+            </label>
+            <div class="flex flex-wrap gap-3 mt-3 text-[11px] text-slate-500">
+                <span class="inline-flex items-center gap-1"><span class="w-3 h-3 rounded bg-white border border-slate-300"></span>未回答</span>
+                <span class="inline-flex items-center gap-1"><span class="w-3 h-3 rounded bg-blue-600"></span>回答済</span>
+                <span class="inline-flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-amber-400"></span>印</span>
+            </div>
+        </div>
+        <div id="drawerList" class="mock-drawer-body px-4 py-3 space-y-4"></div>
+        <div class="px-4 py-3 border-t border-slate-100">
+            <button type="button" id="drawerSubmitBtn" onclick="closeDrawer(); submitExam();"
+                class="w-full bg-slate-800 text-white font-bold py-3 rounded-xl text-sm">
+                答案を提出する
+            </button>
+        </div>
+    </aside>
+
+    <script src="stats-table.js?v=statp1"></script>
+    <script>
+        let exam = null;
+        let sectionIndex = 0;
+        let partIndex = 0;
+        let answers = {};
+        let flags = {};
+        let submitted = false;
+        let startedAt = null;
+        let timerId = null;
+        let allParts = [];
+        let drawerOpen = false;
+
+        const CHOICE_IDLE = "choice-btn w-full p-4 text-left border-2 border-slate-200 rounded-xl hover:bg-blue-50 hover:border-blue-500 transition-all duration-200";
+        const CHOICE_SELECTED = "choice-btn w-full p-4 text-left border-2 border-blue-500 bg-blue-50 rounded-xl transition-all duration-200";
+        const CHOICE_CORRECT = "choice-btn w-full p-4 text-left border-2 border-emerald-500 bg-emerald-50 rounded-xl";
+        const CHOICE_WRONG = "choice-btn w-full p-4 text-left border-2 border-rose-500 bg-rose-50 rounded-xl";
+
+        function progressKey(id) {
+            return `mockProgress:${id}`;
+        }
+
+        function flattenParts() {
+            const list = [];
+            exam.sections.forEach((section, s) => {
+                section.parts.forEach((part, p) => {
+                    list.push({ sectionIndex: s, partIndex: p, part, section });
+                });
+            });
+            return list;
+        }
+
+        function currentSection() {
+            return exam.sections[sectionIndex];
+        }
+
+        function currentPart() {
+            return currentSection().parts[partIndex];
+        }
+
+        function currentFlatIndex() {
+            return allParts.findIndex(item => item.sectionIndex === sectionIndex && item.partIndex === partIndex);
+        }
+
+        function examScore() {
+            const total = allParts.length;
+            const correct = allParts.filter(item => answers[item.part.qNumber] === item.part.answer).length;
+            const accuracy = total > 0 ? Math.round((correct / total) * 100) : 0;
+            return { correct, total, accuracy };
+        }
+
+        function saveProgress() {
+            if (!exam) return;
+            const payload = {
+                answers,
+                flags,
+                sectionIndex,
+                partIndex,
+                startedAt,
+                submitted
+            };
+            if (submitted) {
+                Object.assign(payload, examScore());
+            }
+            sessionStorage.setItem(progressKey(exam.id), JSON.stringify(payload));
+        }
+
+        function loadProgress() {
+            try {
+                return JSON.parse(sessionStorage.getItem(progressKey(exam.id)) || 'null');
+            } catch {
+                return null;
+            }
+        }
+
+        function remainingMs() {
+            const limit = (exam.timeLimitMinutes || 90) * 60 * 1000;
+            return Math.max(0, limit - (Date.now() - startedAt));
+        }
+
+        function formatTime(ms) {
+            const total = Math.ceil(ms / 1000);
+            const m = Math.floor(total / 60);
+            const s = total % 60;
+            return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+        }
+
+        function updateTimer() {
+            const label = document.getElementById('timerLabel');
+            if (submitted) {
+                label.textContent = '提出済み';
+                label.classList.remove('text-amber-200', 'text-rose-200');
+                return;
+            }
+            const left = remainingMs();
+            label.textContent = `残り ${formatTime(left)}`;
+            label.classList.toggle('text-amber-200', left <= 5 * 60 * 1000 && left > 60 * 1000);
+            label.classList.toggle('text-rose-200', left <= 60 * 1000);
+            if (left <= 0) {
+                submitExam(true);
+            }
+        }
+
+        function startTimer() {
+            updateTimer();
+            timerId = setInterval(updateTimer, 1000);
+        }
+
+        function answeredCount() {
+            return allParts.filter(item => answers[item.part.qNumber]).length;
+        }
+
+        function flaggedCount() {
+            return allParts.filter(item => flags[item.part.qNumber]).length;
+        }
+
+        window.onload = () => {
+            const examId = new URLSearchParams(window.location.search).get('exam');
+            if (!examId) {
+                alert('模試が選択されていません。');
+                window.location.href = 'mock.html';
+                return;
+            }
+
+            const script = document.createElement('script');
+            script.src = `questions/${examId}.js?v=mock22`;
+            script.onload = () => {
+                if (typeof mockExam === 'undefined' || !mockExam?.sections?.length) {
+                    alert('模試データを読み込めませんでした。');
+                    window.location.href = 'mock.html';
+                    return;
+                }
+                exam = mockExam;
+                allParts = flattenParts();
+                const saved = loadProgress();
+                if (saved) {
+                    answers = saved.answers || {};
+                    flags = saved.flags || {};
+                    sectionIndex = Number.isInteger(saved.sectionIndex) ? saved.sectionIndex : 0;
+                    partIndex = Number.isInteger(saved.partIndex) ? saved.partIndex : 0;
+                    startedAt = saved.startedAt || Date.now();
+                    submitted = Boolean(saved.submitted);
+                } else {
+                    startedAt = Date.now();
+                    saveProgress();
+                }
+                renderAll();
+                if (submitted) saveProgress();
+                startTimer();
+            };
+            script.onerror = () => {
+                alert('模試データの読み込みに失敗しました。');
+                window.location.href = 'mock.html';
+            };
+            document.body.appendChild(script);
+        };
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape') closeDrawer();
+        });
+
+        function replaceImage(text) {
+            return String(text || '').replace(/!\[.*?\]\((.*?)\)/g, '<img src="$1" class="w-full h-auto rounded-xl my-4 shadow-sm border border-slate-200">');
+        }
+
+        function jumpTo(s, p) {
+            if (typeof closeStatsTable === 'function') closeStatsTable();
+            sectionIndex = s;
+            partIndex = p;
+            saveProgress();
+            renderAll();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function jumpToQNumber(qNumber) {
+            const found = allParts.find(item => item.part.qNumber === qNumber);
+            if (found) jumpTo(found.sectionIndex, found.partIndex);
+        }
+
+        function goPrev() {
+            const i = currentFlatIndex();
+            if (i > 0) jumpTo(allParts[i - 1].sectionIndex, allParts[i - 1].partIndex);
+        }
+
+        function goNext() {
+            const i = currentFlatIndex();
+            if (i < allParts.length - 1) {
+                jumpTo(allParts[i + 1].sectionIndex, allParts[i + 1].partIndex);
+            }
+        }
+
+        function toggleFlag() {
+            if (!exam) return;
+            const qNumber = currentPart().qNumber;
+            if (flags[qNumber]) delete flags[qNumber];
+            else flags[qNumber] = true;
+            saveProgress();
+            renderFlagButton();
+            renderDrawer();
+        }
+
+        function openDrawer() {
+            drawerOpen = true;
+            document.getElementById('drawerOverlay').classList.remove('hidden');
+            document.getElementById('drawer').classList.remove('hidden');
+            renderDrawer();
+        }
+
+        function closeDrawer() {
+            drawerOpen = false;
+            document.getElementById('drawerOverlay').classList.add('hidden');
+            document.getElementById('drawer').classList.add('hidden');
+        }
+
+        function renderAll() {
+            const section = currentSection();
+            const part = currentPart();
+            const total = allParts.length;
+            const done = answeredCount();
+
+            document.getElementById('sectionBadge').textContent = `大問${section.id}`;
+            document.getElementById('sectionTitle').textContent = section.title;
+            document.getElementById('progressBar').style.width = `${total ? (done / total) * 100 : 0}%`;
+            document.getElementById('progressLabel').textContent = submitted
+                ? `採点済み ${done} / ${total}`
+                : `回答済み ${done} / ${total}`;
+            document.getElementById('stemBox').innerHTML = replaceImage(section.stem);
+            document.getElementById('qNumberLabel').textContent = `問題番号 ${part.qNumber}`;
+
+            renderFlagButton();
+            renderNavButtons();
+            renderPart();
+            renderSubmitState();
+            if (drawerOpen) renderDrawer();
+        }
+
+        function renderFlagButton() {
+            const btn = document.getElementById('flagBtn');
+            const flagged = Boolean(flags[currentPart().qNumber]);
+            btn.textContent = flagged ? '印を外す' : '印をつける';
+            btn.className = flagged
+                ? 'inline-flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-bold border border-amber-400 text-amber-800 bg-amber-50'
+                : 'inline-flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-bold border border-slate-200 text-slate-600 bg-white';
+        }
+
+        function renderNavButtons() {
+            const i = currentFlatIndex();
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            prevBtn.disabled = i <= 0;
+            prevBtn.classList.toggle('opacity-40', i <= 0);
+            const last = i >= allParts.length - 1;
+            nextBtn.disabled = last;
+            nextBtn.textContent = last ? '最後の問題' : '次の問題へ';
+            nextBtn.classList.toggle('opacity-40', last);
+        }
+
+        function qButtonClass(item) {
+            const qNumber = item.part.qNumber;
+            const selected = answers[qNumber];
+            const isCurrent = item.sectionIndex === sectionIndex && item.partIndex === partIndex;
+            const flagged = Boolean(flags[qNumber]);
+            let cls = 'mock-q-btn';
+            if (submitted) {
+                const correct = selected === item.part.answer;
+                if (correct) cls += ' is-correct';
+                else if (selected) cls += ' is-wrong';
+                else cls += ' is-unanswered-submit';
+            } else if (selected) {
+                cls += ' is-answered';
+            }
+            if (isCurrent) cls += ' is-current';
+            if (flagged) cls += ' is-flagged';
+            return cls;
+        }
+
+        function renderDrawer() {
+            const flagOnly = document.getElementById('flagFilter').checked;
+            const list = document.getElementById('drawerList');
+            const total = allParts.length;
+            document.getElementById('drawerSummary').textContent =
+                `回答 ${answeredCount()} / ${total}　印 ${flaggedCount()}`;
+
+            list.innerHTML = '';
+            let shown = 0;
+            exam.sections.forEach((section, sIndex) => {
+                const parts = section.parts.filter(part => !flagOnly || flags[part.qNumber]);
+                if (!parts.length) return;
+                shown += parts.length;
+
+                const wrap = document.createElement('div');
+                const complete = section.parts.every(part => answers[part.qNumber]);
+                wrap.innerHTML = `
+                    <div class="flex items-center justify-between mb-2">
+                        <p class="text-sm font-bold text-slate-800">大問${section.id}</p>
+                        <p class="text-[11px] text-slate-400">${complete ? '回答済み' : ''}</p>
+                    </div>
+                    <p class="text-[11px] text-slate-500 mb-2">${section.title}</p>
+                    <div class="flex flex-wrap gap-1.5"></div>
+                `;
+                const grid = wrap.querySelector('div.flex.flex-wrap');
+                parts.forEach(part => {
+                    const item = allParts.find(entry => entry.part.qNumber === part.qNumber);
+                    const btn = document.createElement('button');
+                    btn.type = 'button';
+                    btn.textContent = part.qNumber;
+                    btn.className = qButtonClass(item);
+                    btn.onclick = () => {
+                        closeDrawer();
+                        jumpToQNumber(part.qNumber);
+                    };
+                    grid.appendChild(btn);
+                });
+                list.appendChild(wrap);
+            });
+
+            if (!shown) {
+                list.innerHTML = '<p class="text-sm text-slate-500 py-8 text-center">印をつけた問題はまだありません。</p>';
+            }
+        }
+
+        function renderPart() {
+            const part = currentPart();
+            document.getElementById('partQuestion').innerHTML = replaceImage(part.question);
+
+            const ansContainer = document.getElementById('answerArea');
+            ansContainer.innerHTML = '';
+            const selected = answers[part.qNumber];
+
+            part.choices.forEach(choice => {
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                if (submitted) {
+                    if (choice === part.answer) {
+                        btn.className = CHOICE_CORRECT;
+                        btn.innerHTML = selected === choice ? `${choice} : 正解` : choice;
+                    } else if (selected === choice) {
+                        btn.className = CHOICE_WRONG;
+                        btn.innerHTML = `${choice} : 不正解`;
+                    } else {
+                        btn.className = CHOICE_IDLE;
+                        btn.innerHTML = choice;
+                    }
+                    btn.disabled = true;
+                } else {
+                    btn.className = selected === choice ? CHOICE_SELECTED : CHOICE_IDLE;
+                    btn.innerHTML = choice;
+                    btn.onclick = () => selectChoice(choice);
+                }
+                ansContainer.appendChild(btn);
+            });
+
+            if (submitted) {
+                document.getElementById('answer').innerHTML = replaceImage(part.answer);
+                document.getElementById('explanation').innerHTML = replaceImage(part.explanation || '解説なし');
+                document.getElementById('answerContainer').classList.remove('hidden');
+                document.getElementById('explanationContainer').classList.remove('hidden');
+                const explanationMeta = document.getElementById('explanationMeta');
+                if (explanationMeta) {
+                    if (part.difficulty != null || part.priority != null) {
+                        const diffs = { 1: ['基礎', 'bg-emerald-100 text-emerald-700'], 2: ['標準', 'bg-blue-100 text-blue-700'], 3: ['応用', 'bg-rose-100 text-rose-700'] };
+                        const [label, color] = diffs[part.difficulty] || diffs[2];
+                        explanationMeta.innerHTML = `<span class="text-xs font-bold text-slate-400 tracking-widest">難易度</span><span class="${color} px-2 py-0.5 rounded text-xs font-bold">${label}</span>${typeof priorityLabelHtml === 'function' ? priorityLabelHtml(part.priority) : ''}`;
+                    } else {
+                        explanationMeta.innerHTML = '';
+                    }
+                }
+            } else {
+                document.getElementById('answerContainer').classList.add('hidden');
+                document.getElementById('explanationContainer').classList.add('hidden');
+            }
+
+            if (window.MathJax) MathJax.typesetPromise();
+        }
+
+        function selectChoice(choice) {
+            if (submitted) return;
+            answers[currentPart().qNumber] = choice;
+            saveProgress();
+            renderAll();
+        }
+
+        function renderSubmitState() {
+            const submitBtn = document.getElementById('submitBtn');
+            const drawerSubmit = document.getElementById('drawerSubmitBtn');
+            const backBtn = document.getElementById('backBtn');
+            const banner = document.getElementById('resultBanner');
+            if (submitted) {
+                submitBtn.classList.add('hidden');
+                drawerSubmit.classList.add('hidden');
+                backBtn.classList.remove('hidden');
+                banner.classList.remove('hidden');
+                const { correct, total, accuracy } = examScore();
+                document.getElementById('resultScore').textContent =
+                    `問題 ${total} 問中 ${correct} 問正解`;
+                document.getElementById('accuracyRate').textContent = String(accuracy);
+            } else {
+                submitBtn.classList.remove('hidden');
+                drawerSubmit.classList.remove('hidden');
+                backBtn.classList.add('hidden');
+                banner.classList.add('hidden');
+            }
+        }
+
+        function submitExam(auto = false) {
+            if (submitted || !exam) return;
+            const unanswered = allParts.filter(item => !answers[item.part.qNumber]);
+            if (!auto && unanswered.length) {
+                const ok = confirm(`未回答が ${unanswered.length} 問あります。このまま提出しますか？`);
+                if (!ok) {
+                    jumpToQNumber(unanswered[0].part.qNumber);
+                    return;
+                }
+            }
+            submitted = true;
+            if (timerId) clearInterval(timerId);
+            saveProgress();
+            updateTimer();
+            closeDrawer();
+            renderAll();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#2563eb">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>復習 - 統計検定2級学習アプリ</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500&display=swap">
+    <link rel="stylesheet" href="app.css?v=tag4">
+</head>
+<body class="app-shell">
+
+    <div class="app-frame">
+        <header class="page-hero">
+            <div class="page-hero-bar">
+                <a class="page-hero-back" href="index.html" aria-label="ホームに戻る">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M15 19l-7-7 7-7"/>
+                    </svg>
+                </a>
+                <h1>復習</h1>
+                <span class="page-hero-spacer" aria-hidden="true"></span>
+            </div>
+            <p class="page-hero-lead">保存した問題を解き直す · <span id="countLabel">0件</span></p>
+            <p class="home-hero-script">See the world through data.</p>
+            <img class="page-hero-art" src="picture/home/hero-bars.svg" alt="">
+        </header>
+        <main class="page-main review-main">
+            <section id="reviewToolbar" class="hidden space-y-3">
+                <div class="review-toolbar-row">
+                    <label class="review-select-all">
+                        <input type="checkbox" id="selectAll">
+                        <span>すべて選択（<span id="selectAllCount">0</span>件）</span>
+                    </label>
+                    <button type="button" id="deleteSelectedBtn" class="review-delete">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7h16M9 7V5a1 1 0 011-1h4a1 1 0 011 1v2m-9 0l1 12a2 2 0 002 2h6a2 2 0 002-2l1-12"/>
+                        </svg>
+                        選択を削除
+                    </button>
+                </div>
+                <div class="review-actions">
+                    <button type="button" id="startSelectedBtn" class="review-play">
+                        <span class="review-play-row">
+                            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.14v13.72L19 12 8 5.14z"/></svg>
+                            選択した問題を解く（<span id="playCount">0</span>件）
+                        </span>
+                    </button>
+                    <button type="button" id="startRandomBtn" class="review-random">
+                        <span class="review-random-row">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3z"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 12l8-4.5M12 12L4 7.5M12 12v9"/>
+                            </svg>
+                            ランダムに5問解く
+                        </span>
+                        <small>（保存した問題からランダム出題）</small>
+                    </button>
+                </div>
+            </section>
+
+            <div id="reviewChips" class="review-chips hidden"></div>
+
+            <div id="reviewListHead" class="review-list-head hidden">
+                <p>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7h16M4 12h10M4 17h16"/>
+                    </svg>
+                    保存した問題（<span id="listCount">0</span>件）
+                </p>
+                <button type="button" id="sortBtn" class="review-sort">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 15l4 4 4-4M16 9l-4-4-4 4"/>
+                    </svg>
+                    <span id="sortLabel">保存した順</span>
+                </button>
+            </div>
+
+            <div id="bookmarkList" class="space-y-2.5"></div>
+
+            <div class="review-footer">
+                <svg class="review-book" viewBox="0 0 120 90" fill="none" aria-hidden="true">
+                    <path d="M38 22 L28 18 M36 16 L32 10 M44 18 L46 10" stroke="#93c5fd" stroke-width="2.2" stroke-linecap="round"/>
+                    <path d="M82 22 L92 18 M84 16 L88 10 M76 18 L74 10" stroke="#93c5fd" stroke-width="2.2" stroke-linecap="round"/>
+                    <path d="M60 28 C52 22 28 24 22 30 V72 C32 64 50 64 60 72 C70 64 88 64 98 72 V30 C92 24 68 22 60 28 Z" fill="#dbeafe" stroke="#60a5fa" stroke-width="2.4" stroke-linejoin="round"/>
+                    <path d="M60 30 V70" stroke="#3b82f6" stroke-width="2.2" stroke-linecap="round"/>
+                    <path d="M32 40 H52 M32 48 H50 M32 56 H48" stroke="#93c5fd" stroke-width="1.8" stroke-linecap="round"/>
+                    <path d="M68 40 H88 M70 48 H88 M72 56 H88" stroke="#93c5fd" stroke-width="1.8" stroke-linecap="round"/>
+                </svg>
+                <strong>コツコツ復習して、確実に力をつけましょう</strong>
+                <p id="footerCopy">気になる問題を保存して、<br>苦手分野を重点的に復習できます。</p>
+            </div>
+        </main>
+    </div>
+
+    <script src="menu_data.js?v=q074"></script>
+    <script src="bookmarks.js?v=renum1"></script>
+    <script src="priority.js?v=1"></script>
+    <script src="nav.js?v=home2"></script>
+    <script>
+        const DIFFICULTY = {
+            1: ['基礎', 'is-basic'],
+            2: ['標準', 'is-standard'],
+            3: ['応用', 'is-advanced']
+        };
+
+        const FILTERS = [
+            { id: 'all', label: 'すべて' },
+            { id: 'chapter-1', label: '記述統計' },
+            { id: 'chapter-2', label: '収集' },
+            { id: 'chapter-3', label: '確率' },
+            { id: 'chapter-4', label: '推定' },
+            { id: 'chapter-5', label: '検定' },
+            { id: 'chapter-6', label: '回帰' }
+        ];
+
+        const FIELD_BLURBS = {
+            q01_frequency: 'ヒストグラムと階級、度数分布の読み取り',
+            q02_central: '平均・中央値・最頻値の比較と性質',
+            q03_dispersion: 'データの散らばりを表す指標と、偏差値の計算',
+            q04_boxplot: '四分位範囲、ヒストグラムとの対応、外れ値',
+            q05_gini: 'ローレンツ曲線とジニ係数、指数化',
+            q06_moments: '歪度・尖度と分布の形',
+            q07_correlation: '共分散・相関・偏相関',
+            q08_crosstab: 'カテゴリカルデータと2元クロス表',
+            q09_time_series: '時系列データの処理',
+            q10_study_design: '観察研究・実験研究と実験計画',
+            q11_sampling: '標本調査の考え方',
+            q12_prob_basic: '確率の基礎',
+            q13_bayes: '条件付き確率とベイズの定理',
+            q14_random_variable: '質量関数・密度関数・分布関数',
+            q15_expectation: '期待値・分散とモーメント',
+            q16_joint_dist: '同時分布と共分散',
+            q17_binomial: 'ベルヌーイ分布と二項分布',
+            q18_poisson: 'ポアソン分布・幾何分布',
+            q19_hypergeometric: '超幾何分布・負の二項分布',
+            q20_normal: '正規分布・2変量正規分布',
+            q21_continuous_dist: '一様分布・指数分布',
+            q22_clt: '標本分布・大数の法則・中心極限定理',
+            q23_point_estimation: '推定量と不偏性',
+            q24_point_estimation: '一致性と推定量の比較',
+            q25_sampling_dist: 'χ²分布・t分布・F分布',
+            q26_statistic_dist: '統計量が従う分布',
+            q27_ci_mean: '母平均の信頼区間',
+            q28_ci_variance: '母平均の差・母比率・母分散の区間推定',
+            q29_testing_concept: '仮説検定の基礎',
+            q30_one_sample_test: '1標本の母平均・母比率の検定',
+            q31_two_sample_test: '2標本の母平均の検定',
+            q32_variance_test: 'その他の検定（母分散・等分散・適合度・独立性）',
+            q33_linear_regression: '回帰直線・決定係数・重回帰の基礎',
+            q34_regression_output: '線形回帰の結果表の読み取り',
+            q35_anova: '一元配置分散分析'
+        };
+
+        let reviewItems = [];
+        let activeFilter = 'all';
+        let sortMode = 'saved';
+
+        const genreMeta = {};
+        (typeof menuData !== 'undefined' ? menuData : []).forEach((chapter, index) => {
+            const short = FILTERS.find(filter => filter.id === chapter.id)?.label || chapter.title;
+            (chapter.subItems || []).forEach(sub => {
+                genreMeta[sub.genre] = {
+                    chapterId: chapter.id,
+                    chapterNo: index + 1,
+                    chapterShort: short,
+                    fieldName: String(sub.name || '').replace(/^\d+\.\s*/, '')
+                };
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('selectAll').addEventListener('change', event => toggleSelectAll(event.target.checked));
+            document.getElementById('deleteSelectedBtn').addEventListener('click', deleteSelected);
+            document.getElementById('startSelectedBtn').addEventListener('click', startSelected);
+            document.getElementById('startRandomBtn').addEventListener('click', startRandomFive);
+            document.getElementById('sortBtn').addEventListener('click', toggleSort);
+            document.getElementById('reviewChips').addEventListener('click', event => {
+                const chip = event.target.closest('.review-chip');
+                if (!chip) return;
+                setReviewFilter(chip.dataset.filter);
+            });
+            document.getElementById('bookmarkList').addEventListener('change', event => {
+                if (event.target.classList.contains('bookmark-check')) updateSelectionCounts();
+            });
+            renderReviewPage();
+        });
+
+        function escapeHtml(text) {
+            return String(text || '').replace(/[&<>"']/g, char => ({
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#39;'
+            }[char]));
+        }
+
+        function itemKey(item) {
+            return `${item.genre}#${item.id}`;
+        }
+
+        function fieldBlurb(genre, fieldName) {
+            if (FIELD_BLURBS[genre]) return FIELD_BLURBS[genre];
+            const cleaned = String(fieldName || '').replace(/^\d+\.\s*/, '');
+            const paren = cleaned.match(/（(.+)）/);
+            return paren ? paren[1] : `${cleaned}の復習`;
+        }
+
+        async function renderReviewPage() {
+            const bookmarks = getBookmarks();
+            document.getElementById('countLabel').textContent = `${bookmarks.length}件`;
+            refreshNavBadge();
+
+            if (!bookmarks.length) {
+                reviewItems = [];
+                document.getElementById('reviewToolbar').classList.add('hidden');
+                document.getElementById('reviewChips').classList.add('hidden');
+                document.getElementById('reviewListHead').classList.add('hidden');
+                document.getElementById('bookmarkList').innerHTML = '';
+                document.getElementById('footerCopy').innerHTML = 'まだ保存した問題はありません。<br>演習中に「復習に保存」を押すと、ここに集まります。';
+                return;
+            }
+
+            document.getElementById('footerCopy').innerHTML = '気になる問題を保存して、<br>苦手分野を重点的に復習できます。';
+            document.getElementById('reviewToolbar').classList.remove('hidden');
+            document.getElementById('reviewChips').classList.remove('hidden');
+            document.getElementById('reviewListHead').classList.remove('hidden');
+
+            let items = bookmarks.map(bookmark => {
+                const meta = genreMeta[bookmark.genre] || {};
+                return {
+                    ...bookmark,
+                    chapterId: meta.chapterId || '',
+                    chapterNo: meta.chapterNo || 0,
+                    chapterShort: meta.chapterShort || '',
+                    fieldName: meta.fieldName || bookmark.category || ''
+                };
+            });
+
+            try {
+                const loaded = await loadQuestionsByRefs(bookmarks);
+                const map = new Map(loaded.map(question => [`${question.genre}#${question.id}`, question]));
+                items = items.map(item => {
+                    const question = map.get(itemKey(item));
+                    return {
+                        ...item,
+                        category: question?.category || item.category || item.fieldName,
+                        fieldName: item.fieldName || question?.category || item.category,
+                        difficulty: question?.difficulty ?? item.difficulty,
+                        priority: question?.priority ?? item.priority
+                    };
+                });
+            } catch (error) {
+                console.error('復習一覧のメタ情報の読み込みに失敗しました', error);
+            }
+
+            reviewItems = items;
+            renderChips();
+            renderFilteredList();
+        }
+
+        function filteredItems() {
+            const list = activeFilter === 'all'
+                ? [...reviewItems]
+                : reviewItems.filter(item => item.chapterId === activeFilter);
+
+            if (sortMode === 'chapter') {
+                list.sort((a, b) => (a.chapterNo - b.chapterNo) || (Number(a.id) - Number(b.id)));
+            } else {
+                list.sort((a, b) => (Number(b.savedAt) || 0) - (Number(a.savedAt) || 0));
+            }
+            return list;
+        }
+
+        function renderChips() {
+            const counts = { all: reviewItems.length };
+            FILTERS.slice(1).forEach(filter => {
+                counts[filter.id] = reviewItems.filter(item => item.chapterId === filter.id).length;
+            });
+            document.getElementById('reviewChips').innerHTML = FILTERS.map(filter => `
+                <button type="button" class="review-chip${filter.id === activeFilter ? ' is-active' : ''}" data-filter="${filter.id}">
+                    ${escapeHtml(filter.label)}
+                    <b>${counts[filter.id] || 0}</b>
+                </button>
+            `).join('');
+        }
+
+        function setReviewFilter(filterId) {
+            activeFilter = filterId || 'all';
+            renderChips();
+            renderFilteredList();
+        }
+
+        function renderFilteredList() {
+            const list = document.getElementById('bookmarkList');
+            const items = filteredItems();
+            document.getElementById('listCount').textContent = items.length;
+            document.getElementById('selectAllCount').textContent = items.length;
+            document.getElementById('sortLabel').textContent = sortMode === 'chapter' ? '章順' : '保存した順';
+
+            if (!items.length) {
+                list.innerHTML = '<p class="review-empty-list">この分野に保存した問題はありません。</p>';
+                updateSelectionCounts();
+                return;
+            }
+
+            list.innerHTML = items.map(item => {
+                const [diffLabel, diffClass] = DIFFICULTY[item.difficulty] || DIFFICULTY[2];
+                const letter = typeof priorityLetter === 'function' ? priorityLetter(item.priority) : '';
+                const title = item.category || item.fieldName;
+                const chapterTag = item.chapterNo
+                    ? `<span class="review-tag is-chapter">第${item.chapterNo}章 ${escapeHtml(item.chapterShort)}</span>`
+                    : '';
+                const priorityTag = letter
+                    ? `<span class="review-tag is-priority">重要度 ${letter}</span>`
+                    : '';
+                return `
+                <div class="review-card">
+                    <input type="checkbox" class="bookmark-check" data-genre="${escapeHtml(item.genre)}" data-id="${Number(item.id)}">
+                    <button type="button" class="review-card-main" onclick="startSingle('${escapeHtml(item.genre)}', ${Number(item.id)})">
+                        <div class="review-card-head">
+                            <span class="review-q">Q${Number(item.id)}</span>
+                            <strong>${escapeHtml(title)}</strong>
+                        </div>
+                        <p class="review-card-blurb">${escapeHtml(fieldBlurb(item.genre, item.fieldName))}</p>
+                        <div class="review-tags">
+                            ${chapterTag}
+                            <span class="review-tag ${diffClass}">${diffLabel}</span>
+                            ${priorityTag}
+                        </div>
+                    </button>
+                    <button type="button" class="review-unpin" onclick="removeAndRefresh('${escapeHtml(item.genre)}', ${Number(item.id)})">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/>
+                        </svg>
+                        外す
+                    </button>
+                </div>
+            `;
+            }).join('');
+            updateSelectionCounts();
+        }
+
+        function getCheckedRefs() {
+            return [...document.querySelectorAll('.bookmark-check:checked')].map(el => ({
+                genre: el.dataset.genre,
+                id: Number(el.dataset.id)
+            }));
+        }
+
+        function visibleRefs() {
+            return filteredItems().map(item => ({ genre: item.genre, id: Number(item.id) }));
+        }
+
+        function updateSelectionCounts() {
+            const checked = document.querySelectorAll('.bookmark-check:checked').length;
+            const visible = document.querySelectorAll('.bookmark-check').length;
+            const playCount = checked || visible;
+            document.getElementById('playCount').textContent = playCount;
+            const selectAll = document.getElementById('selectAll');
+            selectAll.checked = visible > 0 && checked === visible;
+            selectAll.indeterminate = checked > 0 && checked < visible;
+        }
+
+        function toggleSelectAll(checked) {
+            document.querySelectorAll('.bookmark-check').forEach(el => {
+                el.checked = checked;
+            });
+            updateSelectionCounts();
+        }
+
+        function toggleSort() {
+            sortMode = sortMode === 'saved' ? 'chapter' : 'saved';
+            renderFilteredList();
+        }
+
+        function startSelected() {
+            const refs = getCheckedRefs();
+            const queue = refs.length ? refs : visibleRefs();
+            if (!queue.length) {
+                alert('出題する問題を選択してください。');
+                return;
+            }
+            startReviewQuiz(queue, { random: false });
+        }
+
+        function startRandomFive() {
+            const pool = visibleRefs();
+            if (!pool.length) {
+                alert('保存した問題がありません。');
+                return;
+            }
+            const shuffled = typeof shuffleItems === 'function' ? shuffleItems(pool) : pool;
+            startReviewQuiz(shuffled.slice(0, Math.min(5, shuffled.length)), { random: false });
+        }
+
+        function startSingle(genre, id) {
+            startReviewQuiz([{ genre, id }], { random: false });
+        }
+
+        function removeAndRefresh(genre, id) {
+            removeBookmark(genre, id);
+            renderReviewPage();
+        }
+
+        function deleteSelected() {
+            const refs = getCheckedRefs();
+            if (!refs.length) {
+                alert('削除する問題を選択してください。');
+                return;
+            }
+            if (!confirm(`選択した${refs.length}件を復習から外しますか？`)) return;
+            refs.forEach(ref => removeBookmark(ref.genre, ref.id));
+            renderReviewPage();
+        }
+
+        function refreshNavBadge() {
+            const link = document.querySelector('.bottom-nav a[href="review.html"]');
+            if (!link) return;
+            const n = getBookmarks().length;
+            let badge = link.querySelector('.nav-badge');
+            if (n <= 0) {
+                badge?.remove();
+                return;
+            }
+            if (!badge) {
+                badge = document.createElement('span');
+                badge.className = 'nav-badge';
+                link.prepend(badge);
+            }
+            badge.textContent = n > 9 ? '9+' : String(n);
+        }
+    </script>
+</body>
+</html>

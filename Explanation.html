@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#2563eb">
+    <title>解説一覧 - 統計検定2級</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="app.css">
+    <script>
+        window.MathJax = {
+            tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body class="app-shell">
+    <div class="app-frame">
+        <header class="app-header">
+            <h1 class="text-white text-xl font-bold">学習解説</h1>
+            <p class="text-blue-100 text-sm mt-1" id="genreTitle">読み込み中...</p>
+        </header>
+        <main class="p-4 space-y-4">
+        
+        <div id="resultBoard" class="hidden mb-8 bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-100 rounded-2xl p-6 text-center shadow-sm">
+            <h2 class="text-sm font-bold text-blue-800 uppercase tracking-wider mb-2">クイズお疲れ様でした！今回の結果</h2>
+            <div class="text-3xl font-extrabold text-slate-800 my-3">
+                <span id="totalQuestionsCount" class="text-2xl text-slate-500">--</span> 問中 
+                <span id="correctAnswersCount" class="text-blue-600">--</span> 問正解！
+            </div>
+            <div class="inline-block bg-white px-4 py-1.5 rounded-full text-xs font-bold text-indigo-600 border border-indigo-100 shadow-xs">
+                正答率: <span id="accuracyRate">--</span>%
+            </div>
+            <p id="starAward" class="hidden mt-3 text-sm font-bold text-amber-600">★ 全問正解！この分野に星がつきました</p>
+        </div>
+
+        <div id="explanationList" class="space-y-6">
+            </div>
+
+        <div class="pt-4 pb-8 text-center">
+            <button id="backBtn" onclick="location.href='category.html'" class="inline-block w-full bg-blue-600 text-white px-8 py-3 rounded-xl font-bold">
+                学習に戻る
+            </button>
+        </div>
+        </main>
+    </div>
+
+    <script id="dataScript"></script>
+    <script src="bookmarks.js?v=renum1"></script>
+    <script src="priority.js?v=1"></script>
+    <script src="nav.js?v=home2"></script>
+
+    <script>
+        window.onload = async () => {
+            const params = new URLSearchParams(window.location.search);
+            const mode = params.get('mode');
+            const genre = params.get('genre');
+            const correct = params.get('correct');
+            const total = params.get('total');
+            
+            if (correct !== null && total !== null){
+                const totalNum = parseInt(total, 10);
+                const correctNum = parseInt(correct, 10);
+                const accuracy = totalNum > 0 ? Math.round((correctNum / totalNum) * 100) : 0;
+
+                document.getElementById('totalQuestionsCount').innerText = totalNum;
+                document.getElementById('correctAnswersCount').innerText = correctNum;
+                document.getElementById('accuracyRate').innerText = accuracy;
+                
+                // hiddenを外して表示
+                document.getElementById('resultBoard').classList.remove('hidden');
+                if (mode !== 'review' && genre && totalNum > 0 && correctNum === totalNum) {
+                    document.getElementById('starAward')?.classList.remove('hidden');
+                }
+            }
+
+            if (mode === 'review') {
+                const backBtn = document.getElementById('backBtn');
+                if (backBtn) {
+                    backBtn.textContent = '復習一覧に戻る';
+                    backBtn.onclick = () => { location.href = 'review.html'; };
+                }
+                document.getElementById('genreTitle').innerText = '復習';
+
+                try {
+                    const questions = await loadQuestionsByRefs(getReviewQueue());
+                    if (!questions.length) {
+                        document.getElementById('explanationList').innerHTML =
+                            "<p class='text-center text-slate-500'>復習した問題を読み込めませんでした。</p>";
+                        return;
+                    }
+                    renderExplanations(questions);
+                } catch (error) {
+                    console.error(error);
+                    document.getElementById('explanationList').innerHTML =
+                        "<p class='text-center text-red-500'>復習問題の読み込みに失敗しました。</p>";
+                }
+                return;
+            }
+
+            if (!genre) {
+                document.getElementById('explanationList').innerHTML = "<p class='text-center text-slate-500'>ジャンルが指定されていません。</p>";
+                return;
+            }
+
+            // 動的にJSファイルを読み込む
+            const script = document.getElementById('dataScript');
+            script.src = `questions/${genre}.js?v=4box`;
+
+            script.onload = () => {
+                if (typeof allQuestions !== 'undefined' && allQuestions.length > 0) {
+                    document.getElementById('genreTitle').innerText = allQuestions[0].category;
+                    renderExplanations(allQuestions);
+                } else {
+                    document.getElementById('explanationList').innerHTML = 
+                        "<p class='text-center text-red-500'>問題データが見つかりませんでした。</p>";
+                }
+            };
+
+            script.onerror = () => {
+                document.getElementById('explanationList').innerHTML = 
+                    `<p class='text-center text-red-500'>ファイル読み込みエラー: questions/${genre}.js が見つかりません。</p>`;
+            };
+        };
+
+        const DIFFICULTY_STYLES = {
+            1: ['基礎', 'bg-emerald-100 text-emerald-700'],
+            2: ['標準', 'bg-blue-100 text-blue-700'],
+            3: ['応用', 'bg-rose-100 text-rose-700']
+        };
+
+        const parseMarkdown = (text) => {
+            if (!text) return "";
+            // 画像タグの置換
+            return text.replace(/!\[.*?\]\((.*?)\)/g, (match, path) => {
+                const cleanPath = path.replace(/\\/g, '').trim();
+                return `<img src="${cleanPath}" 
+                            class="w-full max-w-md h-auto rounded-xl my-4 shadow-md border border-slate-200 block" 
+                            onerror="this.style.display='none'">`;
+            });
+        };
+
+        function difficultyMetaHtml(difficulty, priority) {
+            const [label, color] = DIFFICULTY_STYLES[difficulty] || DIFFICULTY_STYLES[2];
+            return `
+                <span class="text-xs font-bold text-slate-400 tracking-widest">難易度</span>
+                <span class="${color} px-2 py-0.5 rounded text-xs font-bold">${label}</span>
+                ${priorityLabelHtml(priority)}
+            `;
+        }
+
+        function renderExplanations(questions) {
+            const listContainer = document.getElementById('explanationList');
+            listContainer.innerHTML = "";
+
+            questions.forEach((q) => {
+                const section = document.createElement("div");
+                section.className = "bg-white p-6 rounded-2xl shadow-sm border border-slate-100 mb-6";
+
+                const formattedQuestion = parseMarkdown(q.question);
+                const formattedExplanation = parseMarkdown(q.explanation || "解説準備中");
+
+                section.innerHTML = `
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="bg-blue-100 text-blue-700 px-2 py-1 rounded text-xs font-bold">Q${q.id}</span>
+                        <span class="text-slate-400 text-sm">${q.category}</span>
+                    </div>
+                    <div class="flex flex-wrap items-center gap-2 mb-4">
+                        ${difficultyMetaHtml(q.difficulty, q.priority)}
+                    </div>
+                    <div class="text-slate-800 font-medium mb-4">${formattedQuestion}</div>
+                    
+                    <div class="space-y-4">
+                        <div class="bg-emerald-50 border-l-4 border-emerald-400 p-4">
+                            <p class="text-emerald-800 text-xs font-bold mb-1 uppercase">正解</p>
+                            <p class="text-slate-800 text-sm font-bold">${q.answer}</p>
+                        </div>
+                        
+                        <div class="bg-amber-50 border-l-4 border-amber-400 p-4">
+                            <p class="text-amber-900 text-xs font-bold mb-1 uppercase tracking-wider">💡 解説</p>
+                            <div class="text-slate-700 text-sm leading-relaxed">${formattedExplanation}</div>
+                        </div>
+                    </div>
+                `;
+                listContainer.appendChild(section);
+            });
+
+            if (window.MathJax) {
+                window.MathJax.typesetPromise();
+            }
+        }
+    </script>
+</body>
+</html>
