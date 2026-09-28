@@ -28,7 +28,7 @@ function initApp() {
                 <span class="category-hero-spacer" aria-hidden="true"></span>
             </div>
             <p class="category-hero-lead">章ごとに基礎から解く</p>
-            <p class="home-hero-script">See the world through data.</p>
+            <p class="home-hero-script">See the world<br>through data.</p>
             <img class="category-hero-art" src="picture/home/hero-bars.svg" alt="">
         </header>
         <main class="category-main">

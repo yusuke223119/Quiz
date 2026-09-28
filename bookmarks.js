@@ -7,7 +7,33 @@ const MISSED_KEY = 'quizMissed';
 const STUDY_LOG_KEY = 'quizStudyLog';
 const GENRE_RENAME_KEY = 'quizGenreRename:v1';
 const GENRE_RENAMES = {
+    q05_scatterplot: 'q07_correlation',
+    q08_correlation: 'q07_correlation',
+    q09_crosstab: 'q08_crosstab',
+    q10_time_series: 'q09_time_series',
+    q11_study_design: 'q10_study_design',
+    q12_sampling: 'q11_sampling',
+    q13_prob_basic: 'q12_prob_basic',
+    q14_bayes: 'q13_bayes',
+    q15_random_variable: 'q14_random_variable',
+    q16_expectation: 'q15_expectation',
+    q18_binomial: 'q17_binomial',
+    q19_poisson: 'q18_poisson',
+    q21_normal: 'q20_normal',
+    q22_continuous_dist: 'q21_continuous_dist',
+    q23_clt: 'q22_clt',
+    q24_sampling_dist: 'q25_sampling_dist',
+    q25_point_estimation: 'q24_point_estimation',
+    q26_ci_mean: 'q27_ci_mean',
+    q27_ci_variance: 'q28_ci_variance',
+    q28_testing_concept: 'q29_testing_concept',
+    q29_one_sample_test: 'q30_one_sample_test',
+    q30_two_sample_test: 'q31_two_sample_test',
+    q31_chi_square_test: 'q32_variance_test',
+    q32_f_test: 'q32_variance_test',
+    q33_simple_regression: 'q33_linear_regression',
     q34_linear_regression: 'q33_linear_regression',
+    q34_multiple_regression: 'q33_linear_regression',
     q35_regression_output: 'q34_regression_output',
     q36_anova: 'q35_anova'
 };
@@ -291,13 +317,30 @@ function removeBookmark(genre, id) {
     saveBookmarks(getBookmarks().filter(item => !(item.genre === genre && Number(item.id) === Number(id))));
 }
 
+function parseReviewItemsParam(value) {
+    if (!value) return [];
+    return String(value).split(',').map(part => {
+        const idx = part.lastIndexOf(':');
+        if (idx < 0) return null;
+        const genre = decodeURIComponent(part.slice(0, idx));
+        const id = Number(part.slice(idx + 1));
+        if (!genre || !Number.isFinite(id)) return null;
+        return { genre, id };
+    }).filter(Boolean);
+}
+
 function setReviewQueue(refs) {
-    sessionStorage.setItem(REVIEW_QUEUE_KEY, JSON.stringify(refs));
+    const payload = JSON.stringify(refs);
+    try { localStorage.setItem(REVIEW_QUEUE_KEY, payload); } catch (e) {}
+    try { sessionStorage.setItem(REVIEW_QUEUE_KEY, payload); } catch (e) {}
 }
 
 function getReviewQueue() {
     try {
-        const parsed = JSON.parse(sessionStorage.getItem(REVIEW_QUEUE_KEY) || '[]');
+        const fromUrl = parseReviewItemsParam(new URLSearchParams(window.location.search).get('items'));
+        if (fromUrl.length) return fromUrl;
+        const raw = localStorage.getItem(REVIEW_QUEUE_KEY) || sessionStorage.getItem(REVIEW_QUEUE_KEY) || '[]';
+        const parsed = JSON.parse(raw);
         return Array.isArray(parsed) ? parsed : [];
     } catch {
         return [];
@@ -320,19 +363,73 @@ function startReviewQuiz(refs, options = {}) {
     if (!queue.length) return false;
 
     setReviewQueue(queue);
-    window.location.href = 'quiz.html?mode=review';
+    const items = queue.map(ref => `${encodeURIComponent(ref.genre)}:${ref.id}`).join(',');
+    window.location.href = `quiz.html?mode=review&items=${items}`;
     return true;
+}
+
+function readTextXHR(src) {
+    return new Promise((resolve, reject) => {
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET', src, true);
+        xhr.onload = () => {
+            if ((xhr.status === 0 || xhr.status === 200) && xhr.responseText) {
+                resolve(xhr.responseText);
+            } else {
+                reject(new Error(src));
+            }
+        };
+        xhr.onerror = () => reject(new Error(src));
+        xhr.send();
+    });
+}
+
+function nativeReadFile(path) {
+    return new Promise((resolve, reject) => {
+        if (!(window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.readFile)) {
+            reject(new Error('no native reader'));
+            return;
+        }
+        const id = 'f-' + Date.now() + '-' + Math.random().toString(36).slice(2);
+        window.__stat2FilePending = window.__stat2FilePending || {};
+        window.__stat2FilePending[id] = { resolve, reject };
+        window.webkit.messageHandlers.readFile.postMessage({ id, path });
+        setTimeout(() => {
+            if (!window.__stat2FilePending || !window.__stat2FilePending[id]) return;
+            delete window.__stat2FilePending[id];
+            reject(new Error('timeout ' + path));
+        }, 8000);
+    });
+}
+
+window.__stat2FileResolve = function (payload) {
+    const pending = (window.__stat2FilePending || {})[payload.id];
+    if (!pending) return;
+    delete window.__stat2FilePending[payload.id];
+    if (payload.ok) pending.resolve(payload.text);
+    else pending.reject(new Error(payload.text || 'read error'));
+};
+
+async function readQuestionSource(src) {
+    const path = String(src).split('?')[0];
+    try {
+        const text = await nativeReadFile(path);
+        if (text && text.length > 20) return text;
+    } catch (e) {}
+    try {
+        const text = await readTextXHR(path);
+        if (text && text.length > 20) return text;
+    } catch (e) {}
+    const response = await fetch(path);
+    const text = await response.text();
+    if (text && text.length > 20) return text;
+    throw new Error(path);
 }
 
 async function loadGenreQuestions(genre) {
     genre = canonicalGenre(genre);
-    const response = await fetch(`questions/${genre}.js`);
-    if (!response.ok) {
-        throw new Error(genre);
-    }
-    const source = await response.text();
-    const loader = new Function(`${source}\nreturn allQuestions;`);
-    const loaded = loader();
+    const source = await readQuestionSource(`questions/${genre}.js`);
+    const loaded = new Function(`${source}\nreturn allQuestions;`)();
     return (Array.isArray(loaded) ? loaded : []).map(question => ({ ...question, genre }));
 }
 
@@ -352,6 +449,38 @@ async function loadQuestionsByRefs(refs) {
     }
 
     return questions;
+}
+
+function playChoiceFeedback(kind) {
+    const type = kind || 'light';
+    try {
+        if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.haptic) {
+            window.webkit.messageHandlers.haptic.postMessage(type);
+            return;
+        }
+    } catch (e) {}
+    if (typeof navigator !== 'undefined' && typeof navigator.vibrate === 'function') {
+        navigator.vibrate(type === 'error' ? 28 : 12);
+    }
+}
+
+function playJudgeFile(isCorrect) {
+    const src = isCorrect ? 'sounds/correct_soft_ting.wav' : 'sounds/incorrect_soft_low.wav';
+    try {
+        const audio = new Audio(src);
+        audio.play().catch(() => {});
+    } catch (e) {}
+}
+
+function playJudgeFeedback(isCorrect) {
+    const kind = isCorrect ? 'success' : 'error';
+    try {
+        if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.haptic) {
+            window.webkit.messageHandlers.haptic.postMessage(kind);
+            return;
+        }
+    } catch (e) {}
+    playJudgeFile(isCorrect);
 }
 
 migrateStoredGenres();

@@ -65,7 +65,7 @@ const allQuestions = [
       \\]
       から得られた標本の標本平均について、
       \\[
-        E[\\bar X]=\\mu,\\qquad V(\\bar X)=\\dfrac{\\sigma^2}{n}
+        E[\\bar X]=\\mu,\\quad V(\\bar X)=\\dfrac{\\sigma^2}{n}
       \\]
       が成り立ちます。正規分布に従う独立な確率変数の線形結合も正規分布に従うので、
       \\[
@@ -209,12 +209,12 @@ const allQuestions = [
     question: `
       互いに独立な2つの正規母集団
       \\[
-        N(\\mu_1,\\sigma_1^2),\\qquad N(\\mu_2,\\sigma_2^2)
+        N(\\mu_1,\\sigma_1^2),\\quad N(\\mu_2,\\sigma_2^2)
       \\]
       から、それぞれ大きさ \\(n_1,n_2\\) の無作為標本を得たとする。それぞれの標本の不偏分散を \\(S_1^2,S_2^2\\) とする。<br><br>
       このとき、
       \\[
-        U_1=\\dfrac{(n_1-1)S_1^2}{\\sigma_1^2},\\qquad U_2=\\dfrac{(n_2-1)S_2^2}{\\sigma_2^2}
+        U_1=\\dfrac{(n_1-1)S_1^2}{\\sigma_1^2},\\quad U_2=\\dfrac{(n_2-1)S_2^2}{\\sigma_2^2}
       \\]
       が従う分布、および
       \\[
@@ -270,7 +270,7 @@ const allQuestions = [
       \\]
       が成り立ちます。また、互いに独立な
       \\[
-        U_1\\sim\\chi_{\\nu_1}^2,\\qquad U_2\\sim\\chi_{\\nu_2}^2
+        U_1\\sim\\chi_{\\nu_1}^2,\\quad U_2\\sim\\chi_{\\nu_2}^2
       \\]
       に対して、
       \\[
@@ -292,7 +292,7 @@ const allQuestions = [
       \\]
       です。ここで、
       \\[
-        \\dfrac{U_1}{n_1-1}=\\dfrac{S_1^2}{\\sigma_1^2},\\qquad \\dfrac{U_2}{n_2-1}=\\dfrac{S_2^2}{\\sigma_2^2}
+        \\dfrac{U_1}{n_1-1}=\\dfrac{S_1^2}{\\sigma_1^2},\\quad \\dfrac{U_2}{n_2-1}=\\dfrac{S_2^2}{\\sigma_2^2}
       \\]
       なので、
       \\[
@@ -328,24 +328,26 @@ const allQuestions = [
       \\]
       とし、
       \\[
-        U=\\dfrac{(n-1)S^2}{\\sigma^2},\\qquad T=\\dfrac{\\sqrt n(\\bar X-\\mu)}{S}
+        U=\\dfrac{(n-1)S^2}{\\sigma^2},\\quad T=\\dfrac{\\sqrt n(\\bar X-\\mu)}{S}
       \\]
       とする。<br><br>
       \\(\\bar X,U,T\\) が従う分布に関する記述として、最も適切なものを、次の ①〜④ のうちから1つ選べ。<br><br>
       ① 母集団が正規分布 \\(N(\\mu,\\sigma^2)\\) ならば、有限の標本サイズでも
-      \\[
-        \\bar X\\sim N\\left(\\mu,\\dfrac{\\sigma^2}{n}\\right),\\qquad U\\sim\\chi_{n-1}^2,\\qquad T\\sim t_{n-1}
-      \\]
+      \\begin{align*}
+        &\\bar X\\sim N\\left(\\mu,\\dfrac{\\sigma^2}{n}\\right) \\\\
+        &U\\sim\\chi_{n-1}^2 \\\\
+        &T\\sim t_{n-1}
+      \\end{align*}
       が厳密に成り立つ。一方、母集団が正規分布でなくても、適切な条件のもとで標本サイズが大きくなれば、標準化された標本平均や \\(T\\) の分布を標準正規分布で近似できる。<br><br>
       ② 母集団が正規分布であっても、有限の標本サイズでは \\(\\bar X\\) の分布は正規分布とは限らず、標本サイズが十分大きいときにのみ中心極限定理によって正規分布で近似できる。<br><br>
       ③ 母集団の分布によらず、有限の標本サイズについて
       \\[
-        U\\sim\\chi_{n-1}^2,\\qquad T\\sim t_{n-1}
+        U\\sim\\chi_{n-1}^2,\\quad T\\sim t_{n-1}
       \\]
       が厳密に成り立つ。<br><br>
       ④ 母集団が正規分布でなくても、標本サイズを十分大きくすれば、
       \\[
-        U\\sim\\chi_{n-1}^2,\\qquad T\\sim t_{n-1}
+        U\\sim\\chi_{n-1}^2,\\quad T\\sim t_{n-1}
       \\]
       が漸近的に厳密に成立する。
     `,
@@ -385,7 +387,7 @@ const allQuestions = [
       \\]
       は厳密に成立します。また、正規母集団では標本平均と標本分散の間に必要な独立性が成り立つため、
       \\[
-        U\\sim\\chi_{n-1}^2,\\qquad T\\sim t_{n-1}
+        U\\sim\\chi_{n-1}^2,\\quad T\\sim t_{n-1}
       \\]
       も厳密に成立します。<br><br>
       <b>一般の母集団の場合</b><br>

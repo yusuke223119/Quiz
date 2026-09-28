@@ -104,9 +104,11 @@ const allQuestions = [
     type: "選択式",
     question: `
       3つの事象 \\(A,B,C\\) について、次の確率が与えられている。
-      \\[
-        P(A)=0.50,\\quad P(B)=0.40,\\quad P(C)=0.30
-      \\]
+      \\begin{align*}
+        P(A)&=0.50 \\\\
+        P(B)&=0.40 \\\\
+        P(C)&=0.30
+      \\end{align*}
       また、
       \\begin{align*}
         P(A\\cap B)&=0.20 \\\\
@@ -143,8 +145,8 @@ const allQuestions = [
       \\begin{align*}
         P(A\\cup B\\cup C)
         &= 0.50+0.40+0.30 \\\\
-        &- 0.20-0.10-0.15 
-        + 0.05
+        &- 0.20-0.10-0.15 \\\\
+        &+ 0.05
       \\end{align*}
       したがって
       \\[
@@ -167,7 +169,7 @@ const allQuestions = [
     question: `
       2つの事象 \\(A,B\\) は互いに独立であり、
       \\[
-        P(A)=0.4,\\qquad P(A\\cup B)=0.7
+        P(A)=0.4,\\quad P(A\\cup B)=0.7
       \\]
       である。<br><br>
       このとき、\\(P(B)\\) として最も適切なものを、次の ①〜④ のうちから1つ選べ。<br><br>
@@ -202,7 +204,7 @@ const allQuestions = [
       \\]
       整理すると
       \\[
-        0.7 = 0.4 + 0.6p,\\qquad 0.3 = 0.6p
+        0.7 = 0.4 + 0.6p,\\quad 0.3 = 0.6p
       \\]
       したがって
       \\[

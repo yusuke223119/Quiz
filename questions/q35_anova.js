@@ -10,7 +10,7 @@ const allQuestions = [
       3種類の指導法 A、B、C による平均得点に差があるかを調べるため、一元配置分散分析を行うことにした。<br><br>
       各指導法を受けた集団の母平均をそれぞれ
       \\[
-        \\mu_A,\\qquad \\mu_B,\\qquad \\mu_C
+        \\mu_A,\\quad \\mu_B,\\quad \\mu_C
       \\]
       とする。<br><br>
       このとき、一元配置分散分析における帰無仮説 \\(H_0\\) と対立仮説 \\(H_1\\) の組合せとして最も適切なものを、次の ①〜④ のうちから1つ選べ。<br><br>
@@ -227,16 +227,18 @@ const allQuestions = [
       \\]
       によって求めます。したがって、群間平均平方と群内平均平方は、
       \\[
-        MS_B=\\dfrac{SS_B}{df_B},\\qquad MS_W=\\dfrac{SS_W}{df_W}
+        MS_B=\\dfrac{SS_B}{df_B},\\quad MS_W=\\dfrac{SS_W}{df_W}
       \\]
       です。F統計量は、
       \\[
         F=\\dfrac{MS_B}{MS_W}
       \\]
       で求めます。\\(k\\) 群、総標本サイズ \\(N\\) の一元配置分散分析では、自由度は
-      \\[
-        df_B=k-1,\\quad df_W=N-k,\\quad df_T=N-1
-      \\]
+      \\begin{align*}
+        df_B&=k-1 \\\\
+        df_W&=N-k \\\\
+        df_T&=N-1
+      \\end{align*}
       となります。<br><br>
       <b>2. 計算・判定プロセス</b><br>
       群間平均平方は、
@@ -253,7 +255,7 @@ const allQuestions = [
       \\]
       です。よって、
       \\[
-        \\boxed{(A)=30,\\qquad (B)=10,\\qquad (C)=3.00}
+        \\boxed{(A)=30,\\quad (B)=10,\\quad (C)=3.00}
       \\]
       となります。<br><br>
       また、この表では群間自由度が2なので、\\(k-1=2\\) より群数は3です。全体自由度が29なので、\\(N-1=29\\) より総標本サイズは30であり、
@@ -278,7 +280,7 @@ const allQuestions = [
       3種類の学習方法 A、B、C によって平均得点に差があるかを調べるため、一元配置分散分析を行ったところ、次の結果を得た。<br><br>
       各学習方法に対応する母平均を
       \\[
-        \\mu_A,\\qquad \\mu_B,\\qquad \\mu_C
+        \\mu_A,\\quad \\mu_B,\\quad \\mu_C
       \\]
       とする。<br><br>
       <b>分散分析表</b>

@@ -66,7 +66,7 @@ const allQuestions = [
       \\]
       自由度 \\(k\\) の \\(\\chi^2\\) 分布について、
       \\[
-        E[X]=k,\\qquad V(X)=2k
+        E[X]=k,\\quad V(X)=2k
       \\]
       が成り立ちます。<br><br>
       <b>2. 計算・判定プロセス</b><br>
@@ -76,7 +76,7 @@ const allQuestions = [
       \\]
       です。また、\\(Z_i\\sim N(0,1)\\) なので、
       \\[
-        E[Z_i]=0,\\qquad V(Z_i)=1
+        E[Z_i]=0,\\quad V(Z_i)=1
       \\]
       です。分散の公式
       \\[
@@ -92,7 +92,7 @@ const allQuestions = [
       \\]
       です。よって、
       \\[
-        \\boxed{X\\sim\\chi_k^2,\\qquad E[X]=k}
+        \\boxed{X\\sim\\chi_k^2,\\quad E[X]=k}
       \\]
       となります。<br><br>
       <b>3. 各選択肢の吟味</b><br>
@@ -111,7 +111,7 @@ const allQuestions = [
     question: `
       確率変数 \\(Z\\) と \\(U\\) は互いに独立で、
       \\[
-        Z\\sim N(0,1),\\qquad U\\sim\\chi_\\nu^2
+        Z\\sim N(0,1),\\quad U\\sim\\chi_\\nu^2
       \\]
       に従うものとする。<br><br>
       ここで、
@@ -169,13 +169,13 @@ const allQuestions = [
       \\]
       となります。これが \\(t\\) 分布の基本的な構成です。\\(t\\) 分布は0を中心として左右対称な分布であり、標準正規分布より裾が厚いです。自由度が大きくなるにつれて \\(t\\) 分布は標準正規分布に近づき、
       \\[
-        t_\\nu\\longrightarrow N(0,1)\\qquad(\\nu\\to\\infty)
+        t_\\nu\\longrightarrow N(0,1)\\quad(\\nu\\to\\infty)
       \\]
       となります。<br><br>
       <b>2. 計算・判定プロセス</b><br>
       問題文では、
       \\[
-        Z\\sim N(0,1),\\qquad U\\sim\\chi_\\nu^2
+        Z\\sim N(0,1),\\quad U\\sim\\chi_\\nu^2
       \\]
       が互いに独立であり、
       \\[
@@ -202,7 +202,7 @@ const allQuestions = [
     question: `
       確率変数 \\(U_1,U_2\\) は互いに独立で、
       \\[
-        U_1\\sim\\chi_{\\nu_1}^2,\\qquad U_2\\sim\\chi_{\\nu_2}^2
+        U_1\\sim\\chi_{\\nu_1}^2,\\quad U_2\\sim\\chi_{\\nu_2}^2
       \\]
       に従うものとする。<br><br>
       このとき、自由度 \\((\\nu_1,\\nu_2)\\) の \\(F\\) 分布に従う確率変数として、最も適切なものを、次の ①〜④ のうちから1つ選べ。<br><br>
@@ -219,7 +219,7 @@ const allQuestions = [
       <b>1. 基本概念・公式</b><br>
       互いに独立な確率変数
       \\[
-        U_1\\sim\\chi_{\\nu_1}^2,\\qquad U_2\\sim\\chi_{\\nu_2}^2
+        U_1\\sim\\chi_{\\nu_1}^2,\\quad U_2\\sim\\chi_{\\nu_2}^2
       \\]
       に対して、
       \\[
@@ -233,7 +233,7 @@ const allQuestions = [
       <b>2. 計算・判定プロセス</b><br>
       \\(F\\) 分布は、2つの独立な \\(\\chi^2\\) 確率変数をそのまま割ったものではありません。それぞれを対応する自由度で割った
       \\[
-        \\dfrac{U_1}{\\nu_1},\\qquad \\dfrac{U_2}{\\nu_2}
+        \\dfrac{U_1}{\\nu_1},\\quad \\dfrac{U_2}{\\nu_2}
       \\]
       の比を取ります。したがって、
       \\[

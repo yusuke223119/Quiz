@@ -78,7 +78,7 @@ const comprehensiveSet = {
       question: `
         実際の調査では、製品を無作為に64個抽出して内容量を測定した。その結果、標本平均および不偏標準偏差はそれぞれ
         \\[
-          \\bar x=502.0\\text{ g},\\qquad s=12.0\\text{ g}
+          \\bar x=502.0\\text{ g},\\quad s=12.0\\text{ g}
         \\]
         であった。<br><br>
         母分散は未知であるとして、母平均 \\(\\mu\\) の95%信頼区間として最も適切なものを、次の ①〜④ のうちから1つ選べ。<br><br>
@@ -107,7 +107,7 @@ const comprehensiveSet = {
         <b>2. 計算・判定プロセス</b><br>
         今回は
         \\[
-          n=64,\\qquad \\bar x=502.0,\\qquad s=12.0
+          n=64,\\quad \\bar x=502.0,\\quad s=12.0
         \\]
         なので、自由度は
         \\[

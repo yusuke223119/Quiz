@@ -20,22 +20,22 @@ const allQuestions = [
         <tbody>
           <tr>
             <td class='border border-slate-300 p-1 bg-slate-50'>①</td>
-            <td class='border border-slate-300 p-2'>\\(P(A\\mid B)=\\dfrac{P(A\\cap B)}{P(B)}\\)</td>
+            <td class='border border-slate-300 p-2'>\\(\\dfrac{P(A\\cap B)}{P(B)}\\)</td>
             <td class='border border-slate-300 p-2'>\\(P(A\\mid B)=\\dfrac{P(B\\mid A)P(A)}{P(B)}\\)</td>
           </tr>
           <tr>
             <td class='border border-slate-300 p-1 bg-slate-50'>②</td>
-            <td class='border border-slate-300 p-2'>\\(P(A\\mid B)=\\dfrac{P(A\\cap B)}{P(A)}\\)</td>
+            <td class='border border-slate-300 p-2'>\\(\\dfrac{P(A\\cap B)}{P(A)}\\)</td>
             <td class='border border-slate-300 p-2'>\\(P(A\\mid B)=\\dfrac{P(B\\mid A)P(B)}{P(A)}\\)</td>
           </tr>
           <tr>
             <td class='border border-slate-300 p-1 bg-slate-50'>③</td>
-            <td class='border border-slate-300 p-2'>\\(P(A\\mid B)=P(A\\cap B)P(B)\\)</td>
+            <td class='border border-slate-300 p-2'>\\(P(A\\cap B)P(B)\\)</td>
             <td class='border border-slate-300 p-2'>\\(P(A\\mid B)=P(B\\mid A)\\)</td>
           </tr>
           <tr>
             <td class='border border-slate-300 p-1 bg-slate-50'>④</td>
-            <td class='border border-slate-300 p-2'>\\(P(A\\mid B)=\\dfrac{P(A)}{P(B)}\\)</td>
+            <td class='border border-slate-300 p-2'>\\(\\dfrac{P(A)}{P(B)}\\)</td>
             <td class='border border-slate-300 p-2'>\\(P(A\\mid B)=\\dfrac{P(A)P(B)}{P(A\\cap B)}\\)</td>
           </tr>
         </tbody>
@@ -160,7 +160,7 @@ const allQuestions = [
       <b>2. 計算・判定プロセス</b><br>
       箱Aが選ばれる事前確率は \\(P(A)=\\dfrac{1}{2}\\) であり、箱Aから赤玉が出る確率は \\(P(R\\mid A)=\\dfrac{3}{4}\\) です。同様に
       \\[
-        P(B)=\\dfrac{1}{2},\\qquad P(R\\mid B)=\\dfrac{1}{4}
+        P(B)=\\dfrac{1}{2},\\quad P(R\\mid B)=\\dfrac{1}{4}
       \\]
       です。したがって、赤玉が出る確率は
       \\[
@@ -203,18 +203,18 @@ const allQuestions = [
       <解説><br>
       <b>1. 基本公式</b><br>
       疾患を持つ事象を \\(D\\)、検査で陽性となる事象を \\(+\\) とします。求めたいのは \\(P(D\\mid +)\\) です。ベイズの定理と全確率の公式より
-      \\[
-        P(D\\mid +)
-        = \\dfrac{P(+\\mid D)P(D)}{P(+\\mid D)P(D)+P(+\\mid D^c)P(D^c)}
-      \\]
+      \\begin{align*}
+        &P(D\\mid +) \\\\
+        &= \\dfrac{P(+\\mid D)P(D)}{P(+\\mid D)P(D)+P(+\\mid D^c)P(D^c)}
+      \\end{align*}
       となります。<br><br>
       <b>2. 計算・判定プロセス</b><br>
       問題文より
       \\[
-        P(D)=0.01,\\qquad P(D^c)=0.99
+        P(D)=0.01,\\quad P(D^c)=0.99
       \\]
       \\[
-        P(+\\mid D)=0.90,\\qquad P(+\\mid D^c)=0.05
+        P(+\\mid D)=0.90,\\quad P(+\\mid D^c)=0.05
       \\]
       です。疾患を持ち、かつ陽性となる確率は
       \\[

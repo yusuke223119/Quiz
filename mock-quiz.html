@@ -7,7 +7,7 @@
     <meta name="theme-color" content="#2563eb">
     <title>模試 - 統計検定2級学習アプリ</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="app.css?v=statp1">
+    <link rel="stylesheet" href="app.css?v=haptic1">
     <script>
         window.MathJax = {
             tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
@@ -148,6 +148,7 @@
         </div>
     </aside>
 
+    <script src="bookmarks.js?v=reviewfix1"></script>
     <script src="stats-table.js?v=statp1"></script>
     <script>
         let exam = null;
@@ -526,6 +527,7 @@
         function selectChoice(choice) {
             if (submitted) return;
             answers[currentPart().qNumber] = choice;
+            if (typeof playChoiceFeedback === 'function') playChoiceFeedback('light');
             saveProgress();
             renderAll();
         }
@@ -563,6 +565,7 @@
                 }
             }
             submitted = true;
+            if (typeof playJudgeFeedback === 'function') playJudgeFeedback(examScore().accuracy === 100);
             if (timerId) clearInterval(timerId);
             saveProgress();
             updateTimer();

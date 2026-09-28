@@ -36,7 +36,7 @@ const comprehensiveSet = {
         <b>1. 基本概念・公式</b><br>
         確率密度関数 \\(f(x)\\) は、
         \\[
-          f(x)\\ge 0,\\qquad
+          f(x)\\ge 0,\\quad
           \\int_{-\\infty}^{\\infty}f(x)\\,dx=1
         \\]
         を満たす必要があります。この問題では \\(0\\le x\\le 2\\) 以外で \\(f(x)=0\\) なので、
@@ -46,13 +46,13 @@ const comprehensiveSet = {
         を満たすように \\(c\\) を定めればよいです。<br><br>
         <b>2. 計算・判定プロセス</b><br>
         \\(x(2-x)=2x-x^2\\) より、
-        \\[
-          \\int_0^2 cx(2-x)\\,dx
-          =c\\int_0^2(2x-x^2)\\,dx
-          =c\\left[x^2-\\dfrac{x^3}{3}\\right]_0^2
-          =c\\left(4-\\dfrac{8}{3}\\right)
-          =\\dfrac{4c}{3}.
-        \\]
+        \\begin{align*}
+          \\int_0^2 cx(2-x)\\,dx 
+          &=c\\int_0^2(2x-x^2)\\,dx \\\\
+          &=c\\left[x^2-\\dfrac{x^3}{3}\\right]_0^2 \\\\
+          &=c\\left(4-\\dfrac{8}{3}\\right) \\\\
+          &=\\dfrac{4c}{3}.
+        \\end{align*}
         確率密度関数の積分は1であるから、
         \\[
           \\dfrac{4c}{3}=1
@@ -184,38 +184,38 @@ const comprehensiveSet = {
         と求められます。<br><br>
         <b>2. 計算・判定プロセス</b><br>
         まず期待値を求めます。
-        \\[
+        \\begin{align*}
           E[X]
-          =\\int_0^2 x\\cdot\\dfrac{3}{4}x(2-x)\\,dx
-          =\\dfrac{3}{4}\\int_0^2(2x^2-x^3)\\,dx
-          =\\dfrac{3}{4}\\left[\\dfrac{2}{3}x^3-\\dfrac{1}{4}x^4\\right]_0^2
+          &=\\int_0^2 x\\cdot\\dfrac{3}{4}x(2-x)\\,dx \\\\
+          &=\\dfrac{3}{4}\\int_0^2(2x^2-x^3)\\,dx \\\\
+          &=\\dfrac{3}{4}\\left[\\dfrac{2}{3}x^3-\\dfrac{1}{4}x^4\\right]_0^2 \\\\
           =1.
-        \\]
+        \\end{align*}
         次に \\(E[X^2]\\) を求めます。
-        \\[
+        \\begin{align*}
           E[X^2]
-          =\\int_0^2 x^2\\cdot\\dfrac{3}{4}x(2-x)\\,dx
-          =\\dfrac{3}{4}\\int_0^2(2x^3-x^4)\\,dx
-          =\\dfrac{3}{4}\\left[\\dfrac{1}{2}x^4-\\dfrac{1}{5}x^5\\right]_0^2
+          &=\\int_0^2 x^2\\cdot\\dfrac{3}{4}x(2-x)\\,dx \\\\
+          &=\\dfrac{3}{4}\\int_0^2(2x^3-x^4)\\,dx \\\\
+          &=\\dfrac{3}{4}\\left[\\dfrac{1}{2}x^4-\\dfrac{1}{5}x^5\\right]_0^2 \\\\
           =\\dfrac{6}{5}.
-        \\]
+        \\end{align*}
         したがって、
         \\[
           V[X]=\\dfrac{6}{5}-1^2=\\dfrac{1}{5}.
         \\]
         よって、
         \\[
-          E[X]=1,\\qquad V[X]=\\dfrac{1}{5}.
+          E[X]=1,\\quad V[X]=\\dfrac{1}{5}.
         \\]
         なお、密度関数は \\(x=1\\) を中心として左右対称なので、\\(E[X]=1\\) は対称性から判断することもできます。<br><br>
         また、一般に以下の第一種オイラー積分の公式が成り立ちます。(統計検定2級では覚える必要はありません。)
-        \\[
-          \\int_\\alpha^\\beta (x-\\alpha)^m(x-\\beta)^n\\,dx
-          =\\dfrac{m!n!}{(m+n+1)!}(\\beta-\\alpha)^{m+n+1}
-        \\]
+        \\begin{align*}
+          &\\int_\\alpha^\\beta (x-\\alpha)^m(x-\\beta)^n\\,dx \\\\
+          &=\\dfrac{m!n!}{(m+n+1)!}(\\beta-\\alpha)^{m+n+1}
+        \\end{align*}
         これを用いると、
         \\begin{align*}
-          \\int_0^2 x^2\\cdot\\dfrac{3}{4}x(2-x)\\,dx
+          &\\int_0^2 x^2\\cdot\\dfrac{3}{4}x(2-x)\\,dx \\\\
           &=\\dfrac{3}{4}\\int_0^2 x^2\\cdot x(2-x)\\,dx \\\\
           &=\\dfrac{3}{4}\\cdot\\dfrac{2!1!}{(2+1+1)!}(2-0)^{2+1+1} \\\\
           &=\\dfrac{3}{4}\\cdot\\dfrac{2!1!}{4!}(2)^{4} = \\dfrac{6}{5}

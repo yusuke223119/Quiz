@@ -83,7 +83,7 @@ const allQuestions = [
       \\displaystyle\\sum_{i=1}^n (X_i - \\bar{X})^2 &= \\displaystyle\\sum_{i=1}^n \\{(X_i - \\mu) - (\\bar{X} - \\mu)\\}^2 \\\\
       &= \\displaystyle\\sum_{i=1}^n \\left[ (X_i - \\mu)^2 - 2(X_i - \\mu)(\\bar{X} - \\mu) + (\\bar{X} - \\mu)^2 \\right] \\\\
       &= \\displaystyle\\sum_{i=1}^n (X_i - \\mu)^2 \\\\
-       &\\qquad - 2(\\bar{X} - \\mu) \\displaystyle\\sum_{i=1}^n (X_i - \\mu) + \\displaystyle\\sum_{i=1}^n (\\bar{X} - \\mu)^2
+       &\\quad - 2(\\bar{X} - \\mu) \\displaystyle\\sum_{i=1}^n (X_i - \\mu) + \\displaystyle\\sum_{i=1}^n (\\bar{X} - \\mu)^2
       \\end{align}
       ここで、
       \\begin{equation} \\displaystyle\\sum_{i=1}^n (X_i - \\mu)(\\bar{X} - \\mu) = \\boxed{\\text{ア}} \\end{equation}

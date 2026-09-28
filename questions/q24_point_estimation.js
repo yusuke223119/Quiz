@@ -9,7 +9,7 @@ const allQuestions = [
     question: `
       母数 \\(\\theta\\) の推定量を \\(\\hat{\\theta}_n\\) とする。任意の \\(\\varepsilon>0\\) に対して
       \\[
-        P\\left(\\lvert\\hat{\\theta}_n-\\theta\\rvert>\\varepsilon\\right)\\to 0\\qquad(n\\to\\infty)
+        P\\left(\\lvert\\hat{\\theta}_n-\\theta\\rvert>\\varepsilon\\right)\\to 0\\quad(n\\to\\infty)
       \\]
       が成り立つとき、\\(\\hat{\\theta}_n\\) を \\(\\theta\\) の【 A 】という。<br><br>
       平均 \\(\\mu\\)、有限な分散 \\(\\sigma^2\\) をもつ母集団から得られた独立同一分布の標本 \\(X_1,\\ldots,X_n\\) について、標本平均
@@ -104,7 +104,7 @@ const allQuestions = [
       \\]
       を抽出する。母平均 \\(\\mu\\) の推定量として
       \\[
-        T_n=\\bar X+\\dfrac{1}{n},\\qquad \\bar X=\\dfrac{1}{n}\\sum_{i=1}^{n}X_i
+        T_n=\\bar X+\\dfrac{1}{n},\\quad \\bar X=\\dfrac{1}{n}\\sum_{i=1}^{n}X_i
       \\]
       を考える。<br><br>
       このとき、推定量 \\(T_n\\) の不偏性と一致性について、最も適切なものを、次の ①〜④ のうちから1つ選べ。<br><br>
@@ -176,7 +176,7 @@ const allQuestions = [
       \\]
       であり、
       \\[
-        E[X_i]=\\lambda,\\qquad V(X_i)=\\lambda
+        E[X_i]=\\lambda,\\quad V(X_i)=\\lambda
       \\]
       である。<br><br>
       母数 \\(\\lambda\\) の推定量として標本平均
@@ -285,7 +285,7 @@ const allQuestions = [
       です。したがって【 B 】は \\(\\dfrac{\\lambda}{n\\varepsilon^2}\\) です。<br>
       \\(\\lambda>0\\) と \\(\\varepsilon>0\\) を固定すると、
       \\[
-        \\dfrac{\\lambda}{n\\varepsilon^2}\\to 0\\qquad(n\\to\\infty)
+        \\dfrac{\\lambda}{n\\varepsilon^2}\\to 0\\quad(n\\to\\infty)
       \\]
       です。したがって【 C 】は \\(0\\) です。確率は0以上なので、
       \\[
@@ -316,7 +316,7 @@ const allQuestions = [
     question: `
       母平均 \\(\\mu\\)、母分散 \\(\\sigma^2\\) をもつ母集団から、互いに独立に同一の分布に従う標本
       \\[
-        X_1,X_2,\\ldots,X_n\\qquad(n>1)
+        X_1,X_2,\\ldots,X_n\\quad(n>1)
       \\]
       を抽出する。<br><br>
       母平均 \\(\\mu\\) の推定量として、
@@ -391,7 +391,7 @@ const allQuestions = [
       \\]
       です。また、
       \\[
-        \\dfrac{2(2n+1)}{3n(n+1)}\\lt 1\\qquad(n>1)
+        \\dfrac{2(2n+1)}{3n(n+1)}\\lt 1\\quad(n>1)
       \\]
       なので、
       \\[

@@ -111,18 +111,21 @@ body.quiz-shell {
     font-family: "Caveat", "Segoe Script", cursive;
     font-size: 0.95rem;
     font-weight: 500;
-    line-height: 1;
+    line-height: 1.08;
     letter-spacing: 0.01em;
     color: rgba(255, 255, 255, 0.78);
     text-align: right;
-    white-space: nowrap;
+    white-space: normal;
     transform: rotate(-8deg);
     pointer-events: none;
 }
 
 .page-hero .home-hero-script,
 .category-hero .home-hero-script {
-    top: calc(0.45rem + env(safe-area-inset-top, 0px));
+    top: calc(0.28rem + env(safe-area-inset-top, 0px));
+    right: 0.45rem;
+    font-size: 0.88rem;
+    line-height: 1.1;
 }
 
 .home-hero-art {
@@ -1888,17 +1891,34 @@ body.stats-modal-open {
     color: #64748b;
     font-size: 0.72rem;
     font-weight: 800;
+    font-family: inherit;
+    padding: 0;
+    cursor: pointer;
+    appearance: none;
+    -webkit-tap-highlight-color: transparent;
 }
 
-.report-cal-day.is-empty {
+.report-cal-day.is-empty,
+.report-cal-day.is-future {
     background: transparent;
     color: #cbd5e1;
+    cursor: default;
+    pointer-events: none;
+}
+
+.report-cal-day.is-future {
+    background: #f8fafc;
+    opacity: 0.4;
 }
 
 .report-cal-day.lv1 { background: #dbeafe; color: #1e40af; }
 .report-cal-day.lv2 { background: #93c5fd; color: #1e3a8a; }
 .report-cal-day.lv3 { background: #2563eb; color: #fff; }
 .report-cal-day.is-today {
+    outline: 2px solid #93c5fd;
+    outline-offset: 1px;
+}
+.report-cal-day.is-selected {
     outline: 2px solid #1d4ed8;
     outline-offset: 1px;
 }
@@ -1946,6 +1966,14 @@ body.stats-modal-open {
     font-size: 0.58rem;
     font-weight: 700;
     color: #94a3b8;
+}
+
+.report-day-note {
+    margin: 0.55rem 0 0;
+    text-align: center;
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: #64748b;
 }
 
 .report-trend svg {

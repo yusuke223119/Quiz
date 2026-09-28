@@ -14,11 +14,12 @@ const allQuestions = [
       を最小二乗法によって求める。<br><br>
       次の値が得られている。
       \\[
-        \\bar x=4,\\qquad \\bar y=10,
+        \\bar x=4,\\quad \\bar y=10,
       \\]
-      \\[
-        \\sum_{i=1}^{n}(x_i-\\bar x)^2=20,\\qquad \\sum_{i=1}^{n}(x_i-\\bar x)(y_i-\\bar y)=30.
-      \\]
+      \\begin{align*}
+        \\sum_{i=1}^{n}(x_i-\\bar x)^2&=20 \\\\
+        \\sum_{i=1}^{n}(x_i-\\bar x)(y_i-\\bar y)&=30.
+      \\end{align*}
       このとき、最小二乗法によって得られる回帰直線として最も適切なものを、次の ①〜④ のうちから1つ選べ。<br><br>
       <table class='w-full border-collapse border border-slate-300 text-center text-sm'>
         <thead>
@@ -92,10 +93,12 @@ const allQuestions = [
     question: `
       5組のデータ \\((x_i,y_i)\\) について、次の値が得られた。
       \\[
-        n=5,\\qquad \\bar x=4,\\qquad \\bar y=10,
+        n=5,\\quad \\bar x=4,\\quad \\bar y=10,
       \\]
-      \\[
-        \\sum_{i=1}^{5}x_i^2=100,\\qquad \\sum_{i=1}^{5}y_i^2=545,
+      \\begin{align*}
+        \\sum_{i=1}^{5}x_i^2&=100 \\\\
+        \\sum_{i=1}^{5}y_i^2&=545
+      \\end{align*}
       \\]
       また、\\(X\\) と \\(Y\\) の相関係数は
       \\[
@@ -138,7 +141,7 @@ const allQuestions = [
       <b>1. 基本概念・公式</b><br>
       データの分散は、「二乗の平均－平均の二乗」を用いて
       \\[
-        s_X^2=\\dfrac1n\\sum_{i=1}^{n}x_i^2-\\bar x^2,\\qquad s_Y^2=\\dfrac1n\\sum_{i=1}^{n}y_i^2-\\bar y^2
+        s_X^2=\\dfrac1n\\sum_{i=1}^{n}x_i^2-\\bar x^2,\\quad s_Y^2=\\dfrac1n\\sum_{i=1}^{n}y_i^2-\\bar y^2
       \\]
       と計算できます。\\(X\\) から \\(Y\\) を予測する単回帰直線の傾き \\(b\\) と相関係数 \\(r\\) には
       \\[

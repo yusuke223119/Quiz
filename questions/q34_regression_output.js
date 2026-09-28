@@ -130,7 +130,7 @@ const allQuestions = [
       </div><br>
       \\(X\\) の母回帰係数を \\(\\beta_1\\) とし、
       \\[
-        H_0:\\beta_1=0,\\qquad H_1:\\beta_1\\neq 0
+        H_0:\\beta_1=0,\\quad H_1:\\beta_1\\neq 0
       \\]
       を考える。<br><br>
       \\(X\\) の \\(t\\) 値と検定結果の組合せとして最も適切なものを、次の ①〜④ のうちから1つ選べ。<br><br>

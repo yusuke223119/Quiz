@@ -91,9 +91,11 @@ const allQuestions = [
         P(Y=1)=0.20+0.25=0.45
       \\]
       です。したがって、
-      \\[
-        P(X=1\\mid Y=1)=\\dfrac{P(X=1,Y=1)}{P(Y=1)}=\\dfrac{0.25}{0.45}=\\dfrac{5}{9}
-      \\]
+      \\begin{align*}
+        P(X=1\\mid Y=1)&=\\dfrac{P(X=1,Y=1)}{P(Y=1)} \\\\
+        &=\\dfrac{0.25}{0.45} \\\\
+        &=\\dfrac{5}{9}
+      \\end{align*}
       となります。<br><br>
       <b>3. 各選択肢の吟味</b><br>
       ・<b>① 誤り</b>：0.40は \\(P(X=0)\\) です。また、条件付き確率では同時確率0.25をそのまま用いることはできません。<br>
@@ -199,9 +201,11 @@ const allQuestions = [
     type: "選択式",
     question: `
       2つの確率変数 \\(X,Y\\) について、
-      \\[
-        V[X]=4,\\qquad V[Y]=9,\\qquad \\operatorname{Cov}(X,Y)=2
-      \\]
+      \\begin{align*}
+        V[X]=4 \\\\
+        V[Y]=9 \\\\
+        \\operatorname{Cov}(X,Y)=2
+      \\end{align*}
       である。<br><br>
       このとき、
       \\[
@@ -220,9 +224,10 @@ const allQuestions = [
       <解説><br>
       <b>1. 基本概念・公式</b><br>
       2つの確率変数 \\(X,Y\\) と定数 \\(a,b\\) について、
-      \\[
-        V[aX+bY]=a^2V[X]+b^2V[Y]+2ab\\operatorname{Cov}(X,Y)
-      \\]
+      \\begin{align*}
+        V[aX+bY]=a^2V[X]&+b^2V[Y] \\\\
+        &+2ab\\operatorname{Cov}(X,Y)
+      \\end{align*}
       が成り立ちます。特に、
       \\[
         V[X+Y]=V[X]+V[Y]+2\\operatorname{Cov}(X,Y)
@@ -233,14 +238,14 @@ const allQuestions = [
       です。<br><br>
       <b>2. 計算・判定プロセス</b><br>
       \\(2X-Y\\) では、\\(a=2,\\ b=-1\\) です。したがって、
-      \\[
-        \\begin{aligned}
-        V[2X-Y]
-        &=2^2V[X]+(-1)^2V[Y]+2(2)(-1)\\operatorname{Cov}(X,Y)\\\\
+      \\begin{align*}
+        &V[2X-Y] \\\\
+        &=2^2V[X]+(-1)^2V[Y] \\\\
+        &\\qquad +2(2)(-1)\\operatorname{Cov}(X,Y)\\\\
         &=4(4)+9-4(2)\\\\
         &=16+9-8\\\\
         &=17
-        \\end{aligned}
+        \\end{align*}
       \\]
       となります。<br><br>
       <b>3. 各選択肢の吟味</b><br>
@@ -259,15 +264,15 @@ const allQuestions = [
     question: `
       2つの確率変数 \\(X,Y\\) について、
       \\[
-        E[X]=1,\\qquad E[Y]=2,\\qquad E[XY]=3,
+        E[X]=1,\\quad E[Y]=2,\\quad E[XY]=3,
       \\]
       \\[
-        V[X]=2,\\qquad V[Y]=3
+        V[X]=2,\\quad V[Y]=3
       \\]
       である。<br><br>
       ここで、新しい確率変数 \\(U,W\\) を
       \\[
-        U=2X+Y,\\qquad W=X-2Y
+        U=2X+Y,\\quad W=X-2Y
       \\]
       と定める。<br><br>
       このとき、\\(V[U]\\) と \\(V[W]\\) の組合せとして、最も適切なものを、次の ①〜④ のうちから1つ選べ。<br><br>
@@ -314,9 +319,10 @@ const allQuestions = [
         \\operatorname{Cov}(X,Y)=E[XY]-E[X]E[Y]
       \\]
       で求められます。また、線形結合の分散について、
-      \\[
-        V[aX+bY]=a^2V[X]+b^2V[Y]+2ab\\operatorname{Cov}(X,Y)
-      \\]
+      \\begin{align*}
+        V[aX+bY]=a^2V[X]&+b^2V[Y] \\\\
+        &+2ab\\operatorname{Cov}(X,Y)
+      \\end{align*}
       が成り立ちます。したがって、共分散が直接与えられていない場合でも、\\(E[X]\\)、\\(E[Y]\\)、\\(E[XY]\\) が分かれば共分散を求め、線形結合の分散を計算できます。<br><br>
       <b>2. 計算・判定プロセス</b><br>
       まず、\\(X,Y\\) の共分散を求めます。
@@ -348,7 +354,7 @@ const allQuestions = [
       \\]
       となります。したがって、
       \\[
-        V[U]=15,\\qquad V[W]=10
+        V[U]=15,\\quad V[W]=10
       \\]
       です。<br><br>
       <b>3. 各選択肢の吟味</b><br>

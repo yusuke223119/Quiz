@@ -45,7 +45,7 @@ const comprehensiveSet = {
         研修方法 A、B における試験得点の母分散をそれぞれ \\(\\sigma_A^2,\\sigma_B^2\\) とする。<br><br>
         2つの母分散が等しいかを調べるため、
         \\[
-          H_0:\\sigma_A^2=\\sigma_B^2,\\qquad H_1:\\sigma_A^2\\neq\\sigma_B^2
+          H_0:\\sigma_A^2=\\sigma_B^2,\\quad H_1:\\sigma_A^2\\neq\\sigma_B^2
         \\]
         として、有意水準5%で検定する。<br><br>
         検定統計量と検定結果の組合せとして、最も適切なものを、次の ①〜④ のうちから1つ選べ。<br><br>
@@ -190,7 +190,7 @@ const comprehensiveSet = {
         \\]
         を用い、自由度には単純な \\(n_A+n_B-2\\) ではなく、問題文で定義された \\(\\nu\\) を用います。よって、
         \\[
-          T=\\dfrac{\\bar X_A-\\bar X_B}{\\sqrt{S_A^2/n_A+S_B^2/n_B}},\\qquad \\text{自由度 }\\nu
+          T=\\dfrac{\\bar X_A-\\bar X_B}{\\sqrt{S_A^2/n_A+S_B^2/n_B}},\\quad \\text{自由度 }\\nu
         \\]
         が適切です。<br><br>
         <b>3. 各選択肢の吟味</b><br>
@@ -207,7 +207,7 @@ const comprehensiveSet = {
       question: `
         問2の方法を用いて、
         \\[
-          H_0:\\mu_A=\\mu_B,\\qquad H_1:\\mu_A\\neq\\mu_B
+          H_0:\\mu_A=\\mu_B,\\quad H_1:\\mu_A\\neq\\mu_B
         \\]
         として、有意水準5%で検定する。<br><br>
         検定統計量、自由度および検定結果の組合せとして、最も適切なものを、次の ①〜④ のうちから1つ選べ。<br><br>

@@ -10,12 +10,12 @@ const comprehensiveSet = {
     母平均 \\(\\mu\\) の推定量として、次の4つを考える。
     \\[
       T_1=\\dfrac{X_1+X_2}{2},
-      \\qquad
+      \\quad
       T_2=\\dfrac{1}{n}\\sum_{k=1}^{n}X_k,
     \\]
     \\[
       T_3=\\dfrac{2}{n(n+1)}\\sum_{k=1}^{n}kX_k,
-      \\qquad
+      \\quad
       T_4=\\dfrac{1}{n+1}\\sum_{k=1}^{n}X_k.
     \\]
   `,
@@ -165,7 +165,7 @@ const comprehensiveSet = {
         \\]
         \\(T_2\\) と \\(T_3\\) を比較すると、
         \\[
-          \\dfrac{V[T_3]}{V[T_2]}=\\dfrac{2(2n+1)}{3(n+1)}>1\\qquad(n>1)
+          \\dfrac{V[T_3]}{V[T_2]}=\\dfrac{2(2n+1)}{3(n+1)}>1\\quad(n>1)
         \\]
         なので、
         \\[
@@ -198,7 +198,7 @@ const comprehensiveSet = {
       question: `
         推定量 \\(T_n\\) が、任意の \\(\\varepsilon>0\\) に対して
         \\[
-          P(|T_n-\\mu|\\ge\\varepsilon)\\to 0\\qquad(n\\to\\infty)
+          P(|T_n-\\mu|\\ge\\varepsilon)\\to 0\\quad(n\\to\\infty)
         \\]
         を満たすとき、\\(T_n\\) を \\(\\mu\\) の一致推定量という。<br><br>
         必要ならば、平均と分散が存在する確率変数 \\(Y\\) と任意の \\(\\varepsilon>0\\) に対して成り立つChebyshevの不等式
@@ -259,7 +259,7 @@ const comprehensiveSet = {
         <b>1. 基本概念・公式</b><br>
         一致性とは、標本サイズ \\(n\\) を大きくしたとき、推定量が推定対象である母数に確率的に近づいていく性質です。特に不偏推定量 \\(T_n\\) について、
         \\[
-          E[T_n]=\\mu,\\qquad V[T_n]\\to 0
+          E[T_n]=\\mu,\\quad V[T_n]\\to 0
         \\]
         ならば、Chebyshevの不等式より
         \\[
@@ -274,7 +274,7 @@ const comprehensiveSet = {
         であり、\\(n\\) を大きくしても分散は小さくなりません。実際、\\(T_1\\) は常に最初の2個の観測値だけから作られているため、標本サイズを増やしても推定精度は改善しません。したがって、一般には一致推定量ではありません。<br><br>
         \\(T_2\\) については、
         \\[
-          E[T_2]=\\mu,\\qquad V[T_2]=\\dfrac{\\sigma^2}{n}\\to 0.
+          E[T_2]=\\mu,\\quad V[T_2]=\\dfrac{\\sigma^2}{n}\\to 0.
         \\]
         よってChebyshevの不等式から、\\(T_2\\) は \\(\\mu\\) に確率収束し、一致推定量です。<br><br>
         \\(T_3\\) についても、

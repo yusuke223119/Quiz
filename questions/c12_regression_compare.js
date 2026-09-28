@@ -74,25 +74,23 @@ const comprehensiveSet = {
     </div>
     <b>モデル2：最終学歴をダミー変数で表したモデル</b><br>
     高校卒を基準とし、
-    \\[
-      D_{1i}=
+    \\begin{align*}
+      D_{1i}&=
       \\begin{cases}
         1 & （短大・高専卒）\\\\
         0 & （それ以外）
-      \\end{cases}
-      ,\\qquad
-      D_{2i}=
+      \\end{cases} \\\\
+      D_{2i}&=
       \\begin{cases}
         1 & （大学卒）\\\\
         0 & （それ以外）
-      \\end{cases}
-      ,\\qquad
-      D_{3i}=
+      \\end{cases} \\\\
+      D_{3i}&=
       \\begin{cases}
         1 & （大学院卒）\\\\
         0 & （それ以外）
       \\end{cases}
-    \\]
+    \\end{align*}
     として、
     \\[
       Y_i=\\gamma_0+\\gamma_1D_{1i}+\\gamma_2D_{2i}+\\gamma_3D_{3i}+\\varepsilon_i
@@ -181,7 +179,7 @@ const comprehensiveSet = {
         <b>(a)</b> 教育年数の回帰係数の推定値が1.00であることから、このモデルでは、教育年数が1年長いことに対応して、予測される初任給は1.00万円高くなる。<br><br>
         <b>(b)</b> 教育年数の行に示された \\(p\\) 値は、
         \\[
-          H_0:\\beta_1=0,\\qquad H_1:\\beta_1\\neq 0
+          H_0:\\beta_1=0,\\quad H_1:\\beta_1\\neq 0
         \\]
         という帰無仮説と対立仮説に基づく両側検定の \\(p\\) 値である。<br><br>
         <b>(c)</b> 誤差項が互いに独立に正規分布 \\(N(0,\\sigma^2)\\) に従うと仮定する。帰無仮説 \\(H_0:\\beta_1=0\\) のもとで、

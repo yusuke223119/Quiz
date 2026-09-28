@@ -7,7 +7,7 @@
     <meta name="theme-color" content="#2563eb">
     <title>統計検定2級 AI共闘学習アプリ</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="app.css?v=statp1">
+    <link rel="stylesheet" href="app.css?v=haptic1">
     <script>
         window.MathJax = {
             tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
@@ -111,7 +111,7 @@
 
     <script id="dataScript"></script>
     <script src="priority.js?v=1"></script>
-    <script src="bookmarks.js?v=report1"></script>
+    <script src="bookmarks.js?v=reviewfix2"></script>
     <script src="stats-table.js?v=statp1"></script>
 
     <script>
@@ -302,6 +302,7 @@
                 button.className = CHOICE_IDLE;
             });
             btn.className = CHOICE_SELECTED;
+            if (typeof playChoiceFeedback === 'function') playChoiceFeedback('light');
         }
 
         function submitJudgement() {
@@ -328,6 +329,7 @@
             document.getElementById("judgeBtn").classList.add("hidden");
 
             const isCorrect = (submittedValue === currentQuestion.answer);
+            if (typeof playJudgeFeedback === 'function') playJudgeFeedback(isCorrect);
             const container = document.getElementById("answerArea");
 
             // 選択式ボタンの全無効化

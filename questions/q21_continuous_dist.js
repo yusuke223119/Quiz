@@ -38,7 +38,7 @@ const allQuestions = [
       \\]
       一様分布では、一定の区間内で確率密度が一定です。区間 \\([a,b]\\) 上の一様分布の確率密度関数は、
       \\[
-        f(x)=\\dfrac{1}{b-a}\\qquad(a\\le x\\le b)
+        f(x)=\\dfrac{1}{b-a}\\quad(a\\le x\\le b)
       \\]
       です。したがって、一様分布では確率を「対象となる区間の長さ ÷ 全体の区間の長さ」として求めることもできます。<br><br>
       <b>2. 計算・判定プロセス</b><br>
@@ -141,7 +141,7 @@ const allQuestions = [
       \\]
       です。よって、
       \\[
-        \\boxed{E[X]=3,\\qquad V[X]=3}
+        \\boxed{E[X]=3,\\quad V[X]=3}
       \\]
       となります。<br><br>
       <b>3. 各選択肢の吟味</b><br>
@@ -186,7 +186,7 @@ const allQuestions = [
       <b>1. 基本概念・公式</b><br>
       パラメータ \\(\\lambda\\) の指数分布の確率密度関数は、
       \\[
-        f(x)=\\lambda e^{-\\lambda x}\\qquad(x\\ge 0)
+        f(x)=\\lambda e^{-\\lambda x}\\quad(x\\ge 0)
       \\]
       です。その期待値は、
       \\[

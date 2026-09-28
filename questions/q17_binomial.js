@@ -152,7 +152,7 @@ const allQuestions = [
     question: `
       確率変数 \\(X\\) が成功確率 \\(p\\) のベルヌーイ分布に従うとする。すなわち、
       \\[
-        P(X=1)=p,\\qquad P(X=0)=1-p
+        P(X=1)=p,\\quad P(X=0)=1-p
       \\]
       である。ベルヌーイ分布の分散を導出しよう。<br><br>
       \\(X\\) は0または1の値しか取らないため、
@@ -161,7 +161,7 @@ const allQuestions = [
       \\]
       が常に成り立つ。したがって、
       \\[
-        E[X]=p,\\qquad E[X^2]=\\boxed{\\mathrm{A}}
+        E[X]=p,\\quad E[X^2]=\\boxed{\\mathrm{A}}
       \\]
       であり、
       \\[
@@ -213,7 +213,7 @@ const allQuestions = [
       \\]
       0と1については、
       \\[
-        0^2=0,\\qquad 1^2=1
+        0^2=0,\\quad 1^2=1
       \\]
       なので、常に
       \\[
@@ -276,7 +276,7 @@ const allQuestions = [
     question: `
       互いに独立な確率変数 \\(X,Y\\) が、
       \\[
-        X\\sim\\operatorname{Bin}(10,0.3),\\qquad Y\\sim\\operatorname{Bin}(20,0.3)
+        X\\sim\\operatorname{Bin}(10,0.3),\\quad Y\\sim\\operatorname{Bin}(20,0.3)
       \\]
       に従っている。<br><br>
       このとき、\\(X+Y\\) の分布として、最も適切なものを、次の ①〜④ のうちから1つ選べ。<br><br>
@@ -293,7 +293,7 @@ const allQuestions = [
       <b>1. 基本概念・公式</b><br>
       互いに独立な確率変数 \\(X,Y\\) が、共通の成功確率 \\(p\\) を持つ二項分布
       \\[
-        X\\sim\\operatorname{Bin}(n,p),\\qquad Y\\sim\\operatorname{Bin}(m,p)
+        X\\sim\\operatorname{Bin}(n,p),\\quad Y\\sim\\operatorname{Bin}(m,p)
       \\]
       に従うとき、
       \\[

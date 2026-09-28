@@ -87,7 +87,7 @@ const allQuestions = [
       \\]
       です。したがって、
       \\[
-        \\boxed{E[\\bar X]=50,\\qquad SD(\\bar X)=2}
+        \\boxed{E[\\bar X]=50,\\quad SD(\\bar X)=2}
       \\]
       となります。<br><br>
       <b>3. 各選択肢の吟味</b><br>
@@ -127,7 +127,7 @@ const allQuestions = [
       <b>1. 基本概念・公式</b><br>
       母平均 \\(\\mu\\)、母分散 \\(\\sigma^2\\) の母集団から独立に \\(n\\) 個抽出したとき、
       \\[
-        E[\\bar X]=\\mu,\\qquad V[\\bar X]=\\dfrac{\\sigma^2}{n}
+        E[\\bar X]=\\mu,\\quad V[\\bar X]=\\dfrac{\\sigma^2}{n}
       \\]
       です。特に、母集団が正規分布に従う場合には、標本平均も正規分布に従い、
       \\[
@@ -137,7 +137,7 @@ const allQuestions = [
       <b>2. 計算・判定プロセス</b><br>
       今回は、
       \\[
-        \\mu=100,\\qquad \\sigma=20,\\qquad n=16
+        \\mu=100,\\quad \\sigma=20,\\quad n=16
       \\]
       です。標本平均の期待値は
       \\[
@@ -185,7 +185,7 @@ const allQuestions = [
       <b>1. 基本概念・公式</b><br>
       標本平均について、
       \\[
-        E[\\bar X]=\\mu,\\qquad V[\\bar X]=\\dfrac{\\sigma^2}{n}
+        E[\\bar X]=\\mu,\\quad V[\\bar X]=\\dfrac{\\sigma^2}{n}
       \\]
       が成立します。\\(n\\) を大きくすると、
       \\[
@@ -251,7 +251,7 @@ const allQuestions = [
       <b>2. 計算・判定プロセス</b><br>
       今回、
       \\[
-        \\mu=50,\\qquad \\sigma^2=100,\\qquad n=100
+        \\mu=50,\\quad \\sigma^2=100,\\quad n=100
       \\]
       なので、
       \\[
@@ -267,7 +267,7 @@ const allQuestions = [
       \\]
       と考えることができます。48と52を標準化すると、
       \\[
-        \\dfrac{48-50}{1}=-2,\\qquad \\dfrac{52-50}{1}=2
+        \\dfrac{48-50}{1}=-2,\\quad \\dfrac{52-50}{1}=2
       \\]
       です。したがって、
       \\[

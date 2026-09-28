@@ -9,20 +9,20 @@ const allQuestions = [
     question: `
       互いに独立な2つの正規母集団について、それぞれの母平均を \\(\\mu_1,\\mu_2\\) とする。母標準偏差は既知であり、
       \\[
-        \\sigma_1=8,\\qquad \\sigma_2=6
+        \\sigma_1=8,\\quad \\sigma_2=6
       \\]
       である。<br><br>
       それぞれの母集団から独立に無作為標本を抽出したところ、
       \\[
-        n_1=64,\\qquad \\bar X_1=52
+        n_1=64,\\quad \\bar X_1=52
       \\]
       \\[
-        n_2=36,\\qquad \\bar X_2=48
+        n_2=36,\\quad \\bar X_2=48
       \\]
       を得た。<br><br>
       母平均に差があるかを調べるため、
       \\[
-        H_0:\\mu_1=\\mu_2,\\qquad H_1:\\mu_1\\neq\\mu_2
+        H_0:\\mu_1=\\mu_2,\\quad H_1:\\mu_1\\neq\\mu_2
       \\]
       を有意水準5%で検定する。<br><br>
       帰無仮説のもとで、標本平均の差を標準化した
@@ -76,9 +76,10 @@ const allQuestions = [
       <解説><br>
       <b>1. 基本概念・公式</b><br>
       独立な2標本について、
-      \\[
-        \\bar X_1\\sim N\\left(\\mu_1,\\dfrac{\\sigma_1^2}{n_1}\\right),\\qquad \\bar X_2\\sim N\\left(\\mu_2,\\dfrac{\\sigma_2^2}{n_2}\\right)
-      \\]
+      \\begin{align*}
+        &\\bar X_1\\sim N\\left(\\mu_1,\\dfrac{\\sigma_1^2}{n_1}\\right) \\\\
+        &\\bar X_2\\sim N\\left(\\mu_2,\\dfrac{\\sigma_2^2}{n_2}\\right)
+      \\end{align*}
       です。独立性より、
       \\[
         \\bar X_1-\\bar X_2\\sim N\\left(\\mu_1-\\mu_2,\\,\\dfrac{\\sigma_1^2}{n_1}+\\dfrac{\\sigma_2^2}{n_2}\\right)
@@ -130,20 +131,20 @@ const allQuestions = [
       とする。2つの母分散は等しいが、共通の母分散 \\(\\sigma^2\\) は未知である。<br><br>
       標本から、
       \\[
-        \\bar X=54,\\qquad S_X^2=9
+        \\bar X=54,\\quad S_X^2=9
       \\]
       \\[
-        \\bar Y=50,\\qquad S_Y^2=16
+        \\bar Y=50,\\quad S_Y^2=16
       \\]
       を得た。<br><br>
       母平均に差があるかを調べるため、
       \\[
-        H_0:\\mu_1=\\mu_2,\\qquad H_1:\\mu_1\\neq\\mu_2
+        H_0:\\mu_1=\\mu_2,\\quad H_1:\\mu_1\\neq\\mu_2
       \\]
       を有意水準5%で検定する。<br><br>
       まず、各標本について
       \\[
-        U_1=\\dfrac{(10-1)S_X^2}{\\sigma^2},\\qquad U_2=\\dfrac{(10-1)S_Y^2}{\\sigma^2}
+        U_1=\\dfrac{(10-1)S_X^2}{\\sigma^2},\\quad U_2=\\dfrac{(10-1)S_Y^2}{\\sigma^2}
       \\]
       とおく。また、プールした分散を
       \\[
@@ -236,9 +237,10 @@ const allQuestions = [
         \\dfrac{18S_p^2}{\\sigma^2}=\\dfrac{9S_X^2+9S_Y^2}{\\sigma^2}\\sim\\chi_{18}^2
       \\]
       です。次に \\(S_p=\\sqrt{12.5}\\) なので、
-      \\[
-        T=\\dfrac{54-50}{\\sqrt{12.5}\\sqrt{1/10+1/10}}=\\dfrac{4}{\\sqrt{2.5}}\\approx 2.53
-      \\]
+      \\begin{align*}
+        T&=\\dfrac{54-50}{\\sqrt{12.5}\\sqrt{1/10+1/10}} \\\\
+        &=\\dfrac{4}{\\sqrt{2.5}}\\approx 2.53
+      \\end{align*}
       です。したがって \\(T\\sim t_{18}\\) です。さらに5%両側検定では、\\(t\\) 分布表より自由度18の臨界値は約 \\(2.101\\) です。\\(|T|=2.53>2.101\\) なので、\\(H_0\\) を棄却します。<br><br>
       この問題の流れをまとめると、標本平均の差を標準化すると \\(N(0,1)\\)、2つの標本分散から \\(\\chi_9^2+\\chi_9^2=\\chi_{18}^2\\)、正規変数を \\(\\sqrt{\\chi^2\\text{変数}/18}\\) で割ると \\(t_{18}\\) となります。<br><br>
       <b>3. 各選択肢の吟味</b><br>
@@ -256,18 +258,20 @@ const allQuestions = [
     type: "選択式",
     question: `
       10人の被験者について、あるトレーニングを実施する前と実施した後に同じ能力テストを行った。各被験者について、
-      \\[
-        D_i=(\\text{トレーニング後の得点})-(\\text{トレーニング前の得点})
-      \\]
+      \\begin{align*}
+        X_i&=(\\text{トレーニング前の得点}) \\\\
+        Y_i&=(\\text{トレーニング後の得点}) \\\\
+        D_i&=Y_i-X_i
+      \\end{align*}
       と定義する。<br><br>
       10人について差 \\(D_i\\) を計算したところ、
       \\[
-        n=10,\\qquad \\bar D=2.0,\\qquad S_D=2.5
+        n=10,\\quad \\bar D=2.0,\\quad S_D=2.5
       \\]
       であった。<br><br>
       トレーニングによって平均得点が変化したかを調べるため、
       \\[
-        H_0:\\mu_D=0,\\qquad H_1:\\mu_D\\neq 0
+        H_0:\\mu_D=0,\\quad H_1:\\mu_D\\neq 0
       \\]
       を有意水準5%で検定する。<br><br>
       対応のある2標本では、10組の観測値から得られる10個の差 \\(D_1,\\ldots,D_{10}\\) を1つの標本と考える。<br><br>
@@ -352,23 +356,23 @@ const allQuestions = [
       互いに独立な2つの正規母集団について、それぞれの母平均を \\(\\mu_1,\\mu_2\\) とする。2つの母分散は等しいものとするが、その共通母分散は未知である。<br><br>
       それぞれの母集団から独立に無作為標本を抽出したところ、
       \\[
-        n_1=16,\\qquad \\bar X_1=74,\\qquad S_1^2=16
+        n_1=16,\\quad \\bar X_1=74,\\quad S_1^2=16
       \\]
       \\[
-        n_2=16,\\qquad \\bar X_2=70,\\qquad S_2^2=16
+        n_2=16,\\quad \\bar X_2=70,\\quad S_2^2=16
       \\]
       を得た。<br><br>
       第1の母集団の母平均の方が大きいといえるかを調べるため、
       \\[
-        H_0:\\mu_1=\\mu_2,\\qquad H_1:\\mu_1>\\mu_2
+        H_0:\\mu_1=\\mu_2,\\quad H_1:\\mu_1>\\mu_2
       \\]
       を検定する。<br><br>
       各標本について \\(\\dfrac{(n_i-1)S_i^2}{\\sigma^2}\\sim\\chi_{n_i-1}^2\\) であること、および独立な \\(\\chi^2\\) 変数の和では自由度も加えられることを利用せよ。また、プールした分散
       \\[
         S_p^2=\\dfrac{(n_1-1)S_1^2+(n_2-1)S_2^2}{n_1+n_2-2}
       \\]
-      を用いて検定統計量を求め、付属の \\(t\\) 分布表からp値の範囲を判断せよ。<br><br>
-      検定統計量の値【A】、自由度【B】、片側p値の範囲【C】、有意水準5%での検定結果【D】の組合せとして、最も適切なものを、次の ①〜④ のうちから1つ選べ。<br><br>
+      を用いて検定統計量を求め、付属の \\(t\\) 分布表を用いて有意水準5%で判定せよ。<br><br>
+      検定統計量の値【A】、自由度【B】、有意水準5%での検定結果【C】の組合せとして、最も適切なものを、次の ①〜④ のうちから1つ選べ。<br><br>
       <table class='w-full border-collapse border border-slate-300 text-center text-sm'>
         <thead>
           <tr class='bg-slate-100'>
@@ -376,7 +380,6 @@ const allQuestions = [
             <th class='border border-slate-300 p-2'>A</th>
             <th class='border border-slate-300 p-2'>B</th>
             <th class='border border-slate-300 p-2'>C</th>
-            <th class='border border-slate-300 p-2'>D</th>
           </tr>
         </thead>
         <tbody>
@@ -384,28 +387,24 @@ const allQuestions = [
             <td class='border border-slate-300 p-1 bg-slate-50'>①</td>
             <td class='border border-slate-300 p-2'>約 \\(2.83\\)</td>
             <td class='border border-slate-300 p-2'>15</td>
-            <td class='border border-slate-300 p-2'>\\(0.005\\lt p\\lt 0.01\\)</td>
             <td class='border border-slate-300 p-2'>\\(H_0\\) を棄却する</td>
           </tr>
           <tr>
             <td class='border border-slate-300 p-1 bg-slate-50'>②</td>
             <td class='border border-slate-300 p-2'>約 \\(2.83\\)</td>
             <td class='border border-slate-300 p-2'>30</td>
-            <td class='border border-slate-300 p-2'>\\(0.0025\\lt p\\lt 0.005\\)</td>
             <td class='border border-slate-300 p-2'>\\(H_0\\) を棄却する</td>
           </tr>
           <tr>
             <td class='border border-slate-300 p-1 bg-slate-50'>③</td>
             <td class='border border-slate-300 p-2'>約 \\(2.00\\)</td>
             <td class='border border-slate-300 p-2'>30</td>
-            <td class='border border-slate-300 p-2'>\\(0.025\\lt p\\lt 0.05\\)</td>
-            <td class='border border-slate-300 p-2'>\\(H_0\\) を棄却する</td>
+            <td class='border border-slate-300 p-2'>\\(H_0\\) を棄却しない</td>
           </tr>
           <tr>
             <td class='border border-slate-300 p-1 bg-slate-50'>④</td>
             <td class='border border-slate-300 p-2'>約 \\(2.83\\)</td>
             <td class='border border-slate-300 p-2'>30</td>
-            <td class='border border-slate-300 p-2'>\\(0.05\\lt p\\lt 0.10\\)</td>
             <td class='border border-slate-300 p-2'>\\(H_0\\) を棄却しない</td>
           </tr>
         </tbody>
@@ -448,24 +447,16 @@ const allQuestions = [
         T=\\dfrac{74-70}{\\sqrt{2}}\\approx 2.83
       \\]
       です。自由度は2つの標本分散の自由度を足して \\((16-1)+(16-1)=15+15=30\\) です。よって \\(T\\sim t_{30}\\) です。<br><br>
-      \\(t\\) 分布表から、自由度30について上側0.005点は \\(2.750\\) です。また上側0.0025点は約 \\(3.030\\) です。今回は
-      \\[
-        2.750\\lt 2.83\\lt 3.030
-      \\]
-      なので、
-      \\[
-        \\boxed{0.0025\\lt p\\lt 0.005}
-      \\]
-      です。したがって \\(p\\lt 0.05\\) であり、有意水準5%では
+      片側検定なので、\\(t\\) 分布表の自由度30における上側5%点 \\(t_{0.05}(30)\\approx 1.697\\) と比較します。今回は \\(T\\approx 2.83\\gt 1.697\\) なので、
       \\[
         \\boxed{H_0\\text{を棄却する}}
       \\]
       となります。<br><br>
       <b>3. 各選択肢の吟味</b><br>
       ・<b>① 誤り</b>：自由度15は一方の標本分散だけを考えた場合です。2つの独立な標本分散をプールするため、自由度は \\(15+15=30\\) となります。<br>
-      ・<b>② 正しい</b>：2つの標本分散の自由度はそれぞれ15であり、プールすると \\(15+15=30\\) となります。\\(T\\approx 2.83\\)、片側p値は \\(0.0025\\lt p\\lt 0.005\\) なので \\(H_0\\) を棄却します。<br>
-      ・<b>③ 誤り</b>：差の標準誤差は \\(\\sqrt{2}\\) なので、検定統計量は \\(4/\\sqrt{2}\\approx 2.83\\) です。<br>
-      ・<b>④ 誤り</b>：検定統計量と自由度は正しいですが、\\(T=2.83\\) に対応する片側p値は0.05より十分小さく、\\(H_0\\) を棄却します。
+      ・<b>② 正しい</b>：2つの標本分散の自由度はそれぞれ15であり、プールすると \\(15+15=30\\) となります。\\(T\\approx 2.83\\gt 1.697\\) なので \\(H_0\\) を棄却します。<br>
+      ・<b>③ 誤り</b>：差の標準誤差は \\(\\sqrt{2}\\) なので、検定統計量は \\(4/\\sqrt{2}\\approx 2.83\\) です。また、この値は上側5%点を超えるため \\(H_0\\) を棄却します。<br>
+      ・<b>④ 誤り</b>：検定統計量と自由度は正しいですが、\\(T\\approx 2.83\\gt 1.697\\) なので有意水準5%では \\(H_0\\) を棄却します。
     `
   }
 ];

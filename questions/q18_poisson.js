@@ -9,7 +9,7 @@ const allQuestions = [
     question: `
       確率変数 \\(X\\) がパラメータ \\(\\lambda\\) のポアソン分布 \\(\\operatorname{Poi}(\\lambda)\\) に従うとき、その確率質量関数は
       \\[
-        P(X=k)=e^{-\\lambda}\\dfrac{\\lambda^k}{k!},\\qquad k=0,1,2,\\ldots
+        P(X=k)=e^{-\\lambda}\\dfrac{\\lambda^k}{k!},\\quad k=0,1,2,\\ldots
       \\]
       で与えられる。<br><br>
       あるコールセンターに1時間の間にかかってくる電話の件数 \\(X\\) は、平均2件のポアソン分布に従うとする。<br><br>
@@ -58,11 +58,11 @@ const allQuestions = [
       \\]
       と表し、その確率関数は、
       \\[
-        P(X=k)=e^{-\\lambda}\\dfrac{\\lambda^k}{k!},\\qquad k=0,1,2,\\ldots
+        P(X=k)=e^{-\\lambda}\\dfrac{\\lambda^k}{k!},\\quad k=0,1,2,\\ldots
       \\]
       です。また、ポアソン分布では期待値と分散がともに \\(\\lambda\\) となり、
       \\[
-        E[X]=\\lambda,\\qquad V[X]=\\lambda
+        E[X]=\\lambda,\\quad V[X]=\\lambda
       \\]
       が成り立ちます。<br><br>
       <b>2. 計算・判定プロセス</b><br>
@@ -84,7 +84,7 @@ const allQuestions = [
       \\]
       となります。また、
       \\[
-        E[X]=2,\\qquad V[X]=2
+        E[X]=2,\\quad V[X]=2
       \\]
       です。<br><br>
       <b>3. 各選択肢の吟味</b><br>
@@ -103,12 +103,12 @@ const allQuestions = [
     question: `
       確率変数 \\(X\\) がパラメータ \\(\\lambda\\) のポアソン分布 \\(\\operatorname{Poi}(\\lambda)\\) に従うとき、その確率質量関数は
       \\[
-        P(X=k)=e^{-\\lambda}\\dfrac{\\lambda^k}{k!},\\qquad k=0,1,2,\\ldots
+        P(X=k)=e^{-\\lambda}\\dfrac{\\lambda^k}{k!},\\quad k=0,1,2,\\ldots
       \\]
       で与えられる。<br><br>
       ある病院では、午前中に救急搬送される内科系患者数 \\(X\\) と外科系患者数 \\(Y\\) がそれぞれ
       \\[
-        X\\sim\\operatorname{Poi}(2),\\qquad Y\\sim\\operatorname{Poi}(3)
+        X\\sim\\operatorname{Poi}(2),\\quad Y\\sim\\operatorname{Poi}(3)
       \\]
       に従い、\\(X,Y\\) は互いに独立であるとする。<br><br>
       <b>独立なポアソン分布に従う確率変数の和も、ポアソン分布に従うことが知られている。</b><br><br>
@@ -153,7 +153,7 @@ const allQuestions = [
       <b>1. 基本概念・公式</b><br>
       互いに独立な確率変数 \\(X,Y\\) が、
       \\[
-        X\\sim\\operatorname{Poi}(\\lambda_1),\\qquad Y\\sim\\operatorname{Poi}(\\lambda_2)
+        X\\sim\\operatorname{Poi}(\\lambda_1),\\quad Y\\sim\\operatorname{Poi}(\\lambda_2)
       \\]
       に従うとき、その和について、
       \\[
@@ -167,7 +167,7 @@ const allQuestions = [
       <b>2. 計算・判定プロセス</b><br>
       \\(X,Y\\) は互いに独立であり、
       \\[
-        X\\sim\\operatorname{Poi}(2),\\qquad Y\\sim\\operatorname{Poi}(3)
+        X\\sim\\operatorname{Poi}(2),\\quad Y\\sim\\operatorname{Poi}(3)
       \\]
       なので、再生性より、
       \\[
@@ -178,9 +178,10 @@ const allQuestions = [
         P(Z=0)=e^{-5}\\dfrac{5^0}{0!}=e^{-5}
       \\]
       です。また、\\(Z=0\\) となるのは、内科系患者と外科系患者がともに0人の場合です。独立性から、
-      \\[
-        P(Z=0)=P(X=0)P(Y=0)=e^{-2}e^{-3}=e^{-5}
-      \\]
+      \\begin{align*}
+        P(Z=0)&=P(X=0)P(Y=0)\\\\
+        &=e^{-2}e^{-3}=e^{-5}
+      \\end{align*}
       と計算しても同じ結果が得られます。<br><br>
       <b>3. 各選択肢の吟味</b><br>
       ・<b>① 正しい</b>：再生性よりパラメータを加えて \\(\\operatorname{Poi}(5)\\) となり、0人である確率は \\(e^{-5}\\) です。<br>
@@ -211,11 +212,11 @@ const allQuestions = [
       <b>1. 基本概念・公式</b><br>
       成功確率 \\(p\\) の独立な試行を、初めて成功するまで繰り返します。初めて成功するまでの試行回数 \\(X\\) は幾何分布に従い、
       \\[
-        P(X=k)=(1-p)^{k-1}p,\\qquad k=1,2,\\ldots
+        P(X=k)=(1-p)^{k-1}p,\\quad k=1,2,\\ldots
       \\]
       です。この定義では、期待値と分散は、
       \\[
-        E[X]=\\dfrac{1}{p},\\qquad V[X]=\\dfrac{1-p}{p^2}
+        E[X]=\\dfrac{1}{p},\\quad V[X]=\\dfrac{1-p}{p^2}
       \\]
       となります。<br><br>
       <b>2. 計算・判定プロセス</b><br>

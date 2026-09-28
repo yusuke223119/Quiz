@@ -25,6 +25,7 @@ const PRI_META = [
 let catalog = [];
 let viewYear;
 let viewMonth;
+let selectedKey = '';
 let currentTab = 'report';
 
 function pad(n) {
@@ -40,17 +41,21 @@ function parseDateKey(key) {
     return new Date(y, m - 1, d);
 }
 
+function todayDateKey(date = new Date()) {
+    return typeof studyDateKey === 'function'
+        ? studyDateKey(date)
+        : dateKeyFromParts(date.getFullYear(), date.getMonth() + 1, date.getDate());
+}
+
+function formatDateLabel(key) {
+    const date = parseDateKey(key);
+    if (Number.isNaN(date.getTime())) return '';
+    return `${date.getMonth() + 1}/${date.getDate()}`;
+}
+
 function addDays(date, n) {
     const next = new Date(date);
     next.setDate(next.getDate() + n);
-    return next;
-}
-
-function startOfWeek(date) {
-    const next = new Date(date.getFullYear(), date.getMonth(), date.getDate());
-    const day = next.getDay();
-    const offset = day === 0 ? -6 : 1 - day;
-    next.setDate(next.getDate() + offset);
     return next;
 }
 
@@ -152,25 +157,8 @@ function buildStats(questions) {
     };
 }
 
-function weekRange(date) {
-    const start = startOfWeek(date);
-    return Array.from({ length: 7 }, (_, i) => addDays(start, i));
-}
-
 function logForDay(log, date) {
     return log[studyDateKey(date)] || { answered: 0, correct: 0 };
-}
-
-function monthStats(log, year, month) {
-    let answered = 0;
-    let correct = 0;
-    const days = new Date(year, month, 0).getDate();
-    for (let d = 1; d <= days; d += 1) {
-        const entry = log[dateKeyFromParts(year, month, d)] || { answered: 0, correct: 0 };
-        answered += Number(entry.answered || 0);
-        correct += Number(entry.correct || 0);
-    }
-    return { answered, correct, pct: rate(correct, answered) };
 }
 
 function currentStreak(log, today = new Date()) {
@@ -294,6 +282,8 @@ function renderTrend(days, log) {
 function renderCalendar() {
     const log = typeof getStudyLog === 'function' ? getStudyLog() : {};
     const today = new Date();
+    const todayKey = todayDateKey(today);
+    if (!selectedKey) selectedKey = todayKey;
     const first = new Date(viewYear, viewMonth, 1);
     const startPad = (first.getDay() + 6) % 7;
     const daysInMonth = new Date(viewYear, viewMonth + 1, 0).getDate();
@@ -302,15 +292,24 @@ function renderCalendar() {
     for (let d = 1; d <= daysInMonth; d += 1) {
         const key = dateKeyFromParts(viewYear, viewMonth + 1, d);
         const answered = Number((log[key] || {}).answered || 0);
-        const isToday = today.getFullYear() === viewYear && today.getMonth() === viewMonth && today.getDate() === d;
-        cells.push({ d, answered, isToday, level: heatLevel(answered) });
+        cells.push({
+            d,
+            key,
+            answered,
+            isToday: key === todayKey,
+            isSelected: key === selectedKey,
+            isFuture: key > todayKey,
+            level: heatLevel(answered)
+        });
     }
     while (cells.length % 7) cells.push({ empty: true });
 
-    const month = monthStats(log, viewYear, viewMonth + 1);
-    const week = weekRange(today);
-    const weekStart = week[0];
-    const weekEnd = week[6];
+    const selectedLog = log[selectedKey] || { answered: 0, correct: 0 };
+    const selectedAnswered = Number(selectedLog.answered || 0);
+    const selectedCorrect = Number(selectedLog.correct || 0);
+    const selectedPct = rate(selectedCorrect, selectedAnswered);
+    const selectedMissed = Math.max(0, selectedAnswered - selectedCorrect);
+    const isTodaySelected = selectedKey === todayKey;
     const streak = currentStreak(log, today);
     const trendDays = Array.from({ length: 7 }, (_, i) => addDays(today, i - 6));
 
@@ -326,10 +325,20 @@ function renderCalendar() {
             </h2>
             <div class="report-cal-week">${['月', '火', '水', '木', '金', '土', '日'].map(d => `<span>${d}</span>`).join('')}</div>
             <div class="report-cal-grid">
-                ${cells.map(cell => cell.empty
-                    ? `<span class="report-cal-day is-empty">-</span>`
-                    : `<span class="report-cal-day ${cell.level} ${cell.isToday ? 'is-today' : ''}">${cell.d}</span>`
-                ).join('')}
+                ${cells.map(cell => {
+                    if (cell.empty) return `<span class="report-cal-day is-empty">-</span>`;
+                    const cls = [
+                        'report-cal-day',
+                        cell.level,
+                        cell.isToday ? 'is-today' : '',
+                        cell.isSelected ? 'is-selected' : '',
+                        cell.isFuture ? 'is-future' : ''
+                    ].filter(Boolean).join(' ');
+                    if (cell.isFuture) {
+                        return `<span class="${cls}">${cell.d}</span>`;
+                    }
+                    return `<button type="button" class="${cls}" data-date="${cell.key}" aria-pressed="${cell.isSelected ? 'true' : 'false'}">${cell.d}</button>`;
+                }).join('')}
             </div>
             <div class="report-cal-legend">
                 <span><i></i>0問</span>
@@ -338,17 +347,18 @@ function renderCalendar() {
                 <span><i class="lv3"></i>11問以上</span>
             </div>
         </section>
-        <section class="report-card">
+        <section class="report-card" id="dayRecordCard">
             <h2>
-                今月の学習
-                <span class="report-card-link">${weekStart.getMonth() + 1}/${weekStart.getDate()} 〜 ${weekEnd.getMonth() + 1}/${weekEnd.getDate()}</span>
+                ${isTodaySelected ? '今日の学習' : 'この日の学習'}
+                <span class="report-card-link">${formatDateLabel(selectedKey)}</span>
             </h2>
             <div class="report-month-stats">
-                <div><b>${month.answered}</b><span>回答</span></div>
-                <div><b>${month.correct}</b><span>正解</span></div>
-                <div><b>${month.answered ? month.pct + '%' : '—'}</b><span>正答率</span></div>
-                <div><b>${streak}日</b><span>連続学習</span></div>
+                <div><b>${selectedAnswered}</b><span>回答</span></div>
+                <div><b>${selectedCorrect}</b><span>正解</span></div>
+                <div><b>${selectedMissed}</b><span>不正解</span></div>
+                <div><b>${selectedAnswered ? selectedPct + '%' : '—'}</b><span>正答率</span></div>
             </div>
+            ${isTodaySelected ? `<p class="report-day-note">連続学習 ${streak}日</p>` : ''}
         </section>
         <section class="report-card">
             <h2>学習の推移</h2>
@@ -372,6 +382,12 @@ function renderCalendar() {
         }
         renderCalendar();
     });
+    document.querySelectorAll('#calendarPane [data-date]').forEach(btn => {
+        btn.addEventListener('click', () => {
+            selectedKey = btn.getAttribute('data-date') || todayKey;
+            renderCalendar();
+        });
+    });
 }
 
 function showTab(tab) {
@@ -386,6 +402,7 @@ async function initReport() {
     const now = new Date();
     viewYear = now.getFullYear();
     viewMonth = now.getMonth();
+    selectedKey = todayDateKey(now);
     catalog = await loadCatalog();
     renderReport(buildStats(catalog));
     try {

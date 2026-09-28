@@ -49,11 +49,11 @@ const allQuestions = [
       <解説><br>
       <b>1. 基本公式</b><br>
       平均値、標本分散、標準偏差はそれぞれ
-      \\[
-        \\bar{x}=\\frac{1}{n}\\sum_{i=1}^{n}x_i,\\qquad
-        s^2=\\frac{1}{n}\\sum_{i=1}^{n}(x_i-\\bar{x})^2,\\qquad
-        s=\\sqrt{s^2}
-      \\]
+      \\begin{align*}
+        \\bar{x}&=\\frac{1}{n}\\sum_{i=1}^{n}x_i \\\\
+        s^2&=\\frac{1}{n}\\sum_{i=1}^{n}(x_i-\\bar{x})^2 \\\\
+        s&=\\sqrt{s^2}
+      \\end{align*}
       で求めます。ここで標本分散は \\(n\\) で割るものとし、\\(n-1\\) で割る不偏分散とは区別します。<br><br>
       <b>2. 計算・判定プロセス</b><br>
       平均値は
@@ -62,7 +62,7 @@ const allQuestions = [
       \\]
       です。偏差平方は順に \\(9,1,0,1,9\\) であり、偏差平方和は20です。したがって、
       \\[
-        s^2=\\frac{20}{5}=4.0,\\qquad s=\\sqrt{4}=2\\ \\text{（点）}
+        s^2=\\frac{20}{5}=4.0,\\quad s=\\sqrt{4}=2\\ \\text{（点）}
       \\]
       となります。<br><br>
       <b>3. 各選択肢の吟味</b><br>
@@ -97,19 +97,19 @@ const allQuestions = [
         <tbody>
           <tr>
             <td class='border border-slate-300 p-1 bg-slate-50'>①</td>
-            <td class='border border-slate-300 p-1'>−70</td>
+            <td class='border border-slate-300 p-1'>-70</td>
             <td class='border border-slate-300 p-1'>400</td>
             <td class='border border-slate-300 p-1'>20</td>
           </tr>
           <tr>
             <td class='border border-slate-300 p-1 bg-slate-50'>②</td>
-            <td class='border border-slate-300 p-1'>−70</td>
-            <td class='border border-slate-300 p-1'>−200</td>
-            <td class='border border-slate-300 p-1'>−20</td>
+            <td class='border border-slate-300 p-1'>-70</td>
+            <td class='border border-slate-300 p-1'>-200</td>
+            <td class='border border-slate-300 p-1'>-20</td>
           </tr>
           <tr>
             <td class='border border-slate-300 p-1 bg-slate-50'>③</td>
-            <td class='border border-slate-300 p-1'>−70</td>
+            <td class='border border-slate-300 p-1'>-70</td>
             <td class='border border-slate-300 p-1'>200</td>
             <td class='border border-slate-300 p-1'>20</td>
           </tr>
@@ -129,22 +129,22 @@ const allQuestions = [
       <解説><br>
       <b>1. 基本公式</b><br>
       一次変換 \\(Y=aX+b\\) に対して、
-      \\[
-        \\bar{y}=a\\bar{x}+b,\\qquad s_y^2=a^2s_x^2,\\qquad s_y=|a|s_x
-      \\]
+      \\begin{align*}
+        \\bar{y}&=a\\bar{x}+b \\\\
+        s_y^2&=a^2s_x^2 \\\\
+        s_y&=|a|s_x
+      \\end{align*}
       が成り立ちます。定数の加算 \\(b\\) は位置だけを移動させ、散らばりには影響しません。<br><br>
       <b>2. 計算・判定プロセス</b><br>
       \\(a=-2,b=30,s_x^2=10^2=100\\) より、
-      \\[
-        \\bar{y}=(-2)\\times50+30=-70
-      \\]
-      \\[
-        s_y^2=(-2)^2\\times100=400,\\qquad
-        s_y=|-2|\\times10=20
-      \\]
+      \\begin{align*}
+        \\bar{y}&=(-2)\\times50+30=-70 \\\\
+        s_y^2&=(-2)^2\\times100=400 \\\\
+        s_y&=|-2|\\times10=20
+      \\end{align*}
       となります。<br><br>
       <b>3. 各選択肢の吟味</b><br>
-      ・<b>① 正しい</b>：平均値−70、標本分散400、標準偏差20と全て一致します。<br>
+      ・<b>① 正しい</b>：平均値-70、標本分散400、標準偏差20と全て一致します。<br>
       ・<b>② 誤り</b>：分散と標準偏差は常に0以上であり、負にはなりません。<br>
       ・<b>③ 誤り</b>：分散を \\(a^2\\) 倍ではなく \\(|a|\\) 倍にしています。<br>
       ・<b>④ 誤り</b>：平均値の計算で \\(-2\\times50\\) の符号を誤っています。
@@ -179,10 +179,10 @@ const allQuestions = [
       <b>1. 基本概念</b><br>
       変動係数 \\(\\mathrm{CV}=s/\\bar{x}\\) は単位を持たないため、測定単位やスケールが大きく異なるデータ同士の「平均値に対する相対的なばらつき」を比較できます。<br><br>
       <b>2. 計算・判定プロセス</b><br>
-      \\[
-        \\mathrm{CV}_A=\\frac{4}{20}=0.20=20\\%,\\qquad
-        \\mathrm{CV}_B=\\frac{50}{500}=0.10=10\\%
-      \\]
+      \\begin{align*}
+        \\mathrm{CV}_A&=\\frac{4}{20}=0.20=20\\% \\\\
+        \\mathrm{CV}_B&=\\frac{50}{500}=0.10=10\\%
+      \\end{align*}
       したがって、相対的なばらつきはグループAの方が大きいと判断できます。<br><br>
       <b>3. 各選択肢の吟味</b><br>
       ・<b>① 誤り</b>：標準偏差はデータのスケールに影響されるため、単位や平均値が異なるデータの相対比較には適しません。<br>
@@ -243,18 +243,20 @@ const allQuestions = [
       <b>1. 基本公式</b><br>
       標準化得点と偏差値は
       \\[
-        z=\\frac{x-\\mu}{\\sigma},\\qquad T=50+10z
+        z=\\frac{x-\\mu}{\\sigma} ,\\quad T=50+10z
       \\]
       で求めます。<br><br>
       <b>2. 計算・判定プロセス</b><br>
       英語については
-      \\[
-        z=\\frac{70-55}{10}=1.5,\\qquad T=50+10\\times1.5=65
-      \\]
+      \\begin{align*}
+        z&=\\frac{70-55}{10}=1.5 \\\\
+        T&=50+10\\times1.5=65
+      \\end{align*}
       数学については
-      \\[
-        z=\\frac{90-60}{15}=2.0,\\qquad T=50+10\\times2.0=70
-      \\]
+      \\begin{align*}
+        z&=\\frac{90-60}{15}=2.0 \\\\
+        T&=50+10\\times2.0=70
+      \\end{align*}
       です。数学は \\(Z=2.0\\) なので上位約2.3%にあたり、1,000人中では
       \\[
         1{,}000\\times0.023=23

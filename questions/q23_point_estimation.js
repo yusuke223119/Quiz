@@ -152,7 +152,7 @@ const allQuestions = [
       ・<b>④ 誤り</b>：バイアスは「推定量の期待値－母数」で定義されるため、符号が逆です。<br>
       なお、この推定量では
       \\[
-        -\\dfrac{\\mu}{n+1}\\to 0\\qquad(n\\to\\infty)
+        -\\dfrac{\\mu}{n+1}\\to 0\\quad(n\\to\\infty)
       \\]
       となります。バイアスが有限の \\(n\\) で0でないことと、一致性をもつかどうかは別の問題です。
     `
@@ -242,7 +242,7 @@ const allQuestions = [
       \\]
       を抽出する。ただし、
       \\[
-        E[X_k]=\\mu\\qquad(k=1,\\ldots,n)
+        E[X_k]=\\mu\\quad(k=1,\\ldots,n)
       \\]
       とする。<br><br>
       母平均 \\(\\mu\\) の推定量として、次の4つを考える。
@@ -346,9 +346,11 @@ const allQuestions = [
       \\]
       です。よって \\(T_3\\) も不偏推定量です。<br>
       一方、\\(T_4\\) について、
-      \\[
-        E[T_4]=\\dfrac{1}{n}\\sum_{k=1}^n k\\mu=\\dfrac{\\mu}{n}\\cdot\\dfrac{n(n+1)}{2}=\\dfrac{n+1}{2}\\mu
-      \\]
+      \\begin{align*}
+        E[T_4]&=\\dfrac{1}{n}\\sum_{k=1}^n k\\mu \\\\
+        &=\\dfrac{\\mu}{n}\\cdot\\dfrac{n(n+1)}{2} \\\\
+        &=\\dfrac{n+1}{2}\\mu
+      \\end{align*}
       です。一般には \\(\\mu\\) と一致しないため、\\(T_4\\) は不偏推定量ではありません。したがって、
       \\[
         \\boxed{T_1,\\ T_2,\\ T_3}

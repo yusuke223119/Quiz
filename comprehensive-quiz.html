@@ -7,7 +7,7 @@
     <meta name="theme-color" content="#2563eb">
     <title>総合演習 - 統計検定2級学習アプリ</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="app.css?v=statp1">
+    <link rel="stylesheet" href="app.css?v=haptic1">
     <script>
         window.MathJax = {
             tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
@@ -115,7 +115,7 @@
         </div>
     </div>
 
-    <script src="bookmarks.js?v=compstar1"></script>
+    <script src="bookmarks.js?v=reviewfix1"></script>
     <script src="priority.js?v=1"></script>
     <script src="stats-table.js?v=statp1"></script>
     <script>
@@ -270,6 +270,7 @@
         function selectChoice(choice) {
             if (hasJudged) return;
             selectedAnswers[currentPartIndex] = choice;
+            if (typeof playChoiceFeedback === 'function') playChoiceFeedback('light');
             renderTabs();
             renderPart();
         }
@@ -287,6 +288,7 @@
             partResults = currentSet.parts.map((part, index) => selectedAnswers[index] === part.answer);
             const correctCount = partResults.filter(Boolean).length;
             const allCorrect = currentSet.parts.length > 0 && correctCount === currentSet.parts.length;
+            if (typeof playJudgeFeedback === 'function') playJudgeFeedback(allCorrect);
             const setId = new URLSearchParams(window.location.search).get('set');
             if (allCorrect && setId && typeof awardGenreStar === 'function') {
                 awardGenreStar(setId, currentSet.parts.length);

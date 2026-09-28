@@ -195,7 +195,7 @@ const mockExam = {
                       店舗Dでは、29日が20人以上50人未満にある一方、1日だけ70人以上80人未満です。他の大部分のデータから大きく離れた値が存在するため、上側に外れ値をもつ（イ）に対応します。<br>
                       残った店舗Aは（エ）に対応します。実際、店舗Aでは30日のすべてが20人以上50人未満に入り、特に30人以上40人未満に17日が集中しているため、比較的狭い範囲にまとまった箱ひげ図になります。したがって、
                       \\[
-                        A=(エ),\\qquad B=(ア),\\qquad C=(ウ),\\qquad D=(イ)
+                        A=(エ),\\quad B=(ア),\\quad C=(ウ),\\quad D=(イ)
                       \\]
                       です。<br><br>
                       <b>3. 各選択肢の吟味</b><br>
@@ -233,7 +233,7 @@ const mockExam = {
                       <b>2. 計算・判定プロセス</b><br>
                       店舗A〜Dと箱ひげ図の対応は、
                       \\[
-                        A=(エ),\\qquad B=(ア),\\qquad C=(ウ),\\qquad D=(イ)
+                        A=(エ),\\quad B=(ア),\\quad C=(ウ),\\quad D=(イ)
                       \\]
                       です。店舗Cに対応する（ウ）を見ると、箱の下端である第1四分位数が4店舗の中で最も高い位置にあります。したがって、第1四分位数が最も大きいのは店舗Cです。<br>
                       一方、店舗Dには70人台の外れ値が存在します。この値も含めて最大値と最小値の差を考えると、店舗Dの範囲が最も大きくなります。<br><br>
@@ -522,11 +522,40 @@ const mockExam = {
                       \\[
                         Z=\\dfrac{1}{2}X
                       \\]
-                      を定義した。このとき、\\(Z\\) と \\(Y\\) の共分散および相関係数について、最も適切なものを、次の ①〜④ のうちから1つ選べ。<br><br>
-                      ① 共分散は \\(\\dfrac{1}{2}\\) 倍になり、相関係数も \\(\\dfrac{1}{2}\\) 倍になる。<br><br>
-                      ② 共分散は \\(\\dfrac{1}{2}\\) 倍になるが、相関係数は変わらない。<br><br>
-                      ③ 共分散は変わらないが、相関係数は \\(\\dfrac{1}{2}\\) 倍になる。<br><br>
-                      ④ 共分散も相関係数も変わらない。
+                      を定義した。このとき、\\(Z\\) と \\(Y\\) の共分散および相関係数について、\\(X\\) と \\(Y\\) のそれらと比べた関係として最も適切なものを、次の ①〜④ のうちから1つ選べ。<br><br>
+                      <div class='overflow-x-auto'>
+                        <table class='w-full border-collapse border border-slate-300 text-center text-sm'>
+                          <thead>
+                            <tr class='bg-slate-100'>
+                              <th class='border border-slate-300 p-1'></th>
+                              <th class='border border-slate-300 p-2'>\\(\\operatorname{Cov}(Z,Y)\\)</th>
+                              <th class='border border-slate-300 p-2'>\\(Z\\) と \\(Y\\) の相関係数</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td class='border border-slate-300 p-1 bg-slate-50'>①</td>
+                              <td class='border border-slate-300 p-2'>\\(\\operatorname{Cov}(X,Y)\\) の \\(\\dfrac{1}{2}\\) 倍</td>
+                              <td class='border border-slate-300 p-2'>\\(r_{XY}\\) の \\(\\dfrac{1}{2}\\) 倍</td>
+                            </tr>
+                            <tr>
+                              <td class='border border-slate-300 p-1 bg-slate-50'>②</td>
+                              <td class='border border-slate-300 p-2'>\\(\\operatorname{Cov}(X,Y)\\) の \\(\\dfrac{1}{2}\\) 倍</td>
+                              <td class='border border-slate-300 p-2'>\\(r_{XY}\\)と変わらない</td>
+                            </tr>
+                            <tr>
+                              <td class='border border-slate-300 p-1 bg-slate-50'>③</td>
+                              <td class='border border-slate-300 p-2'>\\(\\operatorname{Cov}(X,Y)\\)と変わらない</td>
+                              <td class='border border-slate-300 p-2'>\\(r_{XY}\\) の \\(\\dfrac{1}{2}\\) 倍</td>
+                            </tr>
+                            <tr>
+                              <td class='border border-slate-300 p-1 bg-slate-50'>④</td>
+                              <td class='border border-slate-300 p-2'>\\(\\operatorname{Cov}(X,Y)\\)と変わらない</td>
+                              <td class='border border-slate-300 p-2'>\\(r_{XY}\\)と変わらない</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
                     `,
                     choices: ["①", "②", "③", "④"],
                     answer: "②",
@@ -534,7 +563,7 @@ const mockExam = {
                       正解は②です。<br>
                       <解説><br>
                       <b>1. 基本概念・公式</b><br>
-                      定数 \\(a\\) に対して、共分散には
+                      \\(Z=X/2\\) より、<b>\\(Z\\) は \\(X\\) の \\(\\dfrac{1}{2}\\) 倍</b>です。定数 \\(a\\) に対して、共分散には
                       \\[
                         \\operatorname{Cov}(aX,Y)=a\\operatorname{Cov}(X,Y)
                       \\]
@@ -544,7 +573,7 @@ const mockExam = {
                       \\[
                         \\operatorname{Cov}(Z,Y)=\\operatorname{Cov}\\left(\\dfrac{1}{2}X,Y\\right)=\\dfrac{1}{2}\\operatorname{Cov}(X,Y)
                       \\]
-                      となります。一方、相関係数については、
+                      となり、\\(\\operatorname{Cov}(Z,Y)\\) は \\(\\operatorname{Cov}(X,Y)\\) の \\(\\dfrac{1}{2}\\) 倍です。一方、相関係数については、
                       \\[
                         r_{ZY}=\\dfrac{\\operatorname{Cov}(Z,Y)}{\\sqrt{V(Z)}\\sqrt{V(Y)}}
                       \\]
@@ -563,7 +592,7 @@ const mockExam = {
                       となり、相関係数は変化しません。<br><br>
                       <b>3. 各選択肢の吟味</b><br>
                       ・<b>① 誤り</b>：共分散は \\(\\dfrac{1}{2}\\) 倍になりますが、相関係数は変わりません。<br>
-                      ・<b>② 正しい</b>：共分散は変数の尺度の影響を受けますが、正の定数倍では相関係数は変化しません。<br>
+                      ・<b>② 正しい</b>：\\(Z\\) は \\(X\\) の \\(\\dfrac{1}{2}\\) 倍なので共分散も \\(\\dfrac{1}{2}\\) 倍になりますが、正の定数倍では相関係数は変化しません。<br>
                       ・<b>③ 誤り</b>：共分散と相関係数の変化を逆に捉えています。<br>
                       ・<b>④ 誤り</b>：相関係数は変わりませんが、共分散は \\(\\dfrac{1}{2}\\) 倍になります。
                     `
@@ -731,7 +760,7 @@ const mockExam = {
             stem: `
               2つの事象 \\(A,B\\) について、
               \\[
-                P(A)=0.4,\\qquad P(B)=0.5,\\qquad P(A\\cup B)=0.7
+                P(A)=0.4,\\quad P(B)=0.5,\\quad P(A\\cup B)=0.7
               \\]
               であることが分かっている。
             `,
@@ -921,15 +950,15 @@ const mockExam = {
             stem: `
               2つの確率変数 \\(X,Y\\) について、
               \\[
-                E(X)=2,\\qquad E(Y)=1
+                E(X)=2,\\quad E(Y)=1
               \\]
               \\[
-                V(X)=4,\\qquad V(Y)=1,\\qquad \\operatorname{Cov}(X,Y)=1
+                V(X)=4,\\quad V(Y)=1,\\quad \\operatorname{Cov}(X,Y)=1
               \\]
               であることが分かっている。<br><br>
               ここで、新しい確率変数 \\(U,W\\) を
               \\[
-                U=X+Y,\\qquad W=X-Y
+                U=X+Y,\\quad W=X-Y
               \\]
               と定義する。
             `,
@@ -1022,7 +1051,8 @@ const mockExam = {
                         \\begin{aligned}
                         \\operatorname{Cov}(U,W)
                         &=\\operatorname{Cov}(X+Y,X-Y)\\\\
-                        &=\\operatorname{Cov}(X,X)-\\operatorname{Cov}(X,Y)+\\operatorname{Cov}(Y,X)-\\operatorname{Cov}(Y,Y)
+                        &=\\operatorname{Cov}(X,X)-\\operatorname{Cov}(X,Y) \\\\
+                        &+\\operatorname{Cov}(Y,X)-\\operatorname{Cov}(Y,Y) \\\\
                         \\end{aligned}
                       \\]
                       です。ここで、\\(\\operatorname{Cov}(X,X)=V(X)\\)、\\(\\operatorname{Cov}(Y,Y)=V(Y)\\) および \\(\\operatorname{Cov}(X,Y)=\\operatorname{Cov}(Y,X)\\) であるため、
@@ -1134,10 +1164,10 @@ const mockExam = {
                       <解説><br>
                       <b>1. 基本概念・公式</b><br>
                       連続確率変数 \\(X\\) の期待値および2乗の期待値は、
-                      \\[
-                        E(X)=\\int_{-\\infty}^{\\infty}xf(x)\\,dx,\\qquad
+                      \\begin{align*}
+                        E(X)=\\int_{-\\infty}^{\\infty}xf(x)\\,dx \\\\
                         E(X^2)=\\int_{-\\infty}^{\\infty}x^2f(x)\\,dx
-                      \\]
+                      \\end{align*}
                       で求められます。分散は、
                       \\[
                         V(X)=E(X^2)-\\{E(X)\\}^2
@@ -1281,7 +1311,7 @@ const mockExam = {
                       <b>1. 基本概念・公式</b><br>
                       成功確率 \\(p\\) の独立な試行を成功するまで繰り返し、<b>初めて成功するまでの試行回数</b>を \\(X\\) とすると、\\(X\\) は幾何分布に従います。このとき、
                       \\[
-                        P(X=k)=(1-p)^{k-1}p\\qquad(k=1,2,\\ldots)
+                        P(X=k)=(1-p)^{k-1}p\\quad(k=1,2,\\ldots)
                       \\]
                       であり、その期待値は
                       \\[
@@ -1338,7 +1368,7 @@ const mockExam = {
                       の値として、最も適切なものを、次の ①〜④ のうちから1つ選べ。<br><br>
                       必要であれば、標準正規分布について次の値を用いてよい。
                       \\[
-                        P(Z\\leq 1)=0.8413,\\qquad P(Z\\leq 2)=0.9772
+                        P(Z\\leq 1)=0.8413,\\quad P(Z\\leq 2)=0.9772
                       \\]
                       <br>
                       ① \\(0.0228\\)<br><br>
@@ -1358,13 +1388,13 @@ const mockExam = {
                       \\]
                       となります。したがって、
                       \\[
-                        E(\\bar{X})=\\mu,\\qquad V(\\bar{X})=\\dfrac{\\sigma^2}{n}
+                        E(\\bar{X})=\\mu,\\quad V(\\bar{X})=\\dfrac{\\sigma^2}{n}
                       \\]
                       であり、標本平均の標準偏差（標準誤差）は \\(\\sigma/\\sqrt{n}\\) です。<br><br>
                       <b>2. 計算・判定プロセス</b><br>
                       この問題では \\(\\mu=50\\)、\\(\\sigma=10\\)、\\(n=25\\) なので、
                       \\[
-                        E(\\bar{X})=50,\\qquad V(\\bar{X})=\\dfrac{10^2}{25}=4
+                        E(\\bar{X})=50,\\quad V(\\bar{X})=\\dfrac{10^2}{25}=4
                       \\]
                       となります。したがって、
                       \\[
@@ -1558,7 +1588,7 @@ const mockExam = {
               とする。<br><br>
               母平均 \\(\\mu\\) の推定量として、次の3つを考える。
               \\[
-                T_1=\\bar{X},\\qquad T_2=\\dfrac{n}{n+1}\\bar{X},\\qquad T_3=X_1
+                T_1=\\bar{X},\\quad T_2=\\dfrac{n}{n+1}\\bar{X},\\quad T_3=X_1
               \\]
               ただし、
               \\[
@@ -1684,7 +1714,7 @@ const mockExam = {
               を得た。<br><br>
               この標本について、標本平均および不偏分散はそれぞれ
               \\[
-                \\bar{X}=50,\\qquad S^2=64
+                \\bar{X}=50,\\quad S^2=64
               \\]
               であった。ただし、母分散 \\(\\sigma^2\\) は未知である。
             `,
@@ -1744,11 +1774,7 @@ const mockExam = {
                     qNumber: 25,
                     question: `
                       母平均 \\(\\mu\\) の95%信頼区間として、最も適切なものを、次の ①〜④ のうちから1つ選べ。<br><br>
-                      ただし、自由度15の \\(t\\) 分布について、上側確率2.5%となる点を
-                      \\[
-                        t_{0.025,15}=2.131
-                      \\]
-                      とする。<br>
+                      必要であればt分布表を用いても良い。<br>
                       ①
                       \\[
                         46.08\\leq\\mu\\leq 53.92
@@ -1815,9 +1841,9 @@ const mockExam = {
                     qNumber: 26,
                     question: `
                       問15-2で求めた95%信頼区間の解釈として、最も適切なものを、次の ①〜④ のうちから1つ選べ。<br><br>
-                      ① 今回得られた区間 \\(45.74\\leq\\mu\\leq 54.26\\) に、母平均 \\(\\mu\\) が含まれる確率は95%である。<br><br>
-                      ② 母集団から新たに1個の観測値を取り出したとき、その観測値が \\(45.74\\) 以上 \\(54.26\\) 以下となる確率は95%である。<br><br>
-                      ③ 同じ母集団から標本を繰り返し抽出して同じ方法で信頼区間を構成すると、得られる信頼区間の幅の95%が \\(8.52\\) 以下となる。<br><br>
+                      ① 今回得られた信頼区間 に、母平均 \\(\\mu\\) が含まれる確率は95%である。<br><br>
+                      ② 母集団から新たに1個の観測値を取り出したとき、その観測値が信頼区間に含まれる確率は95%である。<br><br>
+                      ③ 同じ母集団から標本を繰り返し抽出して同じ方法で信頼区間を構成すると、得られる95%の信頼区間の幅は今回得られた信頼区間の幅以下となる。<br><br>
                       ④ 同じ母集団から標本を繰り返し抽出し、同じ方法で95%信頼区間を構成すると、そのようにして得られる区間のおよそ95%が真の母平均 \\(\\mu\\) を含む。
                     `,
                     choices: ["①", "②", "③", "④"],
@@ -1919,16 +1945,6 @@ const mockExam = {
                     id: 2,
                     qNumber: 28,
                     question: `
-                      問16-1で得られた検定統計量は、
-                      \\[
-                        Z\\approx 2.04
-                      \\]
-                      であった。<br><br>
-                      標準正規分布に従う確率変数を \\(Z_0\\) としたとき、
-                      \\[
-                        P(Z_0\\geq 2.04)=0.0207
-                      \\]
-                      であることを用いる。<br><br>
                       この検定のp値として、最も適切なものを、次の ①〜④ のうちから1つ選べ。<br><br>
                       ① \\(0.0207\\)<br><br>
                       ② \\(0.0414\\)<br><br>
@@ -1947,7 +1963,14 @@ const mockExam = {
                       \\]
                       で求められます。<br><br>
                       <b>2. 計算・判定プロセス</b><br>
-                      本問では \\(Z\\approx 2.04\\) であり、\\(P(Z_0\\geq 2.04)=0.0207\\) が与えられています。両側検定なので、p値は
+                      検定統計量を計算すると、
+                      \\begin{align*}
+                        Z&=\\frac{\\hat{p}-p_0}{\\sqrt{\\frac{p_0(1-p_0)}{n}}} \\\\
+                        &=\\frac{0.5-0.4}{\\sqrt{\\frac{0.4 \\times 0.6}{100}}} \\\\
+                        &=\\frac{1}{\\sqrt{0.24}} \\\\
+                        &\\approx 2.04
+                      \\end{align*}  
+                      となります。標準正規分布表より\\(P(Z_0\\geq 2.04)=0.0207\\) が与えられています。両側検定なので、p値は
                       \\[
                         2P(Z_0\\geq 2.04)=2\\times 0.0207=0.0414
                       \\]
@@ -1967,7 +1990,7 @@ const mockExam = {
             stem: `
               互いに独立な2つの正規母集団
               \\[
-                N(\\mu_X,\\sigma_X^2),\\qquad N(\\mu_Y,\\sigma_Y^2)
+                N(\\mu_X,\\sigma_X^2),\\quad N(\\mu_Y,\\sigma_Y^2)
               \\]
               から、それぞれ独立に無作為標本を抽出したところ、次の結果を得た。
               <div class='overflow-x-auto mt-4 mb-4'>
@@ -2207,7 +2230,7 @@ const mockExam = {
                       <b>1. 基本概念・公式</b><br>
                       正規母集団から得られた不偏分散について、
                       \\[
-                        \\dfrac{(n_1-1)S_X^2}{\\sigma_X^2}\\sim\\chi^2_{n_1-1},\\qquad
+                        \\dfrac{(n_1-1)S_X^2}{\\sigma_X^2}\\sim\\chi^2_{n_1-1},\\quad
                         \\dfrac{(n_2-1)S_Y^2}{\\sigma_Y^2}\\sim\\chi^2_{n_2-1}
                       \\]
                       が成り立ちます。2つの標本が独立であり、帰無仮説 \\(H_0:\\sigma_X^2=\\sigma_Y^2\\) が成り立つとき、
@@ -2266,11 +2289,7 @@ const mockExam = {
                 H_0:\\text{各目が出る確率はすべて }\\dfrac{1}{6}
               \\]
               として、有意水準5%でカイ二乗適合度検定を行う。<br><br>
-              自由度5のカイ二乗分布の上側5%点は、
-              \\[
-                \\chi^2_{0.05}(5)=11.07
-              \\]
-              である。
+              必要であれば\\(\\chi^2\\)分布表を用いても良い。
             `,
             parts: [
                 {
@@ -2481,7 +2500,7 @@ const mockExam = {
                       <b>2. 計算・判定プロセス</b><br>
                       \\(x_1\\) について、
                       \\[
-                        \\hat\\beta_1=2.4000,\\qquad \\operatorname{SE}(\\hat\\beta_1)=0.8000
+                        \\hat\\beta_1=2.4000,\\quad \\operatorname{SE}(\\hat\\beta_1)=0.8000
                       \\]
                       です。したがって、
                       \\[
