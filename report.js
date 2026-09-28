@@ -246,24 +246,38 @@ function renderTrend(days, log) {
     const values = days.map(date => logForDay(log, date));
     const maxAns = Math.max(1, ...values.map(v => Number(v.answered || 0)));
     const w = 320;
-    const h = 136;
+    const h = 148;
     const padL = 28;
-    const padR = 28;
-    const padT = 12;
+    const padR = 10;
+    const padT = 18;
     const padB = 28;
     const innerW = w - padL - padR;
     const innerH = h - padT - padB;
     const barW = innerW / days.length * 0.42;
     const points = values.map((v, i) => {
         const x = padL + (innerW / days.length) * (i + 0.5);
-        const pct = Number(v.answered || 0) ? rate(Number(v.correct || 0), Number(v.answered || 0)) : 0;
+        const answered = Number(v.answered || 0);
+        const pct = answered ? rate(Number(v.correct || 0), answered) : 0;
         const y = padT + innerH * (1 - pct / 100);
-        const barH = (Number(v.answered || 0) / maxAns) * innerH * 0.9;
-        return { x, y, barH, label: `${days[i].getMonth() + 1}/${days[i].getDate()}`, pct, answered: Number(v.answered || 0) };
+        const barH = (answered / maxAns) * innerH * 0.82;
+        const countY = Math.max(padT + 8, padT + innerH - barH - 3);
+        return {
+            x,
+            y,
+            barH,
+            countY,
+            label: `${days[i].getMonth() + 1}/${days[i].getDate()}`,
+            pct,
+            answered
+        };
     });
     const line = points.map(p => `${p.x},${p.y}`).join(' ');
     return `
-        <svg viewBox="0 0 ${w} ${h}" role="img" aria-label="直近7日の正答率と学習数">
+        <div class="report-trend-legend">
+            <span><i class="is-bar"></i>問題数</span>
+            <span><i class="is-line"></i>正答率</span>
+        </div>
+        <svg viewBox="0 0 ${w} ${h}" role="img" aria-label="直近7日の問題数と正答率">
             ${[0, 25, 50, 75, 100].map(n => {
                 const y = padT + innerH * (1 - n / 100);
                 return `<line x1="${padL}" x2="${w - padR}" y1="${y}" y2="${y}" stroke="#eef2f7"/>
@@ -271,6 +285,7 @@ function renderTrend(days, log) {
             }).join('')}
             ${points.map(p => `
                 <rect x="${p.x - barW / 2}" y="${padT + innerH - p.barH}" width="${barW}" height="${p.barH}" rx="3" fill="#bfdbfe"/>
+                ${p.answered ? `<text x="${p.x}" y="${p.countY}" text-anchor="middle" font-size="7.5" font-weight="700" fill="#64748b">${p.answered}</text>` : ''}
             `).join('')}
             <polyline points="${line}" fill="none" stroke="#2563eb" stroke-width="2"/>
             ${points.map(p => `<circle cx="${p.x}" cy="${p.y}" r="2.4" fill="#2563eb"/>`).join('')}

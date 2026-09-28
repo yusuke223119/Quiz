@@ -19,6 +19,9 @@ Thumbs.db
 __pycache__/
 *.pyc
 
+# Local asset build tools (not shipped in the app)
+tools/
+
 # --- 環境変数・秘密情報 ---
 .env
 .env.development

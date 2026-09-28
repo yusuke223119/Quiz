@@ -1,7 +1,7 @@
 const menuData = [
     {
         id: "chapter-1",
-        title: "第1章 1変量・2変量の記述統計",
+        title: "第1章 記述統計",
         description: "度数分布、代表値、散らばり、相関など（分野01〜07）",
         hasSubMenu: true,
         subItems: [
@@ -16,7 +16,7 @@ const menuData = [
     },
     {
         id: "chapter-2",
-        title: "第2章 データ分析の実践と収集",
+        title: "第2章 データ収集",
         description: "分割表、時系列、研究デザイン、標本調査（分野08〜11）",
         hasSubMenu: true,
         subItems: [
@@ -28,7 +28,7 @@ const menuData = [
     },
     {
         id: "chapter-3",
-        title: "第3章 確率と確率分布",
+        title: "第3章 確率分布",
         description: "確率の法則、確率変数、各種分布（分野12〜21）",
         hasSubMenu: true,
         subItems: [
@@ -73,7 +73,7 @@ const menuData = [
     },
     {
         id: "chapter-6",
-        title: "第6章 回帰分析と分散分析",
+        title: "第6章 回帰分析",
         description: "単回帰・重回帰・分散分析（分野33〜35）",
         hasSubMenu: true,
         subItems: [

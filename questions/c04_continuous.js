@@ -105,16 +105,14 @@ const comprehensiveSet = {
           =\\int_{1/2}^{1}\\dfrac{3}{4}x(2-x)\\,dx
         \\]
         です。したがって、
-        \\[
-          \\begin{aligned}
-          P\\left(\\dfrac12\\le X\\le 1\\right)
+        \\begin{align*}
+          P\\left(\\dfrac12\\le X\\le 1\\right) &=
           &=\\dfrac{3}{4}\\left[x^2-\\dfrac{x^3}{3}\\right]_{1/2}^{1}\\\\
           &=\\dfrac{3}{4}\\left\\{\\dfrac{2}{3}-\\left(\\dfrac{1}{4}-\\dfrac{1}{24}\\right)\\right\\}\\\\
           &=\\dfrac{3}{4}\\left(\\dfrac{2}{3}-\\dfrac{5}{24}\\right)\\\\
           &=\\dfrac{3}{4}\\cdot\\dfrac{11}{24}\\\\
           &=\\dfrac{11}{32}.
-          \\end{aligned}
-        \\]
+        \\end{align*}
         よって、正しい値は \\(\\dfrac{11}{32}\\) です。<br><br>
         <b>3. 各選択肢の吟味</b><br>
         ・<b>① 誤り</b>：積分区間や原始関数への代入を誤った場合に得られうる値です。<br>
@@ -189,7 +187,7 @@ const comprehensiveSet = {
           &=\\int_0^2 x\\cdot\\dfrac{3}{4}x(2-x)\\,dx \\\\
           &=\\dfrac{3}{4}\\int_0^2(2x^2-x^3)\\,dx \\\\
           &=\\dfrac{3}{4}\\left[\\dfrac{2}{3}x^3-\\dfrac{1}{4}x^4\\right]_0^2 \\\\
-          =1.
+          &=1.
         \\end{align*}
         次に \\(E[X^2]\\) を求めます。
         \\begin{align*}
@@ -197,7 +195,7 @@ const comprehensiveSet = {
           &=\\int_0^2 x^2\\cdot\\dfrac{3}{4}x(2-x)\\,dx \\\\
           &=\\dfrac{3}{4}\\int_0^2(2x^3-x^4)\\,dx \\\\
           &=\\dfrac{3}{4}\\left[\\dfrac{1}{2}x^4-\\dfrac{1}{5}x^5\\right]_0^2 \\\\
-          =\\dfrac{6}{5}.
+          &=\\dfrac{6}{5}.
         \\end{align*}
         したがって、
         \\[

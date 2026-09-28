@@ -241,7 +241,7 @@ const allQuestions = [
       \\begin{align*}
         E[Y]=E[3X+5]=3E[X]+5 \\\\
         &=3\\times 10+5 \\\\
-        3\\times 10+5=35
+        &=35
       \\end{align*}
       となります。分散は、
       \\begin{align*}
