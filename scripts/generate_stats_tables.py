@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-統計検定2級向けの統計数値表を生成する。
+統計学試験向けの統計数値表を生成する。
 
 出力:
     picture/normal_distribution_table.png

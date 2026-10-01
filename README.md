@@ -1,6 +1,6 @@
-# 統計検定2級対策アプリ
+# 統計学試験対策アプリ
 
-統計検定2級の学習用クイズアプリです。静的な HTML / JavaScript / CSS で動きます。進捗・星・復習はブラウザの `localStorage` に保存します。
+統計学試験の学習用クイズアプリです。静的な HTML / JavaScript / CSS で動きます。進捗・星・復習はブラウザの `localStorage` に保存します。
 
 キャッチコピー: **See the world through data.**
 

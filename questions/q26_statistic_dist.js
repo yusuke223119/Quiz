@@ -349,7 +349,7 @@ const allQuestions = [
       \\[
         U\\sim\\chi_{n-1}^2,\\quad T\\sim t_{n-1}
       \\]
-      が漸近的に厳密に成立する。
+      が漸近的に成立する。
     `,
     choices: ["①", "②", "③", "④"],
     answer: "①",

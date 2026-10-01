@@ -97,7 +97,7 @@ const allQuestions = [
       \\[
         \\bar X=52,\\quad S^2=16
       \\]
-      を得た。ただし、母分散 \\(\\sigma^2\\) は未知である。<br><br>
+      を得た。ただし、\\(S^2\\) は不偏分散であり、母分散 \\(\\sigma^2\\) は未知である。<br><br>
       母平均 \\(\\mu\\) について、
       \\[
         H_0:\\mu=50,\\quad H_1:\\mu\\neq 50
@@ -189,7 +189,7 @@ const allQuestions = [
       \\[
         \\bar X=72,\\quad S=5
       \\]
-      であった。母分散は未知である。<br><br>
+      であった。ただし、\\(S\\) は不偏分散の正の平方根であり、母分散は未知である。<br><br>
       この検定について、対立仮説【A】、検定統計量の値【B】、有意水準5%での検定結果【C】の組合せとして、最も適切なものを、次の ①〜④ のうちから1つ選べ。<br>
       必要に応じて、付属の \\(t\\) 分布表を用いてください。<br><br>
       <table class='w-full border-collapse border border-slate-300 text-center text-sm'>

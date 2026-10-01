@@ -236,7 +236,7 @@ const allQuestions = [
       <b>2. 計算・判定プロセス</b><br>
       今回、\\(W=2X-Y\\) なので、平均は
       \\begin{align*}
-        E[W]=2E[X]-E[Y] \\\\
+        E[W]&=2E[X]-E[Y] \\\\
         &=2\\times 10-20 \\\\
         &=0
       \\end{align*}

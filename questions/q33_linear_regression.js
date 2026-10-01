@@ -99,7 +99,6 @@ const allQuestions = [
         \\sum_{i=1}^{5}x_i^2&=100 \\\\
         \\sum_{i=1}^{5}y_i^2&=545
       \\end{align*}
-      \\]
       また、\\(X\\) と \\(Y\\) の相関係数は
       \\[
         r=\\dfrac{2}{3}
